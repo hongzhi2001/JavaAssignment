@@ -6,7 +6,7 @@ public class Appointment {
     private String time;
     private int status;
     private People owner;
-    private Centre centre;
+    private Centre appointCentre;
 
     public Appointment(int id, String appointmentDate, String time, int status, People owner, Centre centre) {
         this.id = id;
@@ -14,7 +14,7 @@ public class Appointment {
         this.time = time;
         this.status = status;
         this.owner = owner;
-        this.centre = centre;
+        this.appointCentre = centre;
     }
 
     public int getId() {
@@ -57,13 +57,14 @@ public class Appointment {
         this.owner = owner;
     }
 
-    public Centre getCentre() {
-        return centre;
+    public Centre getAppointCentre() {
+        return appointCentre;
     }
 
-    public void setCentre(Centre centre) {
-        this.centre = centre;
+    public void setAppointCentre(Centre appointCentre) {
+        this.appointCentre = appointCentre;
     }
+
     
     
 }
