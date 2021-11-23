@@ -32,6 +32,10 @@ public class Appointment {
     public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
+    
+    public void cancelAppointment(){
+        status = 0;
+    }
 
     public String getTime() {
         return time;

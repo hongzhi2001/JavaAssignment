@@ -3,24 +3,24 @@ package javaassignment;
 import java.util.ArrayList;
 
 public class Centre {
-    private int id;
+    private int Id;
     private String healthFacility;
     private String location;
     private ArrayList<Appointment> allAppointment;
     private ArrayList<Vaccine> allVaccine;
 
-    public Centre(int id, String healthFacility, String location) {
-        this.id = id;
+    public Centre(int Id, String healthFacility, String location) {
+        this.Id = Id;
         this.healthFacility = healthFacility;
         this.location = location;
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getHealthFacility() {

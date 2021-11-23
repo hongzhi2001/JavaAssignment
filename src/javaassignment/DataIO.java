@@ -73,14 +73,13 @@ public class DataIO {
             for(int i=0; i<allPeople.size(); i++){
                 a.println(allPeople.get(i).getId());
                 a.println(allPeople.get(i).getName());
+                a.println(allPeople.get(i).getIdentityNo());
                 a.println(allPeople.get(i).getDob());
                 a.println(allPeople.get(i).getPhoneNo());
                 a.println(allPeople.get(i).getEmail());
                 a.println(allPeople.get(i).getAddress());
                 a.println(allPeople.get(i).getStatus());
                 a.println(allPeople.get(i).getType());
-                a.println(allPeople.get(i).getmyAppoinment());
-                a.println(allPeople.get(i).getmyVaccine());
                 a.println();
             }
             a.close();
@@ -132,7 +131,7 @@ public class DataIO {
             System.out.println("Error in write!");
         }
     }
-    public static Personnel checking(String x){
+    public static Personnel checkPersonnel(String x){
         for(int i=0; i<allPersonnel.size(); i++){
             if(x.equals(allPersonnel.get(i).getName())){
                 return allPersonnel.get(i);
@@ -140,9 +139,10 @@ public class DataIO {
         }
         return null;
     }
-    public static People checking(String x){
+    
+    public static People checkPeople(String x){
         for(int i=0; i<allPeople.size(); i++){
-            if(x.equals(allPeople.get(i).getPeople())){
+            if(x.equals(allPeople.get(i).getName())){
                 return allPeople.get(i);
             }
         }
