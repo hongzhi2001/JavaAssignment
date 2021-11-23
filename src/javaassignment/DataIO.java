@@ -18,50 +18,65 @@ public class DataIO {
         try{
             Scanner s = new Scanner(new File("people.txt"));
             while(s.hasNext()){
-                String a = s.nextLine();
-                int b = Integer.parseInt(s.nextLine());
+                int x1 = Integer.parseInt(s.nextLine());
+                String x2 = s.nextLine();
+                String x3 = s.nextLine();
+                String x4 = s.nextLine();
+                int x5 = Integer.parseInt(s.nextLine());
+                String x6 = s.nextLine();
+                String x7 = s.nextLine();
+                int x8 = Integer.parseInt(s.nextLine());
+                int x9 = Integer.parseInt(s.nextLine());
                 s.nextLine();
-                People c = new People(a,b);
-                allPeople.add(c);
+                People p = new People(x1,x2,x3,x4,x5,x6,x7,x8,x9);
+                allPeople.add(p);
             }
             Scanner s1 = new Scanner(new File("appointment.txt"));
             while(s1.hasNext()){
                 int x1 = Integer.parseInt(s1.nextLine());
-                String x2 = s.nextLine();
-                String x3 =s.nextLine();
+                String x2 = s1.nextLine();
+                String x3 =s1.nextLine();
                 int x4 = Integer.parseInt(s1.nextLine());
-                People x5 = checking(s1.nextLine());
-                Centre x6 = Centre.valueOf(s1.nextLine());                
+                People x5 = checkPeople(s1.nextLine());
+                Centre x6 = checkCentre(s1.nextLine());                
                 s1.nextLine();
-                Appointment y = new Appointment(x1,x2,x3,x4,x5,x6);
-                allAppointment.add(y);
+                Appointment a = new Appointment(x1,x2,x3,x4,x5,x6);
+                allAppointment.add(a);
                 
             }
             Scanner s2 = new Scanner(new File("vaccine.txt"));
             while(s2.hasNext()){
-                int x1 = Integer.parseInt(s1.nextLine());
-                String x2 = s.nextLine();
-                String x3 =s.nextLine();
-                String x4 =s.nextLine();
-                String x5 =s.nextLine();
-                int x6 = Integer.parseInt(s1.nextLine());                
-                Centre x7 = Centre.valueOf(s1.nextLine());                
-                s1.nextLine();
+                int x1 = Integer.parseInt(s2.nextLine());
+                String x2 = s2.nextLine();
+                String x3 =s2.nextLine();
+                String x4 =s2.nextLine();
+                String x5 =s2.nextLine();
+                int x6 = Integer.parseInt(s2.nextLine());                
+                Centre x7 = checkCentre(s2.nextLine());                
+                s2.nextLine();
                 Vaccine v = new Vaccine(x1,x2,x3,x4,x5,x6,x7);
                 allVaccine.add(v);    
             }
             Scanner s3 = new Scanner(new File("centre.txt"));
             while(s3.hasNext()){
-                int x1 = Integer.parseInt(s1.nextLine());
-                String x2 = s.nextLine();
-                String x3 =s.nextLine();
-                String x4 =s.nextLine();
-                String x5 =s.nextLine();
-                int x6 = Integer.parseInt(s1.nextLine());                
-                Centre x7 = Centre.valueOf(s1.nextLine());                
-                s1.nextLine();
-                Vaccine v = new Vaccine(x1,x2,x3,x4,x5,x6,x7);
-                allVaccine.add(v);    
+                int x1 = Integer.parseInt(s3.nextLine());
+                String x2 = s3.nextLine();
+                String x3 =s3.nextLine();                
+                s3.nextLine();
+                Centre c = new Centre(x1,x2,x3);
+                allCentre.add(c);    
+            }
+            Scanner s4 = new Scanner(new File("personnel.txt"));
+            while(s4.hasNext()){
+                int x1 = Integer.parseInt(s4.nextLine());
+                String x2 = s4.nextLine();
+                String x3 = s4.nextLine();
+                String x4 = s4.nextLine();
+                int x5 = Integer.parseInt(s4.nextLine());
+                String x6 = s4.nextLine();
+                s4.nextLine();
+                Personnel ps = new Personnel(x1,x2,x3,x4,x5,x6);
+                allPersonnel.add(ps);
             }
         } catch(Exception e){
             System.out.println("Error in read!");
@@ -148,4 +163,13 @@ public class DataIO {
         }
         return null;
     }
+    public static Centre checkCentre(String x){
+        for(int i=0; i<allCentre.size(); i++){
+            if(x.equals(allCentre.get(i).getHealthFacility())){
+                return allCentre.get(i);
+            }
+        }
+        return null;
+    }
+    
 }

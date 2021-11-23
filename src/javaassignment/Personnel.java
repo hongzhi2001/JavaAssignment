@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Personnel implements Operation{
     private int Id;
     private String name;
-    private int identityNo;
+    private String identityNo;
     private String Dob;
     private int phoneNo;
     private String email;
 
-    public Personnel(int Id, String name, int identityNo, String Dob, int phoneNo, String email) {
+    public Personnel(int Id, String name, String identityNo, String Dob, int phoneNo, String email) {
         this.Id = Id;
         this.name = name;
         this.identityNo = identityNo;
@@ -135,11 +135,11 @@ public class Personnel implements Operation{
         this.name = name;
     }
 
-    public int getIdentityNo() {
+    public String getIdentityNo() {
         return identityNo;
     }
 
-    public void setIdentityNo(int identityNo) {
+    public void setIdentityNo(String identityNo) {
         this.identityNo = identityNo;
     }
 

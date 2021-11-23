@@ -2,10 +2,10 @@ package javaassignment;
 
 import java.util.ArrayList;
 
-public class People {
+public class People implements Operation{
     private int Id;
     private String name;
-    private int identityNo;
+    private String identityNo;
     private String Dob;
     private int phoneNo;
     private String email;
@@ -15,7 +15,7 @@ public class People {
     private ArrayList<Appointment> myAppointment;
     private ArrayList<Vaccine> myVaccine;
 
-    public People(int Id, String name, int identityNo, String Dob, int phoneNo, String email, String address, int status, int type) {
+    public People(int Id, String name, String identityNo, String Dob, int phoneNo, String email, String address, int status, int type) {
         this.Id = Id;
         this.name = name;
         this.identityNo = identityNo;
@@ -25,6 +25,12 @@ public class People {
         this.address = address;
         this.status = status;
         this.type = type;
+    }
+    
+    @Override
+    public void registerNew(People x){
+        DataIO.allPeople.add(x);
+        DataIO.write();
     }
     
     public void viewAppointment(){  // NOT DONE
@@ -69,11 +75,11 @@ public class People {
         this.name = name;
     }
 
-    public int getIdentityNo() {
+    public String getIdentityNo() {
         return identityNo;
     }
 
-    public void setIdentityNo(int identityNo) {
+    public void setIdentityNo(String identityNo) {
         this.identityNo = identityNo;
     }
 
