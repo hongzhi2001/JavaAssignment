@@ -149,7 +149,7 @@ public class DataIO {
     }
     public static Personnel checkPersonnel(String x){
         for(int i=0; i<allPersonnel.size(); i++){
-            if(x.equals(allPersonnel.get(i).getName())){
+            if(x.equals(allPersonnel.get(i).getIdentityNo())){
                 return allPersonnel.get(i);
             }
         }
