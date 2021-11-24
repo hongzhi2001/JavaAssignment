@@ -30,17 +30,8 @@ public class Personnel implements Operation{
         DataIO.write();
     }
     
-    public void deletePeople(People x){
-        for(int i=0;i<DataIO.allPeople.size();i++){
-            if(x==DataIO.allPeople.get(i)){
-                DataIO.allPeople.remove(i);
-                DataIO.write();
-                break;
-            }
-        }
-    }
-        
-    public void updatePeople(People x, People y){
+    @Override
+    public void updateProfile(People x, People y){
         for(int i=0;i<DataIO.allPeople.size();i++){
             if(x==DataIO.allPeople.get(i)){
                 DataIO.allPeople.remove(i);
@@ -51,6 +42,29 @@ public class Personnel implements Operation{
             
         }
     }
+    
+    public void updateProfile(Personnel x, Personnel y){
+         for(int i=0;i<DataIO.allPersonnel.size();i++){
+            if(x==DataIO.allPersonnel.get(i)){
+                DataIO.allPersonnel.remove(i);
+                DataIO.allPersonnel.add(i, y);
+                DataIO.write();
+                break;
+            }
+            
+        }
+    }
+    
+    public void deletePeople(People x){
+        for(int i=0;i<DataIO.allPeople.size();i++){
+            if(x==DataIO.allPeople.get(i)){
+                DataIO.allPeople.remove(i);
+                DataIO.write();
+                break;
+            }
+        }
+    }
+        
     
     public void viewPeople(){
         

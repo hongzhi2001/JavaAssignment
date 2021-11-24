@@ -58,6 +58,20 @@ public class People implements Operation{
             
         }
     }
+    
+    @Override
+    public void updateProfile(People x, People y){
+        for(int i=0;i<DataIO.allPeople.size();i++){
+            if(x==DataIO.allPeople.get(i)){
+                DataIO.allPeople.remove(i);
+                DataIO.allPeople.add(i, y);
+                DataIO.write();
+                break;
+            }
+            
+        }
+
+    }
 
     public int getId() {
         return Id;
