@@ -42,6 +42,8 @@ public class DataIO {
                 s1.nextLine();
                 Appointment a = new Appointment(x1,x2,x3,x4,x5,x6);
                 allAppointment.add(a);
+                x5.getMyAppointment().add(a);
+                x6.getAllAppointment().add(a);
                 
             }
             Scanner s2 = new Scanner(new File("vaccine.txt"));
@@ -56,6 +58,7 @@ public class DataIO {
                 s2.nextLine();
                 Vaccine v = new Vaccine(x1,x2,x3,x4,x5,x6,x7);
                 allVaccine.add(v);    
+                x7.getAllVaccine().add(v);
             }
             Scanner s3 = new Scanner(new File("centre.txt"));
             while(s3.hasNext()){
@@ -98,13 +101,13 @@ public class DataIO {
                 a.println();
             }
             a.close();
-            PrintWriter b = new PrintWriter("appoinment.txt");
+            PrintWriter b = new PrintWriter("appointment.txt");
             for(int i=0; i<allAppointment.size(); i++){
                 b.println(allAppointment.get(i).getId());
                 b.println(allAppointment.get(i).getAppointmentDate());
                 b.println(allAppointment.get(i).getTime());
                 b.println(allAppointment.get(i).getStatus());
-                b.println(allAppointment.get(i).getAppointCentre());
+                b.println(allAppointment.get(i).getAppointCentre().getHealthFacility());
                 b.println(allAppointment.get(i).getOwner().getName());
                 b.println();
             }
@@ -128,7 +131,7 @@ public class DataIO {
                 d.println(allVaccine.get(i).getType());
                 d.println(allVaccine.get(i).getBatchNo());
                 d.println(allVaccine.get(i).getQuantity());
-                d.println(allVaccine.get(i).getVaccineCentre());
+                d.println(allVaccine.get(i).getVaccineCentre().getHealthFacility());
                 d.println();
             }
             d.close();
@@ -137,8 +140,6 @@ public class DataIO {
                 e.println(allCentre.get(i).getId());
                 e.println(allCentre.get(i).getHealthFacility());
                 e.println(allCentre.get(i).getLocation());
-                e.println(allCentre.get(i).getAllAppointment());
-                e.println(allCentre.get(i).getAllVaccine());
                 e.println();
             }
             e.close();

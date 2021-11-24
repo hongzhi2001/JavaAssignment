@@ -33,6 +33,7 @@ public class People implements Operation{
         DataIO.write();
     }
     
+    @Override
     public void viewAppointment(){  // NOT DONE
         
         for(int i=0;i<myAppointment.size();i++){
@@ -51,6 +52,7 @@ public class People implements Operation{
         }
     }
     
+    @Override
     public void viewVaccine(){  // NOT DONE
         
         for(int i=0;i<myVaccine.size();i++){
