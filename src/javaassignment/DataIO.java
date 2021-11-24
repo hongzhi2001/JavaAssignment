@@ -158,7 +158,7 @@ public class DataIO {
     
     public static People checkPeople(String x){
         for(int i=0; i<allPeople.size(); i++){
-            if(x.equals(allPeople.get(i).getName())){
+            if(x.equals(allPeople.get(i).getIdentityNo())){
                 return allPeople.get(i);
             }
         }
