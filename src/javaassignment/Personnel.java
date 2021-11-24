@@ -67,7 +67,10 @@ public class Personnel implements Operation{
         
     
     public void viewPeople(){
-        
+        for(int i=0;i<DataIO.allPeople.size();i++){
+            People p = DataIO.allPeople.get(i);
+            
+        }
     }
     
     public void addAppointment(Appointment x){
@@ -99,7 +102,10 @@ public class Personnel implements Operation{
     
     @Override
     public void viewAppointment(){
-        
+        for(int i=0;i<DataIO.allAppointment.size();i++){
+            Appointment x = DataIO.allAppointment.get(i);
+            
+        }
     }
     
     public void addVaccine(Vaccine x){
@@ -130,7 +136,10 @@ public class Personnel implements Operation{
     }
     
     public void viewVaccine(){
-        
+        for(int i=0;i<DataIO.allVaccine.size();i++){
+            Vaccine x = DataIO.allVaccine.get(i);
+            
+        }
     }
 
     public int getId() {
