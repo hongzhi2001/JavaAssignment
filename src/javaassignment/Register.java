@@ -36,6 +36,7 @@ public class Register extends javax.swing.JFrame {
         buttonGroup4 = new javax.swing.ButtonGroup();
         buttonGroup5 = new javax.swing.ButtonGroup();
         buttonGroup6 = new javax.swing.ButtonGroup();
+        buttonGroup7 = new javax.swing.ButtonGroup();
         lblReg = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         lblIdenNo = new javax.swing.JLabel();
@@ -229,6 +230,12 @@ public class Register extends javax.swing.JFrame {
             People x = new People(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address,0,type);
             x.registerNew(x);
             JOptionPane.showMessageDialog(this,"Register Succesfully");
+            txtName.setText("");
+            txtIdenNo.setText("");
+            txtDOB.setText("");
+            txtPhoneNo.setText("");
+            txtEmail.setText("");
+            txtAddress.setText("");
             this.setVisible(false);
             JavaAssignment.L.setVisible(true);
         }
@@ -279,6 +286,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
