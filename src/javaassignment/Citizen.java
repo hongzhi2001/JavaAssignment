@@ -3,8 +3,8 @@ package javaassignment;
 public class Citizen extends People {
     private String icNo;
     
-    public Citizen(int Id, String name, String icNo, String Dob, int phoneNo, String email, String address, int status) {
-        super(Id, name, icNo, Dob, phoneNo, email, address, status, 1);
+    public Citizen(int Id, String name, String icNo, String Dob, int phoneNo, String email, String address) {
+        super(Id, name, icNo, Dob, phoneNo, email, address, 0, 1);
         this.icNo = icNo;
     }
 

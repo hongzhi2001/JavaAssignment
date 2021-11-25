@@ -230,8 +230,13 @@ public class Register extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"The identity number has been used!");
         }else{
             int Id = 1+DataIO.allPeople.size();
-            People x = new People(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address,0,type);
-            x.registerNew(x);
+            if(type==1){
+                Citizen x = new Citizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                x.registerNew(x);
+            }else if(type ==0){
+                Noncitizen x = new Noncitizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                x.registerNew(x);
+            }
             JOptionPane.showMessageDialog(this,"Register Succesfully");
             txtName.setText("");
             txtIdenNo.setText("");
