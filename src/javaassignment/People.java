@@ -7,7 +7,7 @@ public class People implements Operation{
     private String name;
     private String identityNo;
     private String Dob;
-    private int phoneNo;
+    private String phoneNo;
     private String email;
     private String address;
     private int status;
@@ -15,7 +15,7 @@ public class People implements Operation{
     private ArrayList<Appointment> myAppointment;
     private ArrayList<Vaccine> myVaccine;
 
-    public People(int Id, String name, String identityNo, String Dob, int phoneNo, String email, String address, int status, int type) {
+    public People(int Id, String name, String identityNo, String Dob, String phoneNo, String email, String address, int status, int type) {
         this.Id = Id;
         this.name = name;
         this.identityNo = identityNo;
@@ -107,11 +107,11 @@ public class People implements Operation{
         this.Dob = Dob;
     }
 
-    public int getPhoneNo() {
+    public String getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 

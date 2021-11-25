@@ -22,7 +22,7 @@ public class DataIO {
                 String x2 = s.nextLine();
                 String x3 = s.nextLine();
                 String x4 = s.nextLine();
-                int x5 = Integer.parseInt(s.nextLine());
+                String x5 = s.nextLine();
                 String x6 = s.nextLine();
                 String x7 = s.nextLine();
                 int x8 = Integer.parseInt(s.nextLine());
@@ -75,7 +75,7 @@ public class DataIO {
                 String x2 = s4.nextLine();
                 String x3 = s4.nextLine();
                 String x4 = s4.nextLine();
-                int x5 = Integer.parseInt(s4.nextLine());
+                String x5 = s4.nextLine();
                 String x6 = s4.nextLine();
                 s4.nextLine();
                 Personnel ps = new Personnel(x1,x2,x3,x4,x5,x6);

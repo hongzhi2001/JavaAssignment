@@ -5,6 +5,7 @@
  */
 package javaassignment;
 
+//import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,6 +46,7 @@ public class PRegister extends javax.swing.JFrame {
         lblLogin1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(700, 300));
 
         lblName.setText("Name:");
 
@@ -171,8 +173,41 @@ public class PRegister extends javax.swing.JFrame {
         String Name = txtName.getText();
         String IdentityNo = txtIdenNo.getText();
         String DOB = txtDOB.getText();
-        int PhoneNo = Integer.parseInt(txtPhoneNo.getText());
+        String PhoneNo = txtPhoneNo.getText();
         String Email = txtEmail.getText();
+        
+        //String pattern = "dd-MM-yyyy";
+        //SimpleDateFormat date = new SimpleDateFormat(pattern);
+        
+        if(Name.trim().isEmpty()|| IdentityNo.trim().isEmpty() || DOB.trim().isEmpty() || PhoneNo.trim().isEmpty() || Email.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill");
+            return;
+        }
+        
+        if(!(Name.trim().matches("^[A-Za-z]{1,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Name");
+            return;
+        }
+        
+        if(!(IdentityNo.trim().matches("^[0-9]{12}|[A-Za-z][0-9]{8,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Identity Number");
+            return;
+        }
+        
+        /*if(!DOB.equals(date.format(DOB))){
+            JOptionPane.showMessageDialog(this, "Invalid DOB");
+            return;
+        }*/
+        
+        if(!(PhoneNo.trim().matches("^[0-9]{10,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Phone Number");
+            return;
+        }
+        
+        if(!(Email.trim().matches("^[a-zA-Z0-9]{1,}@[a-z]{4,}.com$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Email");
+            return;
+        }
 
         Personnel found = DataIO.checkPersonnel(IdentityNo);
         if(found!=null){

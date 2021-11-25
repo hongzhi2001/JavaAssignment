@@ -214,7 +214,7 @@ public class Register extends javax.swing.JFrame {
             String Name = txtName.getText();
             String IdentityNo = txtIdenNo.getText();
             String DOB = txtDOB.getText();
-            int PhoneNo = Integer.parseInt(txtPhoneNo.getText());
+            String PhoneNo = txtPhoneNo.getText();
             String Email = txtEmail.getText();
             String Address = txtAddress.getText();
             int type = 0;

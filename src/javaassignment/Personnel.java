@@ -7,10 +7,10 @@ public class Personnel implements Operation{
     private String name;
     private String identityNo;
     private String Dob;
-    private int phoneNo;
+    private String phoneNo;
     private String email;
 
-    public Personnel(int Id, String name, String identityNo, String Dob, int phoneNo, String email) {
+    public Personnel(int Id, String name, String identityNo, String Dob, String phoneNo, String email) {
         this.Id = Id;
         this.name = name;
         this.identityNo = identityNo;
@@ -174,11 +174,11 @@ public class Personnel implements Operation{
         this.Dob = Dob;
     }
 
-    public int getPhoneNo() {
+    public String getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 

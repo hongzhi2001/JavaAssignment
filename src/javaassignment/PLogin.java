@@ -1,6 +1,8 @@
 
 package javaassignment;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author hongz
@@ -25,6 +27,12 @@ public class PLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         lblReg = new javax.swing.JLabel();
+        txtIdenNo = new javax.swing.JTextField();
+        lblPhone = new javax.swing.JLabel();
+        lblLogin = new javax.swing.JLabel();
+        lblIdenNo = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
+        txtPass = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(700, 300));
@@ -36,21 +44,66 @@ public class PLogin extends javax.swing.JFrame {
             }
         });
 
+        lblPhone.setText("Password(Phone no):");
+
+        lblLogin.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lblLogin.setText("Personnel Login");
+
+        lblIdenNo.setText("Identity Number:");
+
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblLogin)
+                .addGap(72, 72, 72))
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(lblReg)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblIdenNo)
+                    .addComponent(lblPhone))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtIdenNo, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblReg)
+                        .addGap(86, 86, 86))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(237, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(lblLogin)
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtIdenNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIdenNo))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPhone)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(btnLogin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(lblReg)
-                .addGap(47, 47, 47))
+                .addGap(28, 28, 28))
         );
 
         pack();
@@ -60,6 +113,32 @@ public class PLogin extends javax.swing.JFrame {
         this.setVisible(false);
         JavaAssignment1.pRegister.setVisible(true);
     }//GEN-LAST:event_lblRegMouseClicked
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String identityNo = txtIdenNo.getText();
+        String pass = txtPass.getText();
+        
+        if(identityNo.trim().isEmpty()|| pass.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill");
+            return;
+        }
+        
+        Personnel found = DataIO.checkPersonnel(identityNo);
+        if(found==null){
+            JOptionPane.showMessageDialog(this, "Invalid Input");     
+        }else{
+            if(pass.equals(found.getPhoneNo())){
+                JavaAssignment1.plogin=found;
+                txtIdenNo.setText("");
+                txtPass.setText("");
+                this.setVisible(false);
+                JavaAssignment1.pRegister.setVisible(true);  
+            }else{
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
+            }
+
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -98,6 +177,12 @@ public class PLogin extends javax.swing.JFrame {
     } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel lblIdenNo;
+    private javax.swing.JLabel lblLogin;
+    private javax.swing.JLabel lblPhone;
     private javax.swing.JLabel lblReg;
+    private javax.swing.JTextField txtIdenNo;
+    private javax.swing.JTextField txtPass;
     // End of variables declaration//GEN-END:variables
 }
