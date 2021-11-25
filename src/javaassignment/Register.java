@@ -206,42 +206,47 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLoginMouseClicked
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-       
-        String Name = txtName.getText();
-        String IdentityNo = txtIdenNo.getText();
-        String DOB = txtDOB.getText();
-        int PhoneNo = Integer.parseInt(txtPhoneNo.getText());
-        String Email = txtEmail.getText();
-        String Address = txtAddress.getText();
-        int type = 0;
-        if (rbCitizen.isSelected()){
-            type = 1;
-        }else if(rbNonCitizen.isSelected()){
-            type = 0;
-        }
-        People found = DataIO.checkPeople(IdentityNo);
-        if(found!=null){
-            JOptionPane.showMessageDialog(this,"The identity number has been used!");
-        }else{
-            int Id = 1+DataIO.allPeople.size();
-            if(type==1){
-                Citizen x = new Citizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
-                x.registerNew(x);
-            }else if(type ==0){
-                Noncitizen x = new Noncitizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
-                x.registerNew(x);
+        if(txtName.getText().trim().isEmpty()||txtIdenNo.getText().trim().isEmpty()||txtDOB.getText().trim().isEmpty()||
+            txtPhoneNo.getText().trim().isEmpty()||txtEmail.getText().trim().isEmpty()||txtAddress.getText().trim().isEmpty()||
+            bgCitizen.getSelection()==null){
+            JOptionPane.showMessageDialog(null, "Please ensure all required fields have been fill and tick the correct identity!!!");
+        } else{
+            String Name = txtName.getText();
+            String IdentityNo = txtIdenNo.getText();
+            String DOB = txtDOB.getText();
+            int PhoneNo = Integer.parseInt(txtPhoneNo.getText());
+            String Email = txtEmail.getText();
+            String Address = txtAddress.getText();
+            int type = 0;
+            if (rbCitizen.isSelected()){
+                type = 1;
+            }else if(rbNonCitizen.isSelected()){
+                type = 0;
             }
-            JOptionPane.showMessageDialog(this,"Register Succesfully");
-            txtName.setText("");
-            txtIdenNo.setText("");
-            txtDOB.setText("");
-            txtPhoneNo.setText("");
-            txtEmail.setText("");
-            txtAddress.setText("");
-            this.setVisible(false);
-            JavaAssignment.L.setVisible(true);
-        }
-        
+            People found = DataIO.checkPeople(IdentityNo);
+            if(found!=null){
+                JOptionPane.showMessageDialog(this,"The identity number has been used!");
+            }else{
+                int Id = 1+DataIO.allPeople.size();
+                if(type==1){
+                    Citizen x = new Citizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                    x.registerNew(x);
+                }else if(type ==0){
+                    Noncitizen x = new Noncitizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                    x.registerNew(x);
+                }
+                JOptionPane.showMessageDialog(this,"Register Succesfully");
+                txtName.setText("");
+                txtIdenNo.setText("");
+                txtDOB.setText("");
+                txtPhoneNo.setText("");
+                txtEmail.setText("");
+                txtAddress.setText("");
+                bgCitizen.clearSelection();
+                this.setVisible(false);
+                JavaAssignment.L.setVisible(true);
+            }    
+        }            
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -251,6 +256,7 @@ public class Register extends javax.swing.JFrame {
         txtPhoneNo.setText("");
         txtEmail.setText("");
         txtAddress.setText("");
+        bgCitizen.clearSelection();
     }//GEN-LAST:event_btnClearActionPerformed
 
     /**
