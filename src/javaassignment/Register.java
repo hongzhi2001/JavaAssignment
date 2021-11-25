@@ -29,13 +29,7 @@ public class Register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
-        buttonGroup4 = new javax.swing.ButtonGroup();
-        buttonGroup5 = new javax.swing.ButtonGroup();
-        buttonGroup6 = new javax.swing.ButtonGroup();
+        bgCitizen = new javax.swing.ButtonGroup();
         lblReg = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         lblIdenNo = new javax.swing.JLabel();
@@ -55,8 +49,6 @@ public class Register extends javax.swing.JFrame {
         lblLogin = new javax.swing.JLabel();
         rbCitizen = new javax.swing.JRadioButton();
         rbNonCitizen = new javax.swing.JRadioButton();
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(700, 150));
@@ -101,8 +93,10 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
+        bgCitizen.add(rbCitizen);
         rbCitizen.setText("Citizen");
 
+        bgCitizen.add(rbNonCitizen);
         rbNonCitizen.setText("Non Citizen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -295,15 +289,9 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgCitizen;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnRegister;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.ButtonGroup buttonGroup4;
-    private javax.swing.ButtonGroup buttonGroup5;
-    private javax.swing.ButtonGroup buttonGroup6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDOB;
