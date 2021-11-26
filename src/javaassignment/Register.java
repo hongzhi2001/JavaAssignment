@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package javaassignment;
-
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JOptionPane;
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 /**
  *
  * @author Acer
@@ -18,6 +20,14 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         initComponents();
+        Calendar cal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -12);//15 year before
+        Date max = cal.getTime();
+        cal1.add(Calendar.YEAR, -80);
+        Date min = cal1.getTime();//actual date
+        //set your dates in your JDateChooser
+        jDateChooser1.setSelectableDateRange(min, max);          
     }
 
     /**
@@ -37,11 +47,9 @@ public class Register extends javax.swing.JFrame {
         btnClear = new javax.swing.JButton();
         lblDOB = new javax.swing.JLabel();
         lblPhoneNo = new javax.swing.JLabel();
-        txtDOB = new javax.swing.JTextField();
         txtPhoneNo = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         lblAddress = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAddress = new javax.swing.JTextArea();
         btnRegister = new javax.swing.JButton();
@@ -49,6 +57,8 @@ public class Register extends javax.swing.JFrame {
         lblLogin = new javax.swing.JLabel();
         rbCitizen = new javax.swing.JRadioButton();
         rbNonCitizen = new javax.swing.JRadioButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(700, 150));
@@ -104,35 +114,31 @@ public class Register extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(lblLogin)
-                .addContainerGap(141, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblIdenNo)
-                            .addComponent(lblName)
-                            .addComponent(lblDOB)
-                            .addComponent(lblPhoneNo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblIdenNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPhoneNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtIdenNo)
-                            .addComponent(txtDOB)
                             .addComponent(txtPhoneNo)
-                            .addComponent(txtName)))
+                            .addComponent(txtName)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRegister)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClear))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEmail)
-                            .addComponent(lblAddress))
-                        .addGap(97, 97, 97)
+                            .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEmail))
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                             .addComponent(txtEmail)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
@@ -140,10 +146,15 @@ public class Register extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(rbNonCitizen)))
                 .addGap(52, 52, 52))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblReg)
-                .addGap(93, 93, 93))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(lblReg))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(lblLogin)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,12 +162,12 @@ public class Register extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(lblReg)
                 .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(lblName))
+                        .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -164,10 +175,8 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(txtIdenNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(lblDOB))
-                    .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDOB)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -175,10 +184,8 @@ public class Register extends javax.swing.JFrame {
                         .addComponent(lblPhoneNo))
                     .addComponent(txtPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(lblEmail))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,27 +209,49 @@ public class Register extends javax.swing.JFrame {
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
         this.setVisible(false);
-        JavaAssignment.L.setVisible(true);
+        JavaAssignment.PL.setVisible(true);
     }//GEN-LAST:event_lblLoginMouseClicked
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        if(txtName.getText().trim().isEmpty()||txtIdenNo.getText().trim().isEmpty()||txtDOB.getText().trim().isEmpty()||
-            txtPhoneNo.getText().trim().isEmpty()||txtEmail.getText().trim().isEmpty()||txtAddress.getText().trim().isEmpty()||
-            bgCitizen.getSelection()==null){
-            JOptionPane.showMessageDialog(null, "Please ensure all required fields have been fill and tick the correct identity!!!");
-        } else{
-            String Name = txtName.getText();
-            String IdentityNo = txtIdenNo.getText();
-            String DOB = txtDOB.getText();
-            String PhoneNo = txtPhoneNo.getText();
-            String Email = txtEmail.getText();
-            String Address = txtAddress.getText();
-            int type = 0;
-            if (rbCitizen.isSelected()){
-                type = 1;
-            }else if(rbNonCitizen.isSelected()){
-                type = 0;
-            }
+        java.util.Date date=new java.util.Date(); 
+        String Name = txtName.getText();
+        String IdentityNo = txtIdenNo.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String DOB = dateFormat.format(jDateChooser1.getDate());
+        String PhoneNo = txtPhoneNo.getText();
+        String Email = txtEmail.getText();
+        String Address = txtAddress.getText();
+        int type = 0;
+        if (rbCitizen.isSelected()){
+            type = 1;
+        }else if(rbNonCitizen.isSelected()){
+            type = 0;
+        }
+        if(Name.trim().isEmpty()|| IdentityNo.trim().isEmpty() || DOB.trim().isEmpty() || PhoneNo.trim().isEmpty() || Email.trim().isEmpty() || Address.trim().isEmpty() || bgCitizen.getSelection()==null){
+            JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill and tick the correct identity!!!");
+            return;
+        }
+        
+        if(!(Name.trim().matches("^[A-Za-z]{1,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Name");
+            return;
+        }
+        
+        if(!(IdentityNo.trim().matches("^[0-9]{12}|[A-Za-z][0-9]{8,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Identity Number");
+            return;
+        }                  
+        
+        if(!(PhoneNo.trim().matches("^[0-9]{10,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Phone Number");
+            return;
+        }
+        
+        if(!(Email.trim().matches("^[a-zA-Z0-9]{1,}@[a-z]{4,}.com$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Email");
+            return;
+        }
+        else{           
             People found = DataIO.checkPeople(IdentityNo);
             if(found!=null){
                 JOptionPane.showMessageDialog(this,"The identity number has been used!");
@@ -238,13 +267,12 @@ public class Register extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Register Succesfully");
                 txtName.setText("");
                 txtIdenNo.setText("");
-                txtDOB.setText("");
                 txtPhoneNo.setText("");
                 txtEmail.setText("");
                 txtAddress.setText("");
                 bgCitizen.clearSelection();
                 this.setVisible(false);
-                JavaAssignment.L.setVisible(true);
+                JavaAssignment.PL.setVisible(true);
             }    
         }            
     }//GEN-LAST:event_btnRegisterActionPerformed
@@ -252,7 +280,6 @@ public class Register extends javax.swing.JFrame {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         txtName.setText("");
         txtIdenNo.setText("");
-        txtDOB.setText("");
         txtPhoneNo.setText("");
         txtEmail.setText("");
         txtAddress.setText("");
@@ -298,6 +325,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.ButtonGroup bgCitizen;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnRegister;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDOB;
@@ -310,7 +338,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbCitizen;
     private javax.swing.JRadioButton rbNonCitizen;
     private javax.swing.JTextArea txtAddress;
-    private javax.swing.JTextField txtDOB;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtIdenNo;
     private javax.swing.JTextField txtName;
