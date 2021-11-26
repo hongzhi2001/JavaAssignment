@@ -83,6 +83,7 @@ public class DataIO {
             }
         } catch(Exception e){
             System.out.println("Error in read!");
+            e.printStackTrace();
         }
     }
     public static void write(){
