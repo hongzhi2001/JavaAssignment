@@ -1,6 +1,5 @@
 package javaassignment;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -139,38 +138,29 @@ public class Personnel implements Operation{
     
     public static void viewAppointment(JTable x){
         DataIO.read();
-        String[] data = new String[9];
+        String[] data = new String[6];
         String status;
-        String userType;
         
-        String[] columnNames = { "ID", "Name", "Identity Number","DOB", "Phone Number", "Email Address", "Address", "Status", "User Type" };
+        String[] columnNames = { "ID", "Date", "Time", "Status", "Owner", "Centre" };
         DefaultTableModel model = (DefaultTableModel)x.getModel();
         model.setColumnIdentifiers(columnNames);     
         
         try{
-            for(int i=0;i<DataIO.allPeople.size();i++){
-                People p = DataIO.allPeople.get(i);
-                if(p.getType()==1){
-                    userType = "citizen";
-                }else {
-                    userType = "Non-citizen";
-                }
-                if(p.getStatus()==0){
-                    status="Not Vacinated";
-                }else if(p.getStatus()==1){
-                    status="1st Dose Completed";
+            for(int i=0;i<DataIO.allAppointment.size();i++){
+                Appointment a = DataIO.allAppointment.get(i);
+                if(a.getStatus()==0){
+                    status="Pending";
+                }else if(a.getStatus()==1){
+                    status="Accepted";
                 }else{
-                    status="Fully Vacinated";
+                    status="Cancelled";
                 }
-                data[0] = Integer.toString(p.getId());
-                data[1] = ""+p.getName();
-                data[2] = ""+p.getIdentityNo();
-                data[3] = ""+p.getDob();
-                data[4] = ""+p.getPhoneNo();
-                data[5] = ""+p.getEmail();
-                data[6] = ""+p.getAddress();
-                data[7] = ""+status;
-                data[8] = ""+userType;
+                data[0] = Integer.toString(a.getId());
+                data[1] = ""+a.getAppointmentDate();
+                data[2] = ""+a.getTime();
+                data[3] = ""+status;
+                data[4] = ""+a.getOwner();
+                data[5] = ""+a.getAppointCentre();
                 model.addRow(data);
             } 
         }catch(Exception e){
@@ -207,9 +197,28 @@ public class Personnel implements Operation{
     }
     
     public static void viewVaccine(JTable x){
-        for(int i=0;i<DataIO.allVaccine.size();i++){
-            Vaccine x = DataIO.allVaccine.get(i);
-            
+        DataIO.read();
+        String[] data = new String[7];
+        
+        String[] columnNames = { "VaccineNo", "Name", "Manufacture", "Type", "BatchNo", "Quantity", "Centre" };
+        DefaultTableModel model = (DefaultTableModel)x.getModel();
+        model.setColumnIdentifiers(columnNames);     
+        
+        try{
+            for(int i=0;i<DataIO.allVaccine.size();i++){
+                Vaccine v = DataIO.allVaccine.get(i);
+                
+                data[0] = Integer.toString(v.getVaccineNo());
+                data[1] = ""+v.getName();
+                data[2] = ""+v.getManufacture();
+                data[3] = ""+v.getType();
+                data[4] = ""+v.getBatchNo();
+                data[5] = ""+Integer.toString(v.getQuantity());
+                data[6] = ""+v.getVaccineCentre();
+                model.addRow(data);
+            } 
+        }catch(Exception e){
+            System.out.println("Error!");
         }
     }
 

@@ -110,6 +110,8 @@ public class PLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegMouseClicked
+        txtIdenNo.setText("");
+        txtPass.setText("");
         this.setVisible(false);
         JavaAssignment1.pRegister.setVisible(true);
     }//GEN-LAST:event_lblRegMouseClicked

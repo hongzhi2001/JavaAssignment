@@ -106,11 +106,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Manage Appointment"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAppointActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnVaccine">
       <Properties>
         <Property name="text" type="java.lang.String" value="Manage Vaccine"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVaccineActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnReport">
       <Properties>

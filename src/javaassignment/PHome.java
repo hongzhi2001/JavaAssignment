@@ -56,8 +56,18 @@ public class PHome extends javax.swing.JFrame {
         });
 
         btnAppoint.setText("Manage Appointment");
+        btnAppoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAppointActionPerformed(evt);
+            }
+        });
 
         btnVaccine.setText("Manage Vaccine");
+        btnVaccine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVaccineActionPerformed(evt);
+            }
+        });
 
         btnReport.setText("Report");
 
@@ -134,6 +144,16 @@ public class PHome extends javax.swing.JFrame {
         this.setVisible(false);
         JavaAssignment1.pUser.setVisible(true);
     }//GEN-LAST:event_btnUserActionPerformed
+
+    private void btnAppointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppointActionPerformed
+        this.setVisible(false);
+        JavaAssignment1.pAppointment.setVisible(true);
+    }//GEN-LAST:event_btnAppointActionPerformed
+
+    private void btnVaccineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaccineActionPerformed
+        this.setVisible(false);
+        JavaAssignment1.pVaccine.setVisible(true);
+    }//GEN-LAST:event_btnVaccineActionPerformed
 
     public void setUser(String user){
         lblTitle.setText("Welcome " + user + "!");

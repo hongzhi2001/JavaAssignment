@@ -5,8 +5,10 @@
  */
 package javaassignment;
 
-//import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -19,6 +21,14 @@ public class PRegister extends javax.swing.JFrame {
      */
     public PRegister() {
         initComponents();
+        Calendar cal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -18);//15 year before
+        Date max = cal.getTime();
+        cal1.add(Calendar.YEAR, -80);
+        Date min = cal1.getTime();//actual date
+        //set your dates in your JDateChooser
+        txtDOB.setSelectableDateRange(min, max);       
     }
 
     /**
@@ -39,11 +49,11 @@ public class PRegister extends javax.swing.JFrame {
         txtName = new javax.swing.JTextField();
         lblDOB = new javax.swing.JLabel();
         lblPhoneNo = new javax.swing.JLabel();
-        txtDOB = new javax.swing.JTextField();
         txtPhoneNo = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         lblReg = new javax.swing.JLabel();
         lblLogin1 = new javax.swing.JLabel();
+        txtDOB = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(700, 300));
@@ -66,7 +76,7 @@ public class PRegister extends javax.swing.JFrame {
             }
         });
 
-        lblDOB.setText("Date of Birth");
+        lblDOB.setText("Date of Birth:");
 
         lblPhoneNo.setText("Phone Number:");
 
@@ -86,10 +96,6 @@ public class PRegister extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(lblReg)
-                .addGap(70, 70, 70))
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(btnRegister)
@@ -100,6 +106,15 @@ public class PRegister extends javax.swing.JFrame {
                 .addGap(100, 100, 100)
                 .addComponent(lblLogin1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblReg)
+                        .addGap(70, 70, 70))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(31, 31, 31)
@@ -112,10 +127,9 @@ public class PRegister extends javax.swing.JFrame {
                     .addGap(38, 38, 38)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                        .addComponent(txtIdenNo)
-                        .addComponent(txtDOB)
                         .addComponent(txtPhoneNo)
-                        .addComponent(txtName))
+                        .addComponent(txtName)
+                        .addComponent(txtIdenNo, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addGap(32, 32, 32)))
         );
         layout.setVerticalGroup(
@@ -123,7 +137,9 @@ public class PRegister extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblReg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(142, 142, 142)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClear)
                     .addComponent(btnRegister))
@@ -144,12 +160,8 @@ public class PRegister extends javax.swing.JFrame {
                             .addGap(6, 6, 6)
                             .addComponent(lblIdenNo))
                         .addComponent(txtIdenNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(32, 32, 32)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(lblDOB))
-                        .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(38, 38, 38)
+                    .addComponent(lblDOB)
                     .addGap(32, 32, 32)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -172,7 +184,8 @@ public class PRegister extends javax.swing.JFrame {
 
         String Name = txtName.getText();
         String IdentityNo = txtIdenNo.getText();
-        String DOB = txtDOB.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String DOB = dateFormat.format(txtDOB.getDate());
         String PhoneNo = txtPhoneNo.getText();
         String Email = txtEmail.getText();
         
@@ -194,11 +207,6 @@ public class PRegister extends javax.swing.JFrame {
             return;
         }
         
-        /*if(!DOB.equals(date.format(DOB))){
-            JOptionPane.showMessageDialog(this, "Invalid DOB");
-            return;
-        }*/
-        
         if(!(PhoneNo.trim().matches("^[0-9]{10,}$"))){
             JOptionPane.showMessageDialog(this, "Invalid Phone Number");
             return;
@@ -219,7 +227,7 @@ public class PRegister extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Register Succesfully");
             txtName.setText("");
             txtIdenNo.setText("");
-            txtDOB.setText("");
+            txtDOB.setCalendar(null);
             txtPhoneNo.setText("");
             txtEmail.setText("");
             this.setVisible(false);
@@ -229,6 +237,11 @@ public class PRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void lblLogin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogin1MouseClicked
+        txtName.setText("");
+        txtIdenNo.setText("");
+        txtDOB.setCalendar(null);
+        txtPhoneNo.setText("");
+        txtEmail.setText("");
         this.setVisible(false);
         JavaAssignment1.pLogin.setVisible(true);
     }//GEN-LAST:event_lblLogin1MouseClicked
@@ -236,7 +249,7 @@ public class PRegister extends javax.swing.JFrame {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         txtName.setText("");
         txtIdenNo.setText("");
-        txtDOB.setText("");
+        txtDOB.setCalendar(null);
         txtPhoneNo.setText("");
         txtEmail.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
@@ -286,7 +299,7 @@ public class PRegister extends javax.swing.JFrame {
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPhoneNo;
     private javax.swing.JLabel lblReg;
-    private javax.swing.JTextField txtDOB;
+    private com.toedter.calendar.JDateChooser txtDOB;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtIdenNo;
     private javax.swing.JTextField txtName;
