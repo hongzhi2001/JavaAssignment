@@ -15,6 +15,11 @@ public class DataIO {
     public static ArrayList<Vaccine> allVaccine
             = new ArrayList<Vaccine>();
         public static void read(){
+            allPeople.clear();
+            allAppointment.clear();
+            allPersonnel.clear();
+            allVaccine.clear();
+            allCentre.clear();
         try{
             Scanner s = new Scanner(new File("people.txt"));
             while(s.hasNext()){
@@ -83,7 +88,6 @@ public class DataIO {
             }
         } catch(Exception e){
             System.out.println("Error in read!");
-            e.printStackTrace();
         }
     }
     public static void write(){
@@ -146,7 +150,7 @@ public class DataIO {
             e.close();
         } catch(Exception e){
             System.out.println("Error in write!");
-        }
+        } 
     }
     public static Personnel checkPersonnel(String x){
         for(int i=0; i<allPersonnel.size(); i++){

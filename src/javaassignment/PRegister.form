@@ -40,13 +40,24 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="51" max="32767" attributes="0"/>
+              <Component id="lblReg" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblReg" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="txtDOB" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="lblPhoneNo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="lblDOB" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="txtDOB" min="-2" pref="221" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -57,9 +68,6 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblIdenNo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lblName" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblDOB" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblPhoneNo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblEmail" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -78,9 +86,16 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblReg" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="152" max="32767" attributes="0"/>
-              <Component id="txtDOB" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="txtDOB" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDOB" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Component id="lblPhoneNo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnClear" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRegister" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -107,24 +122,10 @@
                       </Group>
                       <Component id="txtIdenNo" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="lblDOB" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                  <Component id="txtPhoneNo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="lblPhoneNo" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="txtPhoneNo" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="txtEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="203" max="32767" attributes="0"/>
               </Group>
           </Group>

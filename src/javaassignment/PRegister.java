@@ -108,22 +108,28 @@ public class PRegister extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(lblReg)
+                .addGap(70, 70, 70))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblReg)
-                        .addGap(70, 70, 70))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblEmail)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPhoneNo)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDOB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(31, 31, 31)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblIdenNo)
-                        .addComponent(lblName)
-                        .addComponent(lblDOB)
-                        .addComponent(lblPhoneNo)
-                        .addComponent(lblEmail))
+                        .addComponent(lblName))
                     .addGap(38, 38, 38)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
@@ -137,9 +143,15 @@ public class PRegister extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblReg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142)
+                .addGap(145, 145, 145)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDOB))
+                .addGap(36, 36, 36)
+                .addComponent(lblPhoneNo)
+                .addGap(38, 38, 38)
+                .addComponent(lblEmail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClear)
                     .addComponent(btnRegister))
@@ -160,20 +172,10 @@ public class PRegister extends javax.swing.JFrame {
                             .addGap(6, 6, 6)
                             .addComponent(lblIdenNo))
                         .addComponent(txtIdenNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(38, 38, 38)
-                    .addComponent(lblDOB)
+                    .addGap(86, 86, 86)
+                    .addComponent(txtPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(32, 32, 32)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(lblPhoneNo))
-                        .addComponent(txtPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(32, 32, 32)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(lblEmail))
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(203, Short.MAX_VALUE)))
         );
 
@@ -184,15 +186,13 @@ public class PRegister extends javax.swing.JFrame {
 
         String Name = txtName.getText();
         String IdentityNo = txtIdenNo.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String DOB = dateFormat.format(txtDOB.getDate());
         String PhoneNo = txtPhoneNo.getText();
         String Email = txtEmail.getText();
         
         //String pattern = "dd-MM-yyyy";
         //SimpleDateFormat date = new SimpleDateFormat(pattern);
         
-        if(Name.trim().isEmpty()|| IdentityNo.trim().isEmpty() || DOB.trim().isEmpty() || PhoneNo.trim().isEmpty() || Email.trim().isEmpty()){
+        if(Name.trim().isEmpty()|| IdentityNo.trim().isEmpty() || txtDOB.getDate()==null || PhoneNo.trim().isEmpty() || Email.trim().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill");
             return;
         }
@@ -221,6 +221,8 @@ public class PRegister extends javax.swing.JFrame {
         if(found!=null){
             JOptionPane.showMessageDialog(this,"The identity number has been used!");
         }else{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String DOB = dateFormat.format(txtDOB.getDate());
             int Id = 1+DataIO.allPersonnel.size();
             Personnel x = new Personnel(Id,Name,IdentityNo,DOB,PhoneNo,Email);
             x.registerNew(x);
