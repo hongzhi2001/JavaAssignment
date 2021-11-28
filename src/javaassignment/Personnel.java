@@ -92,7 +92,7 @@ public class Personnel implements Operation{
                 }else{
                     status="Fully Vacinated";
                 }
-                data[0] = Integer.toString(p.getId());
+                data[0] = String.valueOf(p.getId());
                 data[1] = ""+p.getName();
                 data[2] = ""+p.getIdentityNo();
                 data[3] = ""+p.getDob();
@@ -138,10 +138,10 @@ public class Personnel implements Operation{
     
     public static void viewAppointment(JTable x){
         DataIO.read();
-        String[] data = new String[6];
+        String[] data = new String[7];
         String status;
         
-        String[] columnNames = { "ID", "Date", "Time", "Status", "Owner", "Centre" };
+        String[] columnNames = { "ID", "Date", "Time", "Status", "Dos", "Owner", "Centre" };
         DefaultTableModel model = (DefaultTableModel)x.getModel();
         model.setColumnIdentifiers(columnNames);     
         
@@ -152,15 +152,19 @@ public class Personnel implements Operation{
                     status="Pending";
                 }else if(a.getStatus()==1){
                     status="Accepted";
-                }else{
+                }else if(a.getStatus()==2){
                     status="Cancelled";
+                }else{
+                    status="Completed";
                 }
-                data[0] = Integer.toString(a.getId());
+                
+                data[0] = String.valueOf(a.getId());
                 data[1] = ""+a.getAppointmentDate();
                 data[2] = ""+a.getTime();
                 data[3] = ""+status;
-                data[4] = ""+a.getOwner();
-                data[5] = ""+a.getAppointCentre();
+                data[4] = ""+String.valueOf(a.getDos());
+                data[5] = ""+a.getOwner().getName();
+                data[6] = ""+a.getAppointCentre().getHealthFacility();
                 model.addRow(data);
             } 
         }catch(Exception e){
@@ -198,27 +202,25 @@ public class Personnel implements Operation{
     
     public static void viewVaccine(JTable x){
         DataIO.read();
-        String[] data = new String[7];
+        String[] data = new String[5];
         
-        String[] columnNames = { "VaccineNo", "Name", "Manufacture", "Type", "BatchNo", "Quantity", "Centre" };
+        String[] columnNames = { "VaccineNo", "Name", "Manufacture", "Quantity", "Centre" };
         DefaultTableModel model = (DefaultTableModel)x.getModel();
         model.setColumnIdentifiers(columnNames);     
         
         try{
             for(int i=0;i<DataIO.allVaccine.size();i++){
-                Vaccine v = DataIO.allVaccine.get(i);
-                
-                data[0] = Integer.toString(v.getVaccineNo());
+                Vaccine v = DataIO.allVaccine.get(i);              
+                data[0] = ""+String.valueOf(v.getVaccineNo());
                 data[1] = ""+v.getName();
                 data[2] = ""+v.getManufacture();
-                data[3] = ""+v.getType();
-                data[4] = ""+v.getBatchNo();
-                data[5] = ""+Integer.toString(v.getQuantity());
-                data[6] = ""+v.getVaccineCentre();
+                data[3] = ""+String.valueOf(v.getQuantity());
+                data[4] = ""+v.getVaccineCentre().getHealthFacility();
                 model.addRow(data);
             } 
         }catch(Exception e){
             System.out.println("Error!");
+            e.printStackTrace();
         }
     }
 

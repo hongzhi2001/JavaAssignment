@@ -6,8 +6,8 @@ public class Centre {
     private int Id;
     private String healthFacility;
     private String location;
-    private ArrayList<Appointment> allAppointment;
-    private ArrayList<Vaccine> allVaccine;
+    private ArrayList<Appointment> allAppointment = new ArrayList<Appointment>();
+    private ArrayList<Vaccine> allVaccine = new ArrayList<Vaccine>();
 
     public Centre(int Id, String healthFacility, String location) {
         this.Id = Id;
@@ -54,6 +54,7 @@ public class Centre {
     public void setAllVaccine(ArrayList<Vaccine> allVaccine) {
         this.allVaccine = allVaccine;
     }
+
     
     
 }

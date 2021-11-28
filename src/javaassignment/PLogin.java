@@ -134,6 +134,7 @@ public class PLogin extends javax.swing.JFrame {
                 txtIdenNo.setText("");
                 txtPass.setText("");
                 JavaAssignment1.pHome.setUser(found.getName());
+                JavaAssignment1.pMyProfile.getProfile(found);
                 this.setVisible(false);
                 JavaAssignment1.pHome.setVisible(true);  
             }else{

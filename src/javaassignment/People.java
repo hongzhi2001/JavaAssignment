@@ -12,8 +12,8 @@ public class People implements Operation{
     private String address;
     private int status;
     private int type;
-    private ArrayList<Appointment> myAppointment;
-    private ArrayList<Vaccine> myVaccine;
+    private ArrayList<Appointment> myAppointment = new ArrayList<Appointment>();
+    private ArrayList<Vaccine> myVaccine = new ArrayList<Vaccine>();
 
     public People(int Id, String name, String identityNo, String Dob, String phoneNo, String email, String address, int status, int type) {
         this.Id = Id;

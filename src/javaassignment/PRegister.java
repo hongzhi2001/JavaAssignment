@@ -223,8 +223,15 @@ public class PRegister extends javax.swing.JFrame {
         }else{
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String DOB = dateFormat.format(txtDOB.getDate());
-            int Id = 1+DataIO.allPersonnel.size();
-            Personnel x = new Personnel(Id,Name,IdentityNo,DOB,PhoneNo,Email);
+            int id=0;
+            for(int i=0; i<DataIO.allPersonnel.size(); i++){
+                if(i <DataIO.allPersonnel.get(i).getId()){
+                    id = DataIO.allPersonnel.get(i).getId()+1;
+                }else{
+                    id = DataIO.allPersonnel.size()+1;
+                }
+            }
+            Personnel x = new Personnel(id,Name,IdentityNo,DOB,PhoneNo,Email);
             x.registerNew(x);
             JOptionPane.showMessageDialog(this,"Register Succesfully");
             txtName.setText("");

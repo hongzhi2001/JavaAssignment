@@ -7,6 +7,7 @@ public class JavaAssignment1 {
     public static UserManagement pUser = new UserManagement();
     public static AppointmentManage pAppointment = new AppointmentManage();
     public static VaccineManage pVaccine = new VaccineManage();
+    public static PMyprofile pMyProfile = new PMyprofile();
     public static Personnel plogin;
     
     public static void main(String[] args) {

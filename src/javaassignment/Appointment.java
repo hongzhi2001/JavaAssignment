@@ -5,14 +5,16 @@ public class Appointment {
     private String appointmentDate;
     private String time;
     private int status;
+    private int dos;
     private People owner;
     private Centre appointCentre;
 
-    public Appointment(int id, String appointmentDate, String time, int status, People owner, Centre centre) {
+    public Appointment(int id, String appointmentDate, String time, int status, int dos, People owner, Centre centre) {
         this.id = id;
         this.appointmentDate = appointmentDate;
         this.time = time;
         this.status = status;
+        this.dos = dos;
         this.owner = owner;
         this.appointCentre = centre;
     }
@@ -51,6 +53,14 @@ public class Appointment {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getDos() {
+        return dos;
+    }
+
+    public void setDos(int dos) {
+        this.dos = dos;
     }
 
     public People getOwner() {

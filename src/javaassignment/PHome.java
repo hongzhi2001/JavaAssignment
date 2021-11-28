@@ -5,6 +5,12 @@
  */
 package javaassignment;
 
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JLabel;
+import javax.swing.Timer;
+
 /**
  *
  * @author hongz
@@ -16,8 +22,28 @@ public class PHome extends javax.swing.JFrame {
      */
     public PHome() {
         initComponents();
-        
+        showDate(lblDate);
+        showTime(lblTime);
     }
+    
+    public static void showDate(JLabel label){
+        Date d = new Date();
+        SimpleDateFormat dsf = new SimpleDateFormat("yyyy/MM/dd");
+        label.setText(dsf.format(d));
+     }
+     
+     public static void showTime(JLabel label){
+         new Timer(0, new ActionListener(){
+   
+             @Override
+             public void actionPerformed(java.awt.event.ActionEvent ae) {
+                 Date d = new Date();
+                 SimpleDateFormat dsf = new SimpleDateFormat("hh:mm:ss a");
+                 label.setText(dsf.format(d));
+             }
+        }).start();
+       //https://www.youtube.com/watch?v=sz4wbhlNUXg
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,10 +61,13 @@ public class PHome extends javax.swing.JFrame {
         btnVaccine = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
         logoutbtn = new javax.swing.JButton();
+        lblDate = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(700, 300));
 
+        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTitle.setText("Welcome User!");
 
         btnProfile.setText("MyProfile");
@@ -80,14 +109,14 @@ public class PHome extends javax.swing.JFrame {
             }
         });
 
+        lblDate.setText("jLabel1");
+
+        lblTime.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logoutbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addGap(72, 72, 72)
                 .addComponent(btnVaccine)
@@ -95,25 +124,37 @@ public class PHome extends javax.swing.JFrame {
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(28, 28, 28)
+                .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblTitle))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                        .addComponent(btnUser)))
-                .addGap(52, 52, 52)
-                .addComponent(btnAppoint)
+                        .addComponent(btnUser)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnAppoint)))
                 .addGap(57, 57, 57))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(logoutbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblDate)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblTime)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(lblTitle)
-                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDate)
+                    .addComponent(lblTime))
+                .addGap(16, 16, 16)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAppoint)
                     .addComponent(btnUser)
@@ -131,7 +172,8 @@ public class PHome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        JavaAssignment1.pMyProfile.setVisible(true);
     }//GEN-LAST:event_btnProfileActionPerformed
 
     private void logoutbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutbtnActionPerformed
@@ -200,6 +242,8 @@ public class PHome extends javax.swing.JFrame {
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnUser;
     private javax.swing.JButton btnVaccine;
+    private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JButton logoutbtn;
     // End of variables declaration//GEN-END:variables

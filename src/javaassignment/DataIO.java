@@ -36,44 +36,42 @@ public class DataIO {
                 People p = new People(x1,x2,x3,x4,x5,x6,x7,x8,x9);
                 allPeople.add(p);
             }
-            Scanner s1 = new Scanner(new File("appointment.txt"));
+            Scanner s1 = new Scanner(new File("centre.txt"));
             while(s1.hasNext()){
                 int x1 = Integer.parseInt(s1.nextLine());
                 String x2 = s1.nextLine();
-                String x3 =s1.nextLine();
-                int x4 = Integer.parseInt(s1.nextLine());
-                People x5 = checkPeople(s1.nextLine());
-                Centre x6 = checkCentre(s1.nextLine());                
+                String x3 =s1.nextLine();                
                 s1.nextLine();
-                Appointment a = new Appointment(x1,x2,x3,x4,x5,x6);
-                allAppointment.add(a);
-                x5.getMyAppointment().add(a);
-                x6.getAllAppointment().add(a);
-                
+                Centre c = new Centre(x1,x2,x3);
+                allCentre.add(c);    
             }
-            Scanner s2 = new Scanner(new File("vaccine.txt"));
+            Scanner s2 = new Scanner(new File("appointment.txt"));
             while(s2.hasNext()){
                 int x1 = Integer.parseInt(s2.nextLine());
                 String x2 = s2.nextLine();
                 String x3 =s2.nextLine();
-                String x4 =s2.nextLine();
-                String x5 =s2.nextLine();
-                int x6 = Integer.parseInt(s2.nextLine());                
+                int x4 = Integer.parseInt(s2.nextLine());
+                int x5 = Integer.parseInt(s2.nextLine());
+                People x6 = checkPeople(s2.nextLine());
                 Centre x7 = checkCentre(s2.nextLine());                
                 s2.nextLine();
-                Vaccine v = new Vaccine(x1,x2,x3,x4,x5,x6,x7);
-                allVaccine.add(v);    
-                x7.getAllVaccine().add(v);
+                Appointment a = new Appointment(x1,x2,x3,x4,x5,x6,x7);
+                allAppointment.add(a);
+                x6.getMyAppointment().add(a);
+                x7.getAllAppointment().add(a);              
             }
-            Scanner s3 = new Scanner(new File("centre.txt"));
+            Scanner s3 = new Scanner(new File("vaccine.txt"));
             while(s3.hasNext()){
                 int x1 = Integer.parseInt(s3.nextLine());
                 String x2 = s3.nextLine();
-                String x3 =s3.nextLine();                
+                String x3 =s3.nextLine();
+                int x4 = Integer.parseInt(s3.nextLine());                
+                Centre x5 = checkCentre(s3.nextLine());                
                 s3.nextLine();
-                Centre c = new Centre(x1,x2,x3);
-                allCentre.add(c);    
-            }
+                Vaccine v = new Vaccine(x1,x2,x3,x4,x5);
+                allVaccine.add(v);    
+                x5.getAllVaccine().add(v);
+            }          
             Scanner s4 = new Scanner(new File("personnel.txt"));
             while(s4.hasNext()){
                 int x1 = Integer.parseInt(s4.nextLine());
@@ -88,6 +86,7 @@ public class DataIO {
             }
         } catch(Exception e){
             System.out.println("Error in read!");
+            e.printStackTrace();
         }
     }
     public static void write(){
@@ -112,8 +111,9 @@ public class DataIO {
                 b.println(allAppointment.get(i).getAppointmentDate());
                 b.println(allAppointment.get(i).getTime());
                 b.println(allAppointment.get(i).getStatus());
-                b.println(allAppointment.get(i).getAppointCentre().getHealthFacility());
+                b.println(allAppointment.get(i).getDos());
                 b.println(allAppointment.get(i).getOwner().getName());
+                b.println(allAppointment.get(i).getAppointCentre().getHealthFacility());
                 b.println();
             }
             b.close();
@@ -133,8 +133,6 @@ public class DataIO {
                 d.println(allVaccine.get(i).getVaccineNo());
                 d.println(allVaccine.get(i).getName());
                 d.println(allVaccine.get(i).getManufacture());
-                d.println(allVaccine.get(i).getType());
-                d.println(allVaccine.get(i).getBatchNo());
                 d.println(allVaccine.get(i).getQuantity());
                 d.println(allVaccine.get(i).getVaccineCentre().getHealthFacility());
                 d.println();
@@ -169,6 +167,7 @@ public class DataIO {
         }
         return null;
     }
+    
     public static Centre checkCentre(String x){
         for(int i=0; i<allCentre.size(); i++){
             if(x.equals(allCentre.get(i).getHealthFacility())){

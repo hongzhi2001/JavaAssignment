@@ -5,26 +5,34 @@
  */
 package javaassignment;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author hongz
  */
 public class PMyprofile extends javax.swing.JFrame {
-    Personnel user = JavaAssignment1.plogin;
     /**
      * Creates new form PMyprofile
      */
     public PMyprofile() {
         initComponents();
-        getProfile();
+        
     }
 
-    private void getProfile(){
+    public void getProfile(Personnel user){
+        user = JavaAssignment1.plogin;
         txtName.setText(user.getName());
         txtIdenNo.setText(user.getIdentityNo());
         txtDOB.setText(user.getDob());
         txtPhoneNo.setText(user.getPhoneNo());
         txtEmail.setText(user.getEmail());
+
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) && user.getEmail().equals(txtEmail.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,13 +58,31 @@ public class PMyprofile extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtPhoneNo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPhoneNoFocusLost(evt);
+            }
+        });
+
         lblEmail.setText("Email:");
+
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
 
         lblName.setText("Name:");
 
         lblIdenNo.setText("Identity Number:");
 
         txtIdenNo.setEnabled(false);
+
+        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNameFocusLost(evt);
+            }
+        });
 
         lblDOB.setText("Date of Birth");
 
@@ -146,20 +172,62 @@ public class PMyprofile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        Personnel user = JavaAssignment1.plogin;
+        txtName.setText(user.getName());
+        txtIdenNo.setText(user.getIdentityNo());
+        txtDOB.setText(user.getDob());
+        txtPhoneNo.setText(user.getPhoneNo());
+        txtEmail.setText(user.getEmail());
+        btnUpdate.setEnabled(false);
         this.setVisible(false);
         JavaAssignment1.pHome.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        Personnel user = JavaAssignment1.plogin;
         String name = txtName.getText();
         String identityNo = txtIdenNo.getText();
         String dob = txtDOB.getText();
         String phoneNo = txtPhoneNo.getText();
         String email = txtEmail.getText();
         
-        Personnel x = new Personnel(user.getId(),name,identityNo,dob,phoneNo,email);
-        user.updateProfile(user, x);
+        if(user!=null){
+            Personnel x = new Personnel(user.getId(),name,identityNo,dob,phoneNo,email);
+            user.updateProfile(user, x);
+            JOptionPane.showMessageDialog(this,"Update Successfully");
+            JavaAssignment1.plogin = x;
+            getProfile(x);
+        }else{
+            JOptionPane.showMessageDialog(this,"Invalid User!");
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
+        Personnel user = JavaAssignment1.plogin;
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) && user.getEmail().equals(txtEmail.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtNameFocusLost
+
+    private void txtPhoneNoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneNoFocusLost
+        Personnel user = JavaAssignment1.plogin;
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) && user.getEmail().equals(txtEmail.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtPhoneNoFocusLost
+
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        Personnel user = JavaAssignment1.plogin;
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) && user.getEmail().equals(txtEmail.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtEmailFocusLost
 
     /**
      * @param args the command line arguments

@@ -262,12 +262,19 @@ public class Register extends javax.swing.JFrame {
         }else{
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String DOB = dateFormat.format(jDateChooser1.getDate());
-            int Id = 1+DataIO.allPeople.size();
+            int id=0;
+            for(int i=0; i<DataIO.allPeople.size(); i++){
+                if(i <DataIO.allPeople.get(i).getId()){
+                    id = DataIO.allPeople.get(i).getId()+1;
+                }else{
+                    id = DataIO.allPeople.size()+1;
+                }
+            }
             if(type==1){
-                Citizen x = new Citizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                Citizen x = new Citizen(id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
                 x.registerNew(x);
             }else if(type ==0){
-                Noncitizen x = new Noncitizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                Noncitizen x = new Noncitizen(id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
                 x.registerNew(x);
             }
             JOptionPane.showMessageDialog(this,"Register Succesfully");

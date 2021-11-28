@@ -1,0 +1,36 @@
+1
+Sinovac
+Sinovac Life Sciences Co.Ltd.
+3
+Setia City Convention Centre
+
+2
+Pfizer
+Biotech Europe GmbH
+4
+Sunway Pyramid Convention Centre
+
+3
+AstraZeneca
+AstraZeneca-SKBio
+7
+Stadium Nasional Bukit Jalil
+
+4
+Cansino
+CanSino Biologics Inc. 
+8
+Kuala Lumpur Convention Centre(KLCC)  
+
+5
+AstraZeneca
+AstraZeneca (Thailand) Ltd.
+6
+Axiata Arena Bukit Jalil
+
+6
+AstraZeneca
+AstraZeneca PLC.
+8
+Universiti Malaya(UM)
+

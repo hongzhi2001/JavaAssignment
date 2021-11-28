@@ -1,0 +1,24 @@
+1
+Setia City Convention Centre
+SCCC, Jalan Setia Dagang AG U13/AG, Setia Alam, Seksyen U13
+
+2
+Sunway Pyramid Convention Centre
+Sunway Pyramid Convention Centre, No 3, Jalan PJS 11/15, Bandar Sunway
+
+3
+Stadium Nasional Bukit Jalil
+Stadium Nasional Bukit Jalil, Jalan Barat, Bukit Jalil
+
+4
+Kuala Lumpur Convention Centre(KLCC)  
+Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+
+5
+Axiata Arena Bukit Jalil
+Technology Park Malaysia, Lebuhraya Bukit Jalil, Bukit Jalil, 57000 Kuala Lumpur
+
+6
+Universiti Malaya(UM)
+Jln Profesor Diraja Ungku Aziz, 50603 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+

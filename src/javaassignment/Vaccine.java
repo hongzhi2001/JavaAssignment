@@ -4,17 +4,13 @@ public class Vaccine {
     private int vaccineNo;
     private String name;
     private String manufacture;
-    private String type;
-    private String batchNo;
     private int quantity;
     private Centre vaccineCentre;
 
-    public Vaccine(int vaccineNo, String name, String manufacture, String type, String batchNo, int quantity, Centre vaccineCentre) {
+    public Vaccine(int vaccineNo, String name, String manufacture, int quantity, Centre vaccineCentre) {
         this.vaccineNo = vaccineNo;
         this.name = name;
         this.manufacture = manufacture;
-        this.type = type;
-        this.batchNo = batchNo;
         this.quantity = quantity;
         this.vaccineCentre = vaccineCentre;
     }
@@ -41,22 +37,6 @@ public class Vaccine {
 
     public void setManufacture(String manufacture) {
         this.manufacture = manufacture;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getBatchNo() {
-        return batchNo;
-    }
-
-    public void setBatchNo(String batchNo) {
-        this.batchNo = batchNo;
     }
 
     public int getQuantity() {
