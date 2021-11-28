@@ -241,9 +241,16 @@ public class Register extends javax.swing.JFrame {
             return;
         }
         
-        if(!(IdentityNo.trim().matches("^[0-9]{12}|[A-Za-z][0-9]{8,}$"))){
-            JOptionPane.showMessageDialog(this, "Invalid Identity Number");
-            return;
+        if(type==1){
+            if(!(IdentityNo.trim().matches("^[0-9]{12}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Identity Number");
+                return;
+            }                  
+        }else if(type==0){
+            if(!(IdentityNo.trim().matches("^[A-Za-z][0-9]{8,}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Passport Number");
+                return;
+            }   
         }                  
         
         if(!(PhoneNo.trim().matches("^[0-9]{10,}$"))){
@@ -271,10 +278,10 @@ public class Register extends javax.swing.JFrame {
                 }
             }
             if(type==1){
-                Citizen x = new Citizen(id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                Citizen x = new Citizen(id,Name,IdentityNo,DOB,PhoneNo,Email,Address,0);
                 x.registerNew(x);
             }else if(type ==0){
-                Noncitizen x = new Noncitizen(id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                Noncitizen x = new Noncitizen(id,Name,IdentityNo,DOB,PhoneNo,Email,Address,0);
                 x.registerNew(x);
             }
             JOptionPane.showMessageDialog(this,"Register Succesfully");

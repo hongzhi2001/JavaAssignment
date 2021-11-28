@@ -112,7 +112,7 @@ public class DataIO {
                 b.println(allAppointment.get(i).getTime());
                 b.println(allAppointment.get(i).getStatus());
                 b.println(allAppointment.get(i).getDos());
-                b.println(allAppointment.get(i).getOwner().getName());
+                b.println(allAppointment.get(i).getOwner().getIdentityNo());
                 b.println(allAppointment.get(i).getAppointCentre().getHealthFacility());
                 b.println();
             }
