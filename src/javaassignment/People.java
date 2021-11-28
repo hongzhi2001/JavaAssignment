@@ -33,6 +33,11 @@ public class People implements Operation{
         DataIO.write();
     }
     
+    public void addAppointment(Appointment x){
+        DataIO.allAppointment.add(x);
+        DataIO.write();
+    }
+    
     public void viewAppointment(){  // NOT DONE
         
         for(int i=0;i<myAppointment.size();i++){

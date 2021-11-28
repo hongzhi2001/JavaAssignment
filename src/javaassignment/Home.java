@@ -60,7 +60,12 @@ public class Home extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(700, 300));
 
-        btnAppointment.setText("Appoitment");
+        btnAppointment.setText("Appointment");
+        btnAppointment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAppointmentActionPerformed(evt);
+            }
+        });
 
         btnVaccine.setText("Vaccination Status");
 
@@ -72,6 +77,11 @@ public class Home extends javax.swing.JFrame {
         });
 
         btnViewProfile.setText("View Profile");
+        btnViewProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewProfileActionPerformed(evt);
+            }
+        });
 
         lblName.setText("jLabel1");
 
@@ -111,10 +121,10 @@ public class Home extends javax.swing.JFrame {
                         .addGap(150, 150, 150)
                         .addComponent(btnLogout))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnViewProfile)
-                            .addComponent(btnAppointment))))
+                        .addGap(129, 129, 129)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAppointment)
+                            .addComponent(btnViewProfile))))
                 .addContainerGap(126, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -124,9 +134,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
                 .addComponent(btnViewProfile)
-                .addGap(28, 28, 28)
+                .addGap(29, 29, 29)
                 .addComponent(btnAppointment)
-                .addGap(28, 28, 28)
+                .addGap(27, 27, 27)
                 .addComponent(btnVaccine)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(btnLogout)
@@ -140,6 +150,16 @@ public class Home extends javax.swing.JFrame {
         this.setVisible(false);
         JavaAssignment.PL.setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
+        this.setVisible(false);
+        JavaAssignment.pm.setVisible(true);
+    }//GEN-LAST:event_btnViewProfileActionPerformed
+
+    private void btnAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppointmentActionPerformed
+        this.setVisible(false);
+        JavaAssignment.pa.setVisible(true);
+    }//GEN-LAST:event_btnAppointmentActionPerformed
 
     /**
      * @param args the command line arguments

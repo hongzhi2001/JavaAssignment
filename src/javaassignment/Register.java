@@ -26,7 +26,7 @@ public class Register extends javax.swing.JFrame {
         cal1.add(Calendar.YEAR, -80);
         Date min = cal1.getTime();//actual date
         //set your dates in your JDateChooser
-        jDateChooser1.setSelectableDateRange(min, max);          
+        jDateChooser1.setSelectableDateRange(min, max);
     }
 
     /**
@@ -207,16 +207,20 @@ public class Register extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
+        txtName.setText("");
+        txtIdenNo.setText("");
+        jDateChooser1.setCalendar(null);
+        txtPhoneNo.setText("");
+        txtEmail.setText("");
+        txtAddress.setText("");
+        bgCitizen.clearSelection();
         this.setVisible(false);
         JavaAssignment.PL.setVisible(true);
     }//GEN-LAST:event_lblLoginMouseClicked
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        java.util.Date date=new java.util.Date(); 
         String Name = txtName.getText();
         String IdentityNo = txtIdenNo.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String DOB = dateFormat.format(jDateChooser1.getDate());
         String PhoneNo = txtPhoneNo.getText();
         String Email = txtEmail.getText();
         String Address = txtAddress.getText();
@@ -226,7 +230,8 @@ public class Register extends javax.swing.JFrame {
         }else if(rbNonCitizen.isSelected()){
             type = 0;
         }
-        if(Name.trim().isEmpty()|| IdentityNo.trim().isEmpty() || DOB.trim().isEmpty() || PhoneNo.trim().isEmpty() || Email.trim().isEmpty() || Address.trim().isEmpty() || bgCitizen.getSelection()==null){
+        
+        if(Name.trim().isEmpty()|| IdentityNo.trim().isEmpty() || jDateChooser1.getDate()==null || PhoneNo.trim().isEmpty() || Email.trim().isEmpty() || Address.trim().isEmpty() || bgCitizen.getSelection()==null){
             JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill and tick the correct identity!!!");
             return;
         }
@@ -250,35 +255,39 @@ public class Register extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid Email");
             return;
         }
-        else{           
-            People found = DataIO.checkPeople(IdentityNo);
-            if(found!=null){
-                JOptionPane.showMessageDialog(this,"The identity number has been used!");
-            }else{
-                int Id = 1+DataIO.allPeople.size();
-                if(type==1){
-                    Citizen x = new Citizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
-                    x.registerNew(x);
-                }else if(type ==0){
-                    Noncitizen x = new Noncitizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
-                    x.registerNew(x);
-                }
-                JOptionPane.showMessageDialog(this,"Register Succesfully");
-                txtName.setText("");
-                txtIdenNo.setText("");
-                txtPhoneNo.setText("");
-                txtEmail.setText("");
-                txtAddress.setText("");
-                bgCitizen.clearSelection();
-                this.setVisible(false);
-                JavaAssignment.PL.setVisible(true);
-            }    
-        }            
+                   
+        People found = DataIO.checkPeople(IdentityNo);
+        if(found!=null){
+            JOptionPane.showMessageDialog(this,"The identity number has been used!");
+        }else{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String DOB = dateFormat.format(jDateChooser1.getDate());
+            int Id = 1+DataIO.allPeople.size();
+            if(type==1){
+                Citizen x = new Citizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                x.registerNew(x);
+            }else if(type ==0){
+                Noncitizen x = new Noncitizen(Id,Name,IdentityNo,DOB,PhoneNo,Email,Address);
+                x.registerNew(x);
+            }
+            JOptionPane.showMessageDialog(this,"Register Succesfully");
+            txtName.setText("");
+            txtIdenNo.setText("");
+            jDateChooser1.setCalendar(null);
+            txtPhoneNo.setText("");
+            txtEmail.setText("");
+            txtAddress.setText("");
+            bgCitizen.clearSelection();
+            this.setVisible(false);
+            JavaAssignment.PL.setVisible(true);
+        }    
+
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         txtName.setText("");
         txtIdenNo.setText("");
+        jDateChooser1.setCalendar(null);
         txtPhoneNo.setText("");
         txtEmail.setText("");
         txtAddress.setText("");

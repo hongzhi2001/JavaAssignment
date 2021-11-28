@@ -115,8 +115,11 @@ public class PeopleLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisMouseClicked
+        txtIdenNo.setText("");
+        txtPassword.setText("");
         this.setVisible(false);
         JavaAssignment.R.setVisible(true);
+        
     }//GEN-LAST:event_lblRegisMouseClicked
 
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
