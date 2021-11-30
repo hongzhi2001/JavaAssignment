@@ -137,11 +137,15 @@ public class PeopleLogin extends javax.swing.JFrame {
             if(pass.equals(found.getPhoneNo())){
                 JavaAssignment.login=found;
                 txtIdenNo.setText("");
-                txtPassword.setText("");
-                this.setVisible(false);
-                JavaAssignment.h.setVisible(true);
+                txtPassword.setText("");               
                 JavaAssignment.h.setPeople(found.getName());
                 JavaAssignment.h.setPeopleStatus(found.getStatus());
+                JavaAssignment.pm.getProfile(found);
+                JavaAssignment.va.viewAppointment();
+                JavaAssignment.vs.viewVaccine();
+                JavaAssignment.t.test();
+                this.setVisible(false);
+                JavaAssignment.h.setVisible(true);
                 
             }else{
                 JOptionPane.showMessageDialog(this, "Wrong Password!");

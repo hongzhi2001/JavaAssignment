@@ -1,6 +1,8 @@
 package javaassignment;
 
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class People implements Operation{
     private int Id;
@@ -33,17 +35,56 @@ public class People implements Operation{
         DataIO.write();
     }
     
+    @Override
+    public void updateProfile(People x, People y){
+         for(int i=0;i<DataIO.allPeople.size();i++){
+            if(x==DataIO.allPeople.get(i)){                
+                DataIO.allPeople.remove(i);
+                DataIO.allPeople.add(i, y);
+                DataIO.write();
+                break;
+            }           
+        }
+    }
+    
     public void addAppointment(Appointment x){
         DataIO.allAppointment.add(x);
         DataIO.write();
     }
     
-    public void viewAppointment(){  // NOT DONE
+    public void viewAppointment(JTable x){  // NOT DONE
+        DataIO.read();
+        String[] data = new String[5];
+        String status;
         
-        for(int i=0;i<myAppointment.size();i++){
-            Appointment x = myAppointment.get(i);
-            
+        String[] columnNames = { "Date", "Time", "Status", "Dos", "Centre" };
+        DefaultTableModel model = (DefaultTableModel)x.getModel();
+        model.setColumnIdentifiers(columnNames);     
+        
+        try{
+            for(int i=0;i<myAppointment.size();i++){
+                Appointment a = myAppointment.get(i);
+                if(a.getStatus()==0){
+                    status="Pending";
+                }else if(a.getStatus()==1){
+                    status="Accepted";
+                }else if(a.getStatus()==2){
+                    status="Cancelled";
+                }else{
+                    status="Completed";
+                }
+                
+                data[0] = ""+a.getAppointmentDate();
+                data[1] = ""+a.getTime();
+                data[2] = ""+status;
+                data[3] = ""+String.valueOf(a.getDos());             
+                data[4] = ""+a.getAppointCentre().getHealthFacility();
+                model.addRow(data);
+            }
+        } catch(Exception e){           
+            System.out.println("Error!");
         }
+    
     }
     
     public void cancelAppointment(Appointment x){
@@ -57,27 +98,17 @@ public class People implements Operation{
     }
     
     public void viewVaccine(){  // NOT DONE
+        DataIO.read();
         
         for(int i=0;i<myVaccine.size();i++){
-            Vaccine x = myVaccine.get(i);
-            
-        }
+            Vaccine v = myVaccine.get(i);            
+            String id = String.valueOf(v.getVaccineNo());
+            String name = v.getName();
+            String manufacture = v.getManufacture();
+            String healtfacility = String.valueOf(v.getVaccineCentre());   
+        }     
     }
     
-    @Override
-    public void updateProfile(People x, People y){
-        for(int i=0;i<DataIO.allPeople.size();i++){
-            if(x==DataIO.allPeople.get(i)){
-                DataIO.allPeople.remove(i);
-                DataIO.allPeople.add(i, y);
-                DataIO.write();
-                break;
-            }
-            
-        }
-
-    }
-
     public int getId() {
         return Id;
     }

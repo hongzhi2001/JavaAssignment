@@ -5,6 +5,8 @@
  */
 package javaassignment;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Acer
@@ -15,9 +17,43 @@ public class ViewAppointment extends javax.swing.JFrame {
      * Creates new form ViewAppointment
      */
     public ViewAppointment() {
-        initComponents();
+        initComponents();  
     }
+    public void viewAppointment(){  // NOT DONE
+                DataIO.read();
+            String[] data = new String[5];
+            String status;
 
+            String[] columnNames = { "Date", "Time", "Status", "Dos", "Centre" };
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setColumnIdentifiers(columnNames);     
+
+            try{
+                for(int i=0;i<JavaAssignment.login.getMyAppointment().size();i++){
+                    Appointment a = JavaAssignment.login.getMyAppointment().get(i);
+                    if(a.getStatus()==0){
+                        status="Pending";
+                    }else if(a.getStatus()==1){
+                        status="Accepted";
+                    }else if(a.getStatus()==2){
+                        status="Cancelled";
+                    }else{
+                        status="Completed";
+                    }
+
+                    data[0] = ""+a.getAppointmentDate();
+                    data[1] = ""+a.getTime();
+                    data[2] = ""+status;
+                    data[3] = ""+String.valueOf(a.getDos());             
+                    data[4] = ""+a.getAppointCentre().getHealthFacility();
+                    model.addRow(data);
+                }
+            } catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error");
+            }
+        }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,179 +63,162 @@ public class ViewAppointment extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        lblTitleDos1 = new javax.swing.JLabel();
-        lblHealthFacility1 = new javax.swing.JLabel();
-        lblLocation1 = new javax.swing.JLabel();
-        lblDate1 = new javax.swing.JLabel();
-        lblTime1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        lblTitleDos2 = new javax.swing.JLabel();
-        lblHealthFacility2 = new javax.swing.JLabel();
-        lblLocation2 = new javax.swing.JLabel();
-        lblDate2 = new javax.swing.JLabel();
-        lblTime2 = new javax.swing.JLabel();
-        btnConfirm = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(700, 250));
+
+        jPanel3.setBackground(new java.awt.Color(147, 213, 220));
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lblTitle.setText("My Appointment");
 
-        jPanel1.setBackground(new java.awt.Color(124, 166, 212));
-        jPanel1.setForeground(new java.awt.Color(240, 240, 240));
-
-        lblTitleDos1.setText("Dos 1");
-
-        lblHealthFacility1.setText("Health Facility:");
-
-        lblLocation1.setText("Location:");
-
-        lblDate1.setText("Date:");
-
-        lblTime1.setText("Time:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblTitleDos1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblLocation1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblTime1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblHealthFacility1)
-                                .addGap(228, 228, 228)
-                                .addComponent(lblDate1)))))
-                .addContainerGap(260, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitleDos1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHealthFacility1)
-                    .addComponent(lblDate1))
-                .addGap(56, 56, 56)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTime1)
-                    .addComponent(lblLocation1))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBackground(new java.awt.Color(124, 166, 212));
-
-        lblTitleDos2.setText("Dos 2");
-
-        lblHealthFacility2.setText("Health Facility:");
-
-        lblLocation2.setText("Location:");
-
-        lblDate2.setText("Date:");
-
-        lblTime2.setText("Time:");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblTitleDos2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblHealthFacility2)
-                            .addComponent(lblLocation2))
-                        .addGap(236, 236, 236)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTime2)
-                            .addComponent(lblDate2))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitleDos2)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHealthFacility2)
-                    .addComponent(lblDate2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLocation2)
-                    .addComponent(lblTime2))
-                .addGap(36, 36, 36))
-        );
-
-        btnConfirm.setText("Confirm");
-
-        btnCancel.setText("Cancel");
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(337, 337, 337)
+                        .addComponent(lblTitle))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(312, 312, 312)
+                        .addComponent(btnView)
+                        .addGap(175, 175, 175)
+                        .addComponent(btnCancel)))
+                .addContainerGap(294, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExit)
+                .addGap(430, 430, 430))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(lblTitle)
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnView)
+                    .addComponent(btnCancel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExit)
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(181, 181, 181)
-                                .addComponent(lblTitle))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 13, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnConfirm)
-                                .addGap(197, 197, 197)
-                                .addComponent(btnCancel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnExit)))))
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(lblTitle)
-                .addGap(61, 61, 61)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirm)
-                    .addComponent(btnCancel)
-                    .addComponent(btnExit))
-                .addGap(25, 25, 25))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        btnView.setEnabled(true);
+        this.setVisible(false);
+        JavaAssignment.h.setVisible(true);
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        viewAppointment();
+        btnView.setEnabled(false);
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        //not done
+        try{
+            for(int i=0;i<JavaAssignment.login.getMyAppointment().size();i++){
+                Appointment b = JavaAssignment.login.getMyAppointment().get(i);
+                int id = b.getId();
+                String date = b.getAppointmentDate();
+                String time = b.getTime();
+                int status = 2;
+                People p = JavaAssignment.login;      
+                int dos = b.getDos();
+                String c = b.getAppointCentre().getHealthFacility();
+                Centre x5 = null;
+                for(int x=0; x<DataIO.allCentre.size(); x++){                    
+                    if(c.equals(DataIO.allCentre.get(x).getHealthFacility())){
+                        x5 = DataIO.allCentre.get(x);
+                    }                    
+                }
+                                          
+               Appointment z = new Appointment(id,date,time,status,dos,p,x5);                
+                            JavaAssignment.login.cancelAppointment(z);
+                            DataIO.write();
+                            JavaAssignment.login.getMyAppointment().add(z);
+                            JOptionPane.showMessageDialog(this,"Your appointment is already cancel");
+                            break;
+                }
+        
+        } catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error!");
+        }
+
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,20 +257,11 @@ public class ViewAppointment extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnConfirm;
     private javax.swing.JButton btnExit;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblDate1;
-    private javax.swing.JLabel lblDate2;
-    private javax.swing.JLabel lblHealthFacility1;
-    private javax.swing.JLabel lblHealthFacility2;
-    private javax.swing.JLabel lblLocation1;
-    private javax.swing.JLabel lblLocation2;
-    private javax.swing.JLabel lblTime1;
-    private javax.swing.JLabel lblTime2;
+    private javax.swing.JButton btnView;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JLabel lblTitleDos1;
-    private javax.swing.JLabel lblTitleDos2;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,6 +8,7 @@ package javaassignment;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,13 +22,12 @@ public class PeopleAppointment extends javax.swing.JFrame {
     public PeopleAppointment() {
         initComponents();
         Date m = new Date();
-        Calendar cal = Calendar.getInstance();  
-        cal.setTime(m);  
+        Calendar cal = Calendar.getInstance();    
         cal.add(Calendar.DATE, 7);  
         m = cal.getTime();
         jDateChooser1.setMinSelectableDate(m);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,26 +37,21 @@ public class PeopleAppointment extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle = new javax.swing.JLabel();
-        lblName = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         lblDate = new javax.swing.JLabel();
         lblTime = new javax.swing.JLabel();
         lblHealthFacility = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         btnConfirm = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
-        txtName = new javax.swing.JTextField();
         cbHF = new javax.swing.JComboBox<>();
         cbTime = new javax.swing.JComboBox<>();
-        txtIdentityNo = new javax.swing.JTextField();
-        lblIdentityNo = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(700, 300));
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblTitle.setText("Appointment");
-
-        lblName.setText("Name:");
+        jPanel1.setBackground(new java.awt.Color(195, 215, 223));
 
         lblDate.setText("Date:");
 
@@ -78,75 +73,78 @@ public class PeopleAppointment extends javax.swing.JFrame {
             }
         });
 
-        cbHF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbHF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setia City Convention Centre", "Sunway Pyramid Convention Centre", "Stadium Nasional Bukit Jalil", "Kuala Lumpur Convention Centre", "Axiata Arena Bukit Jalil", "Universiti Malaya(UM)" }));
+        cbHF.setSelectedIndex(-1);
+        cbHF.setToolTipText("");
 
         cbTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" }));
+        cbTime.setSelectedIndex(-1);
 
-        lblIdentityNo.setText("Identity No:");
+        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lblTitle.setText("Appointment");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnExit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnConfirm))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblDate)
+                                .addComponent(lblTime))
+                            .addGap(63, 63, 63)
+                            .addComponent(lblTitle))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(181, 181, 181)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblHealthFacility)
+                        .addGap(77, 77, 77)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbHF, 0, 1, Short.MAX_VALUE)
+                            .addComponent(cbTime, 0, 240, Short.MAX_VALUE))))
+                .addContainerGap(95, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitle)
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDate))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTime)
+                    .addComponent(cbTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHealthFacility)
+                    .addComponent(cbHF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExit)
+                    .addComponent(btnConfirm))
+                .addContainerGap(79, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnExit))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblDate)
-                            .addComponent(lblTime)
-                            .addComponent(lblHealthFacility)
-                            .addComponent(lblName)
-                            .addComponent(lblIdentityNo))
-                        .addGap(64, 64, 64)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                            .addComponent(txtName)
-                            .addComponent(cbHF, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbTime, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtIdentityNo)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnConfirm)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(72, 72, 72))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(182, 182, 182)
-                .addComponent(lblTitle)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(lblTitle)
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdentityNo)
-                    .addComponent(txtIdentityNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblDate)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTime)
-                    .addComponent(cbTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHealthFacility)
-                    .addComponent(cbHF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirm)
-                    .addComponent(btnExit))
-                .addContainerGap(94, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -154,26 +152,67 @@ public class PeopleAppointment extends javax.swing.JFrame {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        
-       try{
-           int size = JavaAssignment.login.getMyAppointment().size(); 
-           if(size==0 || JavaAssignment.login.getMyAppointment().get(size-1).getStatus()==3){       
-               String x1 = dateFormat.format(jDateChooser1.getDate());
-               String x2 = String.valueOf(cbTime.getSelectedIndex());
-               int x3 = JavaAssignment.login.getStatus();
-               People x4 = JavaAssignment.login;
-               for(int i=0; i<DataIO.allCentre.size(); i++){
-                    if(cbHF.getSelectedItem().equals(DataIO.allCentre.get(i).getHealthFacility())){
-                        Centre x5 = DataIO.allCentre.get(i);
+       int dos =1;
+       
+       if(jDateChooser1.getDate()==null || cbHF.getSelectedItem()==null || cbTime.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this,"Please ensure all the information have valid input");
+       } else{                    
+           try{
+               int size = JavaAssignment.login.getMyAppointment().size(); 
+               if(size==0 || JavaAssignment.login.getMyAppointment().get(size-1).getStatus()==2 && JavaAssignment.login.getMyAppointment().get(size-1).getDos()==1){  
+                   int id=1; 
+                   for(int i=0; i<DataIO.allAppointment.size(); i++){
+                        if(i<DataIO.allAppointment.get(i).getId()){
+                            id = DataIO.allAppointment.get(i).getId()+1;
+                        }else{
+                            id = DataIO.allAppointment.size()+1;
+                        }
                     }
+                   String x1 = dateFormat.format(jDateChooser1.getDate());
+                   String x2 = String.valueOf(cbTime.getSelectedItem());
+                   int x3 = 0;             
+                   People x4 = JavaAssignment.login;
+                   Centre x5 =null;
+                   for(int i=0; i<DataIO.allCentre.size(); i++){
+                        if(cbHF.getSelectedItem().equals(DataIO.allCentre.get(i).getHealthFacility())){
+                            x5 = DataIO.allCentre.get(i);
+                        }                    
+                    }
+                   boolean flag = true;
+                        for(int i=0; i<DataIO.allAppointment.size(); i++){
+                            Appointment x = DataIO.allAppointment.get(i);
+                            if(x1.equals(x.getAppointmentDate()) 
+                                    && x2.equals(x.getTime()) 
+                                    && x5.equals(x.getAppointCentre())){
+                                flag = false;
+                                JOptionPane.showMessageDialog(this,"This time slot is not available!");
+                                break;
+                            }
+                        }
+                        if(flag){                                              
+                            Appointment z = new Appointment(id,x1,x2,x3,dos,x4,x5);
+                            DataIO.allAppointment.add(z);
+                            JavaAssignment.login.getMyAppointment().add(z);
+                            x5.getAllAppointment().add(z);
+                            DataIO.write();
+                            jDateChooser1.setCalendar(null);                            
+                            cbHF.setSelectedIndex(-1);
+                            cbTime.setSelectedIndex(-1);
+                            JOptionPane.showMessageDialog(this,"Your appointment is submitted");
+                        } 
+               }else{
+                    JOptionPane.showMessageDialog(this,"Sorry, You have booked an appointment!");
                }
-           }
-       } catch(Exception e){
-           
-       }  
+           } catch(Exception e){
+               JOptionPane.showMessageDialog(this,"Error");
+             }
+       }
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        jDateChooser1.setCalendar(null);
+        cbHF.setSelectedIndex(-1);
+        cbTime.setSelectedIndex(-1);
         this.setVisible(false);
         JavaAssignment.h.setVisible(true);
     }//GEN-LAST:event_btnExitActionPerformed
@@ -219,13 +258,10 @@ public class PeopleAppointment extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbHF;
     private javax.swing.JComboBox<String> cbTime;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblHealthFacility;
-    private javax.swing.JLabel lblIdentityNo;
-    private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField txtIdentityNo;
-    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }

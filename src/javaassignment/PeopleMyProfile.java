@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package javaassignment;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author Acer
@@ -17,7 +17,23 @@ public class PeopleMyProfile extends javax.swing.JFrame {
     public PeopleMyProfile() {
         initComponents();
     }
+    
+    public void getProfile(People user){
+        user = JavaAssignment.login;
+        txtName.setText(user.getName());
+        txtIdenNo.setText(user.getIdentityNo());
+        txtDOB.setText(user.getDob());
+        txtPhoneNo.setText(user.getPhoneNo());
+        txtEmail.setText(user.getEmail());
+        txtAddress.setText(user.getAddress());
 
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) 
+                && user.getEmail().equals(txtEmail.getText()) && user.getAddress().equals(txtAddress.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,32 +44,27 @@ public class PeopleMyProfile extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitile = new javax.swing.JLabel();
-        lblName = new javax.swing.JLabel();
-        lblIdentNo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         lblDOB = new javax.swing.JLabel();
         lblPhoneNO = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
         lblAddress = new javax.swing.JLabel();
-        lblIdentityType = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        txtIdenNo = new javax.swing.JTextField();
         txtDOB = new javax.swing.JTextField();
+        lblTitile = new javax.swing.JLabel();
         txtPhoneNo = new javax.swing.JTextField();
+        lblName = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
+        lblIdentNo = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
-        txtIdenType = new javax.swing.JTextField();
-        btnEdit = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        txtIdenNo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(700, 300));
 
-        lblTitile.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblTitile.setText("My Profile");
-
-        lblName.setText("Name:");
-
-        lblIdentNo.setText("Identity Number:");
+        jPanel1.setBackground(new java.awt.Color(196, 215, 214));
 
         lblDOB.setText("Date of Birth:");
 
@@ -63,118 +74,214 @@ public class PeopleMyProfile extends javax.swing.JFrame {
 
         lblAddress.setText("Address:");
 
-        lblIdentityType.setText("Identity Type:");
+        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNameFocusLost(evt);
+            }
+        });
 
-        txtName.setText("jTextField1");
+        txtDOB.setEditable(false);
 
-        txtIdenNo.setText("jTextField2");
+        lblTitile.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lblTitile.setText("My Profile");
 
-        txtDOB.setText("jTextField3");
+        txtPhoneNo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPhoneNoFocusLost(evt);
+            }
+        });
 
-        txtPhoneNo.setText("jTextField4");
+        lblName.setText("Name:");
 
-        txtEmail.setText("jTextField5");
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
 
-        txtAddress.setText("jTextField6");
+        lblIdentNo.setText("Identity Number:");
 
-        txtIdenType.setText("jTextField7");
+        txtAddress.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtAddressFocusLost(evt);
+            }
+        });
 
-        btnEdit.setText("Update");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
         btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        txtIdenNo.setEditable(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(50, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblIdentNo)
+                    .addComponent(lblName)
+                    .addComponent(lblDOB)
+                    .addComponent(lblPhoneNO)
+                    .addComponent(lblEmail)
+                    .addComponent(lblAddress)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnUpdate)
+                        .addGap(17, 17, 17)))
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtDOB)
+                            .addComponent(txtPhoneNo)
+                            .addComponent(txtEmail)
+                            .addComponent(txtAddress))
+                        .addComponent(btnExit))
+                    .addComponent(txtIdenNo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(148, 148, 148)
+                .addComponent(lblTitile)
+                .addContainerGap(168, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(lblTitile)
+                .addGap(60, 60, 60)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIdentNo)
+                    .addComponent(txtIdenNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDOB)
+                    .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPhoneNO)
+                    .addComponent(txtPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmail)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAddress)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(80, 80, 80)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnExit))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        txtIdenNo.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblIdentNo)
-                            .addComponent(lblName)
-                            .addComponent(lblDOB)
-                            .addComponent(lblPhoneNO)
-                            .addComponent(lblEmail)
-                            .addComponent(lblAddress)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnEdit)
-                                .addComponent(lblIdentityType)))
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                .addComponent(txtIdenNo)
-                                .addComponent(txtDOB)
-                                .addComponent(txtPhoneNo)
-                                .addComponent(txtEmail)
-                                .addComponent(txtAddress)
-                                .addComponent(txtIdenType))
-                            .addComponent(btnExit)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(lblTitile)))
-                .addContainerGap(77, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitile)
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdentNo)
-                    .addComponent(txtIdenNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDOB)
-                    .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPhoneNO)
-                    .addComponent(txtPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAddress)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdentityType)
-                    .addComponent(txtIdenType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(69, 69, 69)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
-                    .addComponent(btnExit))
-                .addContainerGap(139, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        //not done 
+        People user = JavaAssignment.login;  
         String name = txtName.getText();
         String identityNo = txtIdenNo.getText();
         String dob = txtDOB.getText();
         String phoneNo = txtPhoneNo.getText();
         String email = txtEmail.getText();
         String address = txtAddress.getText();
-        String type = lblIdentityType.getText();
 
-    }//GEN-LAST:event_btnEditActionPerformed
+        if(user!=null){
+            People p = new People(user.getId(),name,identityNo,dob,phoneNo,email,address,user.getStatus(),user.getType());
+            user.updateProfile(user, p);
+            JOptionPane.showMessageDialog(this,"Update Successfully");
+            JavaAssignment.login = p;
+            getProfile(p);
+        }else{
+            JOptionPane.showMessageDialog(this,"Invalid User!");
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        People user = JavaAssignment.login;
+        txtName.setText(user.getName());
+        txtIdenNo.setText(user.getIdentityNo());
+        txtDOB.setText(user.getDob());
+        txtPhoneNo.setText(user.getPhoneNo());
+        txtEmail.setText(user.getEmail());
+        txtAddress.setText(user.getAddress());
+
+        btnUpdate.setEnabled(false);
+        this.setVisible(false);
+        JavaAssignment.h.setVisible(true);
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
+        People user = JavaAssignment.login;
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) 
+                && user.getEmail().equals(txtEmail.getText()) && user.getAddress().equals(txtAddress.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtNameFocusLost
+
+    private void txtPhoneNoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneNoFocusLost
+        People user = JavaAssignment.login;
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) 
+                && user.getEmail().equals(txtEmail.getText()) && user.getAddress().equals(txtAddress.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtPhoneNoFocusLost
+
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        People user = JavaAssignment.login;
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) 
+                && user.getEmail().equals(txtEmail.getText()) && user.getAddress().equals(txtAddress.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtEmailFocusLost
+
+    private void txtAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusLost
+        People user = JavaAssignment.login;
+        if(user.getName().equals(txtName.getText()) && user.getPhoneNo().equals(txtPhoneNo.getText()) 
+                && user.getEmail().equals(txtEmail.getText()) && user.getAddress().equals(txtAddress.getText())){
+            btnUpdate.setEnabled(false);
+        }else{
+            btnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtAddressFocusLost
 
     /**
      * @param args the command line arguments
@@ -212,13 +319,13 @@ public class PeopleMyProfile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblIdentNo;
-    private javax.swing.JLabel lblIdentityType;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPhoneNO;
     private javax.swing.JLabel lblTitile;
@@ -226,7 +333,6 @@ public class PeopleMyProfile extends javax.swing.JFrame {
     private javax.swing.JTextField txtDOB;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtIdenNo;
-    private javax.swing.JTextField txtIdenType;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhoneNo;
     // End of variables declaration//GEN-END:variables
