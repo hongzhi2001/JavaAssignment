@@ -1,5 +1,10 @@
 package javaassignment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -81,7 +86,7 @@ public class Personnel implements Operation{
             for(int i=0;i<DataIO.allPeople.size();i++){
                 People p = DataIO.allPeople.get(i);
                 if(p.getType()==1){
-                    userType = "citizen";
+                    userType = "Citizen";
                 }else {
                     userType = "Non-citizen";
                 }
@@ -109,9 +114,18 @@ public class Personnel implements Operation{
         
     }
     
-    public void addAppointment(Appointment x){
+    public void addAppointment(Appointment x,Vaccine v){
         DataIO.allAppointment.add(x);
-        DataIO.write();
+        
+        for (int i = 0; i < DataIO.allVaccine.size(); i++) {
+            if (v == DataIO.allVaccine.get(i)) {
+                if (x.getStatus() != 2) {
+                    v.bookVaccine();
+                } 
+            updateVaccine(DataIO.allVaccine.get(i), v);
+            break;
+            }
+        }
     }
     
     public void deleteAppointment(Appointment x){
@@ -128,20 +142,19 @@ public class Personnel implements Operation{
          for(int i=0;i<DataIO.allAppointment.size();i++){
             if(x==DataIO.allAppointment.get(i)){
                 DataIO.allAppointment.remove(i);
-                DataIO.allAppointment.add(i, y);
-                DataIO.write();
+                DataIO.allAppointment.add(i, y);               
+                DataIO.write();  
                 break;
-            }
-            
+            }         
         }
     }
     
     public static void viewAppointment(JTable x){
         DataIO.read();
-        String[] data = new String[7];
-        String status;
+        String[] data = new String[8];
+        String status, dos;
         
-        String[] columnNames = { "ID", "Date", "Time", "Status", "Dos", "Owner", "Centre" };
+        String[] columnNames = { "ID", "Date", "Time", "Status", "Dos", "Owner", "Centre", "Vaccine" };
         DefaultTableModel model = (DefaultTableModel)x.getModel();
         model.setColumnIdentifiers(columnNames);     
         
@@ -158,13 +171,22 @@ public class Personnel implements Operation{
                     status="Completed";
                 }
                 
+                if(a.getDos()==1){
+                    dos="DOS 1";
+                }else if(a.getDos()==2){
+                    dos="DOS 2";
+                }else{
+                    dos=null;
+                }
+                
                 data[0] = String.valueOf(a.getId());
                 data[1] = ""+a.getAppointmentDate();
                 data[2] = ""+a.getTime();
                 data[3] = ""+status;
-                data[4] = ""+String.valueOf(a.getDos());
+                data[4] = ""+dos;
                 data[5] = ""+a.getOwner().getName();
                 data[6] = ""+a.getAppointCentre().getHealthFacility();
+                data[7] = ""+a.getVaccine().getName();
                 model.addRow(data);
             } 
         }catch(Exception e){
@@ -220,7 +242,6 @@ public class Personnel implements Operation{
             } 
         }catch(Exception e){
             System.out.println("Error!");
-            e.printStackTrace();
         }
     }
 

@@ -223,7 +223,7 @@ public class PRegister extends javax.swing.JFrame {
         }else{
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String DOB = dateFormat.format(txtDOB.getDate());
-            int id=0;
+            int id=1;
             for(int i=0; i<DataIO.allPersonnel.size(); i++){
                 if(i <DataIO.allPersonnel.get(i).getId()){
                     id = DataIO.allPersonnel.get(i).getId()+1;

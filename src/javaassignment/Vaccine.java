@@ -1,11 +1,14 @@
 package javaassignment;
 
+import java.util.ArrayList;
+
 public class Vaccine {
     private int vaccineNo;
     private String name;
     private String manufacture;
     private int quantity;
     private Centre vaccineCentre;
+    private ArrayList<Appointment> allAppointment = new ArrayList<Appointment>();
 
     public Vaccine(int vaccineNo, String name, String manufacture, int quantity, Centre vaccineCentre) {
         this.vaccineNo = vaccineNo;
@@ -39,6 +42,14 @@ public class Vaccine {
         this.manufacture = manufacture;
     }
 
+    public void bookVaccine(){
+        quantity=quantity-1;
+    }
+    
+    public void cancelVaccine(){
+        quantity=quantity+1;
+    }
+    
     public int getQuantity() {
         return quantity;
     }
@@ -53,6 +64,14 @@ public class Vaccine {
 
     public void setVaccineCentre(Centre vaccineCentre) {
         this.vaccineCentre = vaccineCentre;
+    }
+
+    public ArrayList<Appointment> getAllAppointment() {
+        return allAppointment;
+    }
+
+    public void setAllAppointment(ArrayList<Appointment> allAppointment) {
+        this.allAppointment = allAppointment;
     }
     
     

@@ -3,7 +3,9 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 public class DataIO {
+    public static boolean logout=true;
     public static ArrayList<Personnel> allPersonnel 
             = new ArrayList<Personnel>();
     public static ArrayList<People> allPeople
@@ -45,33 +47,35 @@ public class DataIO {
                 Centre c = new Centre(x1,x2,x3);
                 allCentre.add(c);    
             }
-            Scanner s2 = new Scanner(new File("appointment.txt"));
+            Scanner s2 = new Scanner(new File("vaccine.txt"));
             while(s2.hasNext()){
                 int x1 = Integer.parseInt(s2.nextLine());
                 String x2 = s2.nextLine();
                 String x3 =s2.nextLine();
-                int x4 = Integer.parseInt(s2.nextLine());
-                int x5 = Integer.parseInt(s2.nextLine());
-                People x6 = checkPeople(s2.nextLine());
-                Centre x7 = checkCentre(s2.nextLine());                
+                int x4 = Integer.parseInt(s2.nextLine());                
+                Centre x5 = checkCentre(s2.nextLine());                
                 s2.nextLine();
-                Appointment a = new Appointment(x1,x2,x3,x4,x5,x6,x7);
-                allAppointment.add(a);
-                x6.getMyAppointment().add(a);
-                x7.getAllAppointment().add(a);              
-            }
-            Scanner s3 = new Scanner(new File("vaccine.txt"));
+                Vaccine v = new Vaccine(x1,x2,x3,x4,x5);
+                allVaccine.add(v);    
+                x5.getAllVaccine().add(v);
+            } 
+            Scanner s3 = new Scanner(new File("appointment.txt"));
             while(s3.hasNext()){
                 int x1 = Integer.parseInt(s3.nextLine());
                 String x2 = s3.nextLine();
                 String x3 =s3.nextLine();
-                int x4 = Integer.parseInt(s3.nextLine());                
-                Centre x5 = checkCentre(s3.nextLine());                
+                int x4 = Integer.parseInt(s3.nextLine());
+                int x5 = Integer.parseInt(s3.nextLine());
+                People x6 = checkPeople(s3.nextLine());
+                Centre x7 = checkCentre(s3.nextLine());
+                Vaccine x8 = checkVaccine(s3.nextLine());
                 s3.nextLine();
-                Vaccine v = new Vaccine(x1,x2,x3,x4,x5);
-                allVaccine.add(v);    
-                x5.getAllVaccine().add(v);
-            }          
+                Appointment a = new Appointment(x1,x2,x3,x4,x5,x6,x7,x8);
+                allAppointment.add(a);
+                x6.getMyAppointment().add(a);
+                x7.getAllAppointment().add(a);  
+                x8.getAllAppointment().add(a);
+            }         
             Scanner s4 = new Scanner(new File("personnel.txt"));
             while(s4.hasNext()){
                 int x1 = Integer.parseInt(s4.nextLine());
@@ -86,6 +90,8 @@ public class DataIO {
             }
         } catch(Exception e){
             System.out.println("Error in read!");
+            JOptionPane.showMessageDialog(JavaAssignment1.pAppointment, "The user or vaccine has been removed, please kindly check and remove the unuse appointment!");
+            logout = false;
             e.printStackTrace();
         }
     }
@@ -114,6 +120,7 @@ public class DataIO {
                 b.println(allAppointment.get(i).getDos());
                 b.println(allAppointment.get(i).getOwner().getIdentityNo());
                 b.println(allAppointment.get(i).getAppointCentre().getHealthFacility());
+                b.println(allAppointment.get(i).getVaccine().getVaccineNo());
                 b.println();
             }
             b.close();
@@ -172,6 +179,15 @@ public class DataIO {
         for(int i=0; i<allCentre.size(); i++){
             if(x.equals(allCentre.get(i).getHealthFacility())){
                 return allCentre.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public static Vaccine checkVaccine(String x){
+        for(int i=0; i<allVaccine.size(); i++){
+            if(Integer.parseInt(x)==allVaccine.get(i).getVaccineNo()){
+                return allVaccine.get(i);
             }
         }
         return null;

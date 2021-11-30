@@ -8,8 +8,9 @@ public class Appointment {
     private int dos;
     private People owner;
     private Centre appointCentre;
+    private Vaccine vaccine;
 
-    public Appointment(int id, String appointmentDate, String time, int status, int dos, People owner, Centre centre) {
+    public Appointment(int id, String appointmentDate, String time, int status, int dos, People owner, Centre centre,Vaccine vaccine) {
         this.id = id;
         this.appointmentDate = appointmentDate;
         this.time = time;
@@ -17,6 +18,7 @@ public class Appointment {
         this.dos = dos;
         this.owner = owner;
         this.appointCentre = centre;
+        this.vaccine = vaccine;
     }
 
     public int getId() {
@@ -36,9 +38,9 @@ public class Appointment {
     }
     
     public void cancelAppointment(){
-        status = 0;
+        status=0;
     }
-
+    
     public String getTime() {
         return time;
     }
@@ -79,6 +81,12 @@ public class Appointment {
         this.appointCentre = appointCentre;
     }
 
-    
+    public Vaccine getVaccine() {
+        return vaccine;
+    }
+
+    public void setVaccine(Vaccine vaccine) {
+        this.vaccine = vaccine;
+    }
     
 }

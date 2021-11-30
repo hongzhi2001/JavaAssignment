@@ -5,20 +5,101 @@
  */
 package javaassignment;
 
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hongz
  */
 public class VaccineManage extends javax.swing.JFrame {
-
+    String vaccineName,manufacturer,vcentre;
+    int count;
+    String id,name,manufacture,quantity,centre;
+    Vector originalTableModel;
+    DocumentListener documentListener;
     /**
      * Creates new form VaccineManage
      */
     public VaccineManage() {
         initComponents();
         Personnel.viewVaccine(jTable1);
+        
+        originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+        //add document listener to jtextfield to search contents as soon as something typed on it
+        txtSearch.getDocument().addDocumentListener(documentListener);
+        addDocumentListener();
+        
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtName.setEnabled(true);
+        txtManufacture.setEnabled(true);
+        cboCentre.setEnabled(true);
     }
 
+    private void addDocumentListener() {
+        documentListener = new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+                search();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                search();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+                search();
+            }
+
+            private void search() {
+                searchTableContents(txtSearch.getText());
+            }
+        };
+    }
+    
+    public void searchTableContents(String searchString) {    
+        DefaultTableModel currtableModel = (DefaultTableModel) jTable1.getModel();
+          //To empty the table before search
+          currtableModel.setRowCount(0);
+          //To search for contents from original table content
+          for (Object rows : originalTableModel) {
+              Vector rowVector = (Vector) rows;
+              for (Object column : rowVector) {
+                  if (column.toString().contains(searchString)) {
+                      //content found so adding to table
+                      currtableModel.addRow(rowVector);
+                      break;
+                  }
+              }
+
+          }
+      }
+    
+    //https://www.geeksforgeeks.org/remove-leading-zeros-from-a-number-given-as-a-string/
+    public void removeLeadingZeros(String str)
+    {
+        // Regex to remove leading
+        // zeros from a string
+        String regex = "^0+(?!$)";
+ 
+        // Replaces the matched
+        // value with given string
+        str = str.replaceAll(regex, "");
+    }
+    
+    public void updateTable(){
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.getDataVector().removeAllElements();
+        Personnel.viewVaccine(jTable1);
+        model.fireTableDataChanged();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,6 +128,7 @@ public class VaccineManage extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         cboCentre = new javax.swing.JComboBox<>();
         btnClear = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(600, 200));
@@ -95,14 +177,34 @@ public class VaccineManage extends javax.swing.JFrame {
     lblTitle.setText("Vaccine Management");
 
     btnUpdate.setText("Update");
+    btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnUpdateActionPerformed(evt);
+        }
+    });
 
     btnSearch.setText("Search");
+    btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSearchActionPerformed(evt);
+        }
+    });
 
     btnAdd.setText("Add");
+    btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnAddActionPerformed(evt);
+        }
+    });
 
     btnDelete.setText("Delete");
+    btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnDeleteActionPerformed(evt);
+        }
+    });
 
-    cboCentre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setia City Convention Centre", "Sunway Pyramid Convention Centre", "Stadium Nasional Bukit Jalil", "Kuala Lumpur Convention Centre(KLCC)", "Axiata Arena Bukit Jalil" }));
+    cboCentre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setia City Convention Centre", "Sunway Pyramid Convention Centre", "Stadium Nasional Bukit Jalil", "Kuala Lumpur Convention Centre", "Axiata Arena Bukit Jalil", "Universiti Malaya(UM)" }));
     cboCentre.setSelectedIndex(-1);
     cboCentre.setToolTipText("");
 
@@ -110,6 +212,13 @@ public class VaccineManage extends javax.swing.JFrame {
     btnClear.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnClearActionPerformed(evt);
+        }
+    });
+
+    btnReset.setText("Reset");
+    btnReset.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnResetActionPerformed(evt);
         }
     });
 
@@ -123,7 +232,9 @@ public class VaccineManage extends javax.swing.JFrame {
             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(29, 29, 29)
             .addComponent(btnSearch)
-            .addGap(230, 230, 230))
+            .addGap(26, 26, 26)
+            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(129, 129, 129))
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -171,16 +282,18 @@ public class VaccineManage extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnSearch)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReset))
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel2)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(cboCentre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cboCentre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)))
             .addGap(20, 20, 20)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtManufacture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,16 +330,22 @@ public class VaccineManage extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if(evt.getClickCount()==1){
             int row = jTable1.getSelectedRow();
-            String id = (String) jTable1.getValueAt(row, 0);
-            String name = (String) jTable1.getValueAt(row, 1);
-            String manufacture = (String) jTable1.getValueAt(row, 2);
-            String quantity = (String) jTable1.getValueAt(row, 3);
-            String centre = (String) jTable1.getValueAt(row, 4);
+            id = (String) jTable1.getValueAt(row, 0);
+            name = (String) jTable1.getValueAt(row, 1);
+            manufacture = (String) jTable1.getValueAt(row, 2);
+            quantity = (String) jTable1.getValueAt(row, 3);
+            centre = (String) jTable1.getValueAt(row, 4);
 
             txtName.setText(name);
             txtManufacture.setText(manufacture);
             txtQuantity.setText(quantity);
             cboCentre.setSelectedItem(centre);
+            btnAdd.setEnabled(false);
+            btnUpdate.setEnabled(true);
+            btnDelete.setEnabled(true);
+            txtName.setEnabled(false);
+            txtManufacture.setEnabled(false);
+            cboCentre.setEnabled(false);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -235,6 +354,12 @@ public class VaccineManage extends javax.swing.JFrame {
         txtManufacture.setText("");
         txtQuantity.setText("");
         cboCentre.setSelectedIndex(-1);
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtName.setEnabled(true);
+        txtManufacture.setEnabled(true);
+        cboCentre.setEnabled(true);
         this.setVisible(false);
         JavaAssignment1.pHome.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -244,7 +369,163 @@ public class VaccineManage extends javax.swing.JFrame {
         txtManufacture.setText("");
         txtQuantity.setText("");
         cboCentre.setSelectedIndex(-1);
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtName.setEnabled(true);
+        txtManufacture.setEnabled(true);
+        cboCentre.setEnabled(true);
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        updateTable();
+        txtSearch.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        searchTableContents(txtSearch.getText());
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+      
+        if(txtName.getText().trim().isEmpty()||txtManufacture.getText().trim().isEmpty()||txtQuantity.getText().trim().isEmpty()||cboCentre.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "Please ensure you have fill in all required details!");
+        }else{
+            vaccineName = txtName.getText();
+            manufacturer = txtManufacture.getText();
+            removeLeadingZeros(txtQuantity.getText());
+            count = Integer.parseInt(txtQuantity.getText());       
+            vcentre = cboCentre.getSelectedItem().toString();
+
+            if(!(vaccineName.matches("^[A-Za-z1-9]{1,}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid vaccine name");
+                return;
+            }
+
+            if(!(txtQuantity.getText().matches("^[0-9]{1,2}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid quantity");
+                return;
+            }
+            
+            boolean flag=true;
+            int id=1;
+            for(int i=0; i<DataIO.allVaccine.size(); i++){
+                if(i <DataIO.allVaccine.get(i).getVaccineNo()){
+                    id = DataIO.allVaccine.get(i).getVaccineNo()+1;
+                }else{
+                    id = DataIO.allVaccine.size()+1;
+                }
+            }
+            Centre x = DataIO.checkCentre(vcentre);
+            Vaccine v = new Vaccine(id,vaccineName,manufacturer,count,x);
+            for(int i=0; i<DataIO.allVaccine.size(); i++){
+                if(v.getName().equals(DataIO.allVaccine.get(i).getName()) &&
+                   v.getManufacture().equals(DataIO.allVaccine.get(i).getManufacture()) &&
+                   v.getVaccineCentre().getHealthFacility().equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                   flag=false;
+                   break;
+                }
+            }
+            
+            if(flag){
+                JavaAssignment1.plogin.addVaccine(v);
+                JOptionPane.showMessageDialog(this,"New vaccine added successfully!");
+                txtName.setText("");
+                txtManufacture.setText("");
+                txtQuantity.setText("");
+                cboCentre.setSelectedIndex(-1);
+                updateTable();
+                originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+            }else{
+                JOptionPane.showMessageDialog(this,"The vaccine has been registered!"); 
+            }
+            
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if(txtName.getText().trim().isEmpty()||txtManufacture.getText().trim().isEmpty()||txtQuantity.getText().trim().isEmpty()||cboCentre.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "Please ensure you have fill in all required details!");
+        }else{
+            vaccineName = txtName.getText();
+            manufacturer = txtManufacture.getText();
+            removeLeadingZeros(txtQuantity.getText());
+            count = Integer.parseInt(txtQuantity.getText());       
+            vcentre = cboCentre.getSelectedItem().toString();
+
+            if(!(vaccineName.matches("^[A-Za-z1-9]{1,}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid vaccine name");
+                return;
+            }
+
+            if(!(txtQuantity.getText().matches("^[0-9]{1,2}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid quantity");
+                return;
+            }
+            
+            boolean flag=true;
+            Vaccine v1=null;
+            
+            for (int i = 0; i < DataIO.allVaccine.size(); i++) {
+               if (Integer.parseInt(id) == DataIO.allVaccine.get(i).getVaccineNo()) {
+                   v1 = DataIO.allVaccine.get(i);
+               }
+            }
+            
+            if(v1!=null){
+                Centre x = DataIO.checkCentre(vcentre);
+                Vaccine v2 = new Vaccine(Integer.parseInt(id),vaccineName,manufacturer,count,x);
+                for(int i=0; i<DataIO.allVaccine.size(); i++){
+                    if(v2.getVaccineNo()==DataIO.allVaccine.get(i).getVaccineNo()&& 
+                       v2.getName().equals(DataIO.allVaccine.get(i).getName()) &&
+                       v2.getManufacture().equals(DataIO.allVaccine.get(i).getManufacture()) &&
+                       v2.getQuantity()==DataIO.allVaccine.get(i).getQuantity()&&     
+                       v2.getVaccineCentre().getHealthFacility().equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                       flag=false;
+                       break;
+                    }
+                }
+
+                if(flag){
+                    JavaAssignment1.plogin.updateVaccine(v1,v2);
+                    JOptionPane.showMessageDialog(this,"Update Successfully!");
+                    txtName.setText("");
+                    txtManufacture.setText("");
+                    txtQuantity.setText("");
+                    cboCentre.setSelectedIndex(-1);
+                    updateTable();
+                    originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+                }else{
+                    JOptionPane.showMessageDialog(this,"No changes have been done!"); 
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "Vaccine not found!");
+            }
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+         Vaccine v1=null;
+            
+        for (int i = 0; i < DataIO.allVaccine.size(); i++) {
+           if (Integer.parseInt(id) == DataIO.allVaccine.get(i).getVaccineNo()) {
+               v1 = DataIO.allVaccine.get(i);
+           }
+        }
+
+        if(v1!=null){
+            JavaAssignment1.plogin.deleteVaccine(v1);
+            JOptionPane.showMessageDialog(this,"Delete Successfully!");
+            txtName.setText("");
+            txtManufacture.setText("");
+            txtQuantity.setText("");
+            cboCentre.setSelectedIndex(-1);
+            updateTable();
+            originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+        }else{
+            JOptionPane.showMessageDialog(this, "Vaccine not found!");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +567,7 @@ public class VaccineManage extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cboCentre;

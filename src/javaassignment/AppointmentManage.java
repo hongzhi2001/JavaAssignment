@@ -7,22 +7,112 @@ package javaassignment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author hongz
  */
 public class AppointmentManage extends javax.swing.JFrame {
-
+    String id,date,time,status,dos,owner,centre,vaccine;
+    String Adate,Atime,Aowner,Acentre,Avaccine;
+    int Astatus,Ados;
+    
+    Vector originalTableModel;
+    DocumentListener documentListener;
     /**
      * Creates new form AppointmentManage
      */
     public AppointmentManage() {
         initComponents();
         Personnel.viewAppointment(jTable1);
+        ownerItem();
+        
+        Date m = new Date();
+        Calendar cal = Calendar.getInstance();  
+        cal.add(Calendar.DATE, 7);  
+        m = cal.getTime();
+        txtDate.setMinSelectableDate(m);
+        
+        originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+        //add document listener to jtextfield to search contents as soon as something typed on it
+        txtSearch.getDocument().addDocumentListener(documentListener);
+        addDocumentListener();
+        
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtDate.setEnabled(true);
+        cboTime.setEnabled(true);
+        cboStatus.setEnabled(true);
+        cboDos.setEnabled(true);
+        cboOwner.setEnabled(true);
+        cboCentre.setEnabled(true);
+        cboVaccine.setEnabled(true);
     }
+    
+    public void ownerItem(){
+        cboOwner.removeAllItems();
+        for(int i=0;i<DataIO.allPeople.size();i++){
+            cboOwner.addItem(DataIO.allPeople.get(i).getName());
+        }
+        cboOwner.setSelectedIndex(-1);
+    }
+    
+     private void addDocumentListener() {
+        documentListener = new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+                search();
+            }
 
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                search();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+                search();
+            }
+
+            private void search() {
+                searchTableContents(txtSearch.getText());
+            }
+        };
+    }
+    
+    public void searchTableContents(String searchString) {    
+        DefaultTableModel currtableModel = (DefaultTableModel) jTable1.getModel();
+          //To empty the table before search
+          currtableModel.setRowCount(0);
+          //To search for contents from original table content
+          for (Object rows : originalTableModel) {
+              Vector rowVector = (Vector) rows;
+              for (Object column : rowVector) {
+                  if (column.toString().contains(searchString)) {
+                      //content found so adding to table
+                      currtableModel.addRow(rowVector);
+                      break;
+                  }
+              }
+
+          }
+      }
+    
+    public void updateTable(){
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.getDataVector().removeAllElements();
+        Personnel.viewAppointment(jTable1);
+        model.fireTableDataChanged();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,6 +145,9 @@ public class AppointmentManage extends javax.swing.JFrame {
         cboCentre = new javax.swing.JComboBox<>();
         cboOwner = new javax.swing.JComboBox<>();
         btnClear = new javax.swing.JButton();
+        cboVaccine = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(600, 200));
@@ -101,18 +194,38 @@ public class AppointmentManage extends javax.swing.JFrame {
     lblTitle.setText("Appointment Management");
 
     btnUpdate.setText("Update");
+    btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnUpdateActionPerformed(evt);
+        }
+    });
 
     btnSearch.setText("Search");
+    btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSearchActionPerformed(evt);
+        }
+    });
 
     btnAdd.setText("Add");
+    btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnAddActionPerformed(evt);
+        }
+    });
 
     btnDelete.setText("Delete");
+    btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnDeleteActionPerformed(evt);
+        }
+    });
 
-    cboTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:30am" }));
+    cboTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" }));
     cboTime.setSelectedIndex(-1);
     cboTime.setToolTipText("");
 
-    cboDos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DOS1", "DOS2" }));
+    cboDos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DOS 1", "DOS 2" }));
     cboDos.setSelectedIndex(-1);
     cboDos.setToolTipText("");
 
@@ -126,9 +239,14 @@ public class AppointmentManage extends javax.swing.JFrame {
 
     jLabel7.setText("Centre:");
 
-    cboCentre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setia City Convention Centre", "Sunway Pyramid Convention Centre", "Stadium Nasional Bukit Jalil", "Kuala Lumpur Convention Centre(KLCC)", "Axiata Arena Bukit Jalil" }));
+    cboCentre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setia City Convention Centre", "Sunway Pyramid Convention Centre", "Stadium Nasional Bukit Jalil", "Kuala Lumpur Convention Centre", "Axiata Arena Bukit Jalil", "Universiti Malaya(UM)" }));
     cboCentre.setSelectedIndex(-1);
     cboCentre.setToolTipText("");
+    cboCentre.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            cboCentreActionPerformed(evt);
+        }
+    });
 
     cboOwner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
     cboOwner.setSelectedIndex(-1);
@@ -137,6 +255,17 @@ public class AppointmentManage extends javax.swing.JFrame {
     btnClear.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnClearActionPerformed(evt);
+        }
+    });
+
+    cboVaccine.setToolTipText("");
+
+    jLabel8.setText("Vaccine:");
+
+    btnReset.setText("Reset");
+    btnReset.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnResetActionPerformed(evt);
         }
     });
 
@@ -150,41 +279,15 @@ public class AppointmentManage extends javax.swing.JFrame {
             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(29, 29, 29)
             .addComponent(btnSearch)
-            .addGap(230, 230, 230))
+            .addGap(18, 18, 18)
+            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(137, 137, 137))
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(31, 31, 31)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnBack)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(27, 27, 27)
-                                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel3))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cboTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cboStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(72, 72, 72)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(cboCentre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel4))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cboDos, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cboOwner, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(40, 40, 40)
                             .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,11 +296,40 @@ public class AppointmentManage extends javax.swing.JFrame {
                             .addGap(42, 42, 42)
                             .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(32, 32, 32)
-                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(27, 27, 27)
+                                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel5)
+                                                .addComponent(jLabel3))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(cboTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(cboStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(55, 55, 55)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel6)))
+                                .addComponent(jLabel8))
+                            .addGap(35, 35, 35)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboDos, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboOwner, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboCentre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cboVaccine, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(155, 155, 155)
                     .addComponent(lblTitle)))
-            .addContainerGap(159, Short.MAX_VALUE))
+            .addContainerGap(126, Short.MAX_VALUE))
     );
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,10 +339,11 @@ public class AppointmentManage extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnSearch)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReset))
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+            .addGap(28, 28, 28)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(52, 52, 52)
@@ -232,7 +365,11 @@ public class AppointmentManage extends javax.swing.JFrame {
                 .addComponent(cboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabel7)
                 .addComponent(cboCentre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(97, 97, 97)
+            .addGap(29, 29, 29)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel8)
+                .addComponent(cboVaccine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnAdd)
                 .addComponent(btnUpdate)
@@ -247,11 +384,13 @@ public class AppointmentManage extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addGroup(layout.createSequentialGroup()
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
     );
 
     pack();
@@ -261,12 +400,14 @@ public class AppointmentManage extends javax.swing.JFrame {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         if(evt.getClickCount()==1){
             int row = jTable1.getSelectedRow();
-            String date = (String) jTable1.getValueAt(row, 0);
-            String time = (String) jTable1.getValueAt(row, 1);
-            String status = (String) jTable1.getValueAt(row, 2);
-            String dos = (String) jTable1.getValueAt(row, 3);
-            String owner = (String) jTable1.getValueAt(row, 4);
-            String centre = (String) jTable1.getValueAt(row, 5);
+            id = (String) jTable1.getValueAt(row, 0);
+            date = (String) jTable1.getValueAt(row, 1);
+            time = (String) jTable1.getValueAt(row, 2);
+            status = (String) jTable1.getValueAt(row, 3);
+            dos = (String) jTable1.getValueAt(row, 4);
+            owner = (String) jTable1.getValueAt(row, 5);
+            centre = (String) jTable1.getValueAt(row, 6);
+            vaccine = (String) jTable1.getValueAt(row, 7);
 
             try {
                 txtDate.setDate(dateFormat.parse(date));
@@ -278,6 +419,20 @@ public class AppointmentManage extends javax.swing.JFrame {
             cboDos.setSelectedItem(dos);
             cboOwner.setSelectedItem(owner);
             cboCentre.setSelectedItem(centre);
+            cboVaccine.setSelectedItem(vaccine);
+            btnAdd.setEnabled(false);
+            btnUpdate.setEnabled(true);
+            btnDelete.setEnabled(true);
+            txtDate.setEnabled(false);
+            cboTime.setEnabled(false);
+            cboDos.setEnabled(false);
+            cboOwner.setEnabled(false);
+            cboCentre.setEnabled(false);
+            cboVaccine.setEnabled(false);
+            
+            if(status.equals("Cancelled")){
+                cboStatus.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -288,6 +443,17 @@ public class AppointmentManage extends javax.swing.JFrame {
         cboDos.setSelectedIndex(-1);
         cboOwner.setSelectedIndex(-1);
         cboCentre.setSelectedIndex(-1);
+        cboVaccine.setSelectedIndex(-1);
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtDate.setEnabled(true);
+        cboTime.setEnabled(true);
+        cboStatus.setEnabled(true);
+        cboDos.setEnabled(true);
+        cboOwner.setEnabled(true);
+        cboCentre.setEnabled(true);
+        cboVaccine.setEnabled(true);
         this.setVisible(false);
         JavaAssignment1.pHome.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -299,7 +465,295 @@ public class AppointmentManage extends javax.swing.JFrame {
         cboDos.setSelectedIndex(-1);
         cboOwner.setSelectedIndex(-1);
         cboCentre.setSelectedIndex(-1);
+        cboVaccine.setSelectedIndex(-1);
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtDate.setEnabled(true);
+        cboTime.setEnabled(true);
+        cboStatus.setEnabled(true);
+        cboDos.setEnabled(true);
+        cboOwner.setEnabled(true);
+        cboCentre.setEnabled(true);
+        cboVaccine.setEnabled(true);
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void cboCentreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCentreActionPerformed
+        String centre = String.valueOf(cboCentre.getSelectedItem());
+        cboVaccine.removeAllItems();
+            for(int i=0;i<DataIO.allVaccine.size();i++){
+                if(centre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                    cboVaccine.addItem(DataIO.allVaccine.get(i).getName());;
+                }
+            }
+        cboVaccine.setSelectedIndex(-1);
+    }//GEN-LAST:event_cboCentreActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        searchTableContents(txtSearch.getText());
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        updateTable();
+        txtSearch.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if(txtDate.getDate()==null || cboTime.getSelectedIndex()==-1 || cboStatus.getSelectedIndex()==-1 || cboDos.getSelectedIndex()==-1 ||
+           cboOwner.getSelectedIndex()==-1 || cboCentre.getSelectedIndex()==-1 || cboVaccine.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill!!!");
+            return;
+        }
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Adate = dateFormat.format(txtDate.getDate());
+        Atime = cboTime.getSelectedItem().toString();
+        Astatus = cboStatus.getSelectedIndex();
+        if(cboDos.getSelectedIndex()==0){
+            Ados = 1;
+        }else{
+            Ados = 2;
+        }
+        Aowner = cboOwner.getSelectedItem().toString();
+        Acentre = cboCentre.getSelectedItem().toString();
+        Avaccine = cboVaccine.getSelectedItem().toString();
+        
+        int totalvaccine=0;
+        
+        for(int i=0;i<DataIO.allVaccine.size();i++){
+            if(Avaccine.equals(DataIO.allVaccine.get(i).getName())){
+                totalvaccine = DataIO.allVaccine.get(i).getQuantity();
+            }
+        }
+        
+        if(totalvaccine<=0){
+            JOptionPane.showMessageDialog(this,"Sorry, the vaccine stock is empty!");
+            return;
+        }
+        
+        People x=null;
+        for(int i=0; i<DataIO.allPeople.size(); i++){
+            if(Aowner.equals(DataIO.allPeople.get(i).getName())){
+              x = DataIO.allPeople.get(i);
+            }
+        }
+        
+        if(x!=null){
+            int Aid=1;
+            for(int i=0; i<DataIO.allAppointment.size(); i++){
+                if(i <DataIO.allAppointment.get(i).getId()){
+                    Aid = DataIO.allAppointment.get(i).getId()+1;
+                }else{
+                    Aid = DataIO.allAppointment.size()+1;
+                }
+            }
+            
+            Centre c = DataIO.checkCentre(Acentre);
+            Vaccine v=null;
+                        
+            for(int i=0;i<DataIO.allVaccine.size();i++){
+                if(Avaccine.equals(DataIO.allVaccine.get(i).getName()) && Acentre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                    v = DataIO.allVaccine.get(i);
+                }
+            }
+
+            Appointment a = new Appointment(Aid,Adate,Atime,Astatus,Ados,x,c,v);
+            int size = x.getMyAppointment().size();
+            if(Ados==1){
+                try{                
+                    if(size==0 || x.getMyAppointment().get(size-1).getDos()==1 && x.getMyAppointment().get(size-1).getStatus()==2){
+                       JavaAssignment1.plogin.addAppointment(a,v);
+                       JOptionPane.showMessageDialog(this,"The appointment added successfully!");                      
+                       txtDate.setCalendar(null);
+                       cboTime.setSelectedIndex(-1);
+                       cboStatus.setSelectedIndex(-1);
+                       cboDos.setSelectedIndex(-1);
+                       cboOwner.setSelectedIndex(-1);
+                       cboCentre.setSelectedIndex(-1);
+                       cboVaccine.setSelectedIndex(-1);
+                       updateTable();
+                       originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+                       JavaAssignment1.pVaccine.updateTable();
+                       return;
+                    }
+                    JOptionPane.showMessageDialog(this, "The user has booked appointment!");
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(this, "The appointment added failed");
+                    
+                }
+            } else if(Ados==2){
+                try{
+                    if(x.getMyAppointment().get(size-1).getDos()==1 && x.getMyAppointment().get(size-1).getStatus()==3 ||
+                       x.getMyAppointment().get(size-1).getDos()==2 && x.getMyAppointment().get(size-1).getStatus()==2){
+                       String first = x.getMyAppointment().get(size-1).getAppointmentDate();
+                       Date firstDate = dateFormat.parse(first);
+                       
+                        if(txtDate.getDate().after(firstDate)){
+                            JavaAssignment1.plogin.addAppointment(a,v);
+                            JOptionPane.showMessageDialog(this,"The appointment added successfully!");
+                            txtDate.setCalendar(null);
+                            cboTime.setSelectedIndex(-1);
+                            cboStatus.setSelectedIndex(-1);
+                            cboDos.setSelectedIndex(-1);
+                            cboOwner.setSelectedIndex(-1);
+                            cboCentre.setSelectedIndex(-1);
+                            cboVaccine.setSelectedIndex(-1);
+                            updateTable();
+                            originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+                            JavaAssignment1.pVaccine.updateTable();
+                        }else{
+                            JOptionPane.showMessageDialog(this, "The second dos appointment date must be after first dos!");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(this, "The user has not done first dos injection or has booked second dos appointment!");
+                    }
+                }catch(Exception e){
+                   JOptionPane.showMessageDialog(this, "The user must done dos 1 injection first!");
+                }
+
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "The user is not exist!");
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Adate = dateFormat.format(txtDate.getDate());
+        Atime = cboTime.getSelectedItem().toString();
+        Astatus = cboStatus.getSelectedIndex();
+        if(cboDos.getSelectedIndex()==0){
+            Ados = 1;
+        }else{
+            Ados = 2;
+        }
+        Aowner = cboOwner.getSelectedItem().toString();
+        Acentre = cboCentre.getSelectedItem().toString();
+        Avaccine = cboVaccine.getSelectedItem().toString();
+        
+        People p=null;
+        for(int i=0; i<DataIO.allPeople.size(); i++){
+            if(Aowner.equals(DataIO.allPeople.get(i).getName())){
+              p = DataIO.allPeople.get(i);
+            }
+        }          
+        Centre c = DataIO.checkCentre(Acentre);
+
+        Vaccine v=null;                        
+        for(int i=0;i<DataIO.allVaccine.size();i++){
+            if(Avaccine.equals(DataIO.allVaccine.get(i).getName()) && Acentre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                v = DataIO.allVaccine.get(i);
+            }
+        }            
+
+        boolean flag=true;
+        Appointment a1=null;
+
+        for (int i = 0; i < DataIO.allAppointment.size(); i++) {
+           if (Integer.parseInt(id) == DataIO.allAppointment.get(i).getId()) {
+               a1 = DataIO.allAppointment.get(i);
+           }
+        }
+        
+        Appointment a2 = new Appointment(Integer.parseInt(id),Adate,Atime,Astatus,Ados,p,c,v);
+        
+        if(a2.getStatus()==a1.getStatus()){
+           flag=false;
+        }
+        
+        if(a1!=null){              
+            if(flag){
+                if(Ados==1 && Astatus==3){
+                    int totalvaccine=0;
+
+                    for(int i=0;i<DataIO.allVaccine.size();i++){
+                        if(Avaccine.equals(DataIO.allVaccine.get(i).getName())){
+                            totalvaccine = DataIO.allVaccine.get(i).getQuantity();
+                        }
+                    }
+
+                    if(totalvaccine<=0){
+                        JOptionPane.showMessageDialog(this,"Sorry, the vaccine stock is empty!");
+                        return;
+                    }
+
+                    int Aid=1;
+                    for(int i=0;i<DataIO.allAppointment.size();i++){
+                        if(i <DataIO.allAppointment.get(i).getId()){
+                            Aid = DataIO.allAppointment.get(i).getId()+1;
+                        }else{
+                            Aid = DataIO.allAppointment.size()+1;
+                        }          
+                    }
+                    Date secondDate;
+                    String appointDate;
+                    //https://stackoverflow.com/questions/7654151/how-to-add-7-days-to-current-date-while-not-going-over-available-days-of-a-month/7654199
+                    Calendar cal = Calendar.getInstance();  
+                    cal.setTime(txtDate.getDate());  
+                    cal.add(Calendar.DATE, 14);
+                    secondDate = cal.getTime();
+                    appointDate = dateFormat.format(secondDate);                           
+            
+                    Appointment a3 = new Appointment(Aid,appointDate,Atime,0,2,p,c,v);
+                    JavaAssignment1.plogin.addAppointment(a3, v);
+                    JOptionPane.showMessageDialog(this,"Update Successfully and the second appointment has been created!");
+                    
+                }else if(Astatus==2){            
+
+                    for (int i = 0; i < DataIO.allVaccine.size(); i++) {               
+                        if(v==DataIO.allVaccine.get(i)){
+                            v.cancelVaccine();
+                            JavaAssignment1.plogin.updateVaccine(DataIO.allVaccine.get(i), v);
+                            JOptionPane.showMessageDialog(this,"Update Successfully");                           
+                            break;
+                        }
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this,"The appointment does not exist!");
+                }
+            
+                JavaAssignment1.plogin.updateAppointment(a1, a2);
+                txtDate.setCalendar(null);
+                cboTime.setSelectedIndex(-1);
+                cboStatus.setSelectedIndex(-1);
+                cboDos.setSelectedIndex(-1);
+                cboOwner.setSelectedIndex(-1);
+                cboCentre.setSelectedIndex(-1);
+                cboVaccine.setSelectedIndex(-1);
+                updateTable();
+                originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+                JavaAssignment1.pVaccine.updateTable();    
+                
+            }else{
+                JOptionPane.showMessageDialog(this,"No changes have been done!"); 
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,"The appointment does not exist"); 
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        Appointment a=null;
+        for(int i=0;i<DataIO.allAppointment.size();i++){
+            if(Integer.parseInt(id)==DataIO.allAppointment.get(i).getId()){
+                 a = DataIO.allAppointment.get(i);                
+            }
+        }
+        if(a!=null){
+            JavaAssignment1.plogin.deleteAppointment(a);
+            txtDate.setCalendar(null);
+            cboTime.setSelectedIndex(-1);
+            cboStatus.setSelectedIndex(-1);
+            cboDos.setSelectedIndex(-1);
+            cboOwner.setSelectedIndex(-1);
+            cboCentre.setSelectedIndex(-1);
+            cboVaccine.setSelectedIndex(-1);
+            updateTable();
+            originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+        }else{
+             JOptionPane.showMessageDialog(this, "The appointment does not exist!");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,6 +795,7 @@ public class AppointmentManage extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cboCentre;
@@ -348,12 +803,14 @@ public class AppointmentManage extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboOwner;
     private javax.swing.JComboBox<String> cboStatus;
     private javax.swing.JComboBox<String> cboTime;
+    private javax.swing.JComboBox<String> cboVaccine;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

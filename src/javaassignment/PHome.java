@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
@@ -177,9 +178,12 @@ public class PHome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProfileActionPerformed
 
     private void logoutbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutbtnActionPerformed
-        JavaAssignment1.plogin=null;
-        this.setVisible(false);
-        JavaAssignment1.pLogin.setVisible(true);
+        DataIO.read();
+        if(DataIO.logout){
+            JavaAssignment1.plogin=null;
+            this.setVisible(false);
+            JavaAssignment1.pLogin.setVisible(true);
+        }
     }//GEN-LAST:event_logoutbtnActionPerformed
 
     private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed

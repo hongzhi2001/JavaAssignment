@@ -7,22 +7,100 @@ package javaassignment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author hongz
  */
 public class UserManagement extends javax.swing.JFrame {
-
+    String userName,userIdenNo,userDOB,userPhone,userEmail,userAddress;
+    int userStatus, userType;
+    String id,name,identityNo,dob,phoneNo,email,address,status,type;
+    Vector originalTableModel;
+    DocumentListener documentListener;
     /**
      * Creates new form UserManagement
      */
     public UserManagement() {
         initComponents();
         Personnel.viewPeople(jTable1);
+        
+        Calendar cal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -12);//15 year before
+        Date max = cal.getTime();
+        cal1.add(Calendar.YEAR, -80);
+        Date min = cal1.getTime();//actual date
+        txtDOB.setSelectableDateRange(min, max);
+        
+        originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+        //add document listener to jtextfield to search contents as soon as something typed on it
+        txtSearch.getDocument().addDocumentListener(documentListener);
+        addDocumentListener();
+        
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtIdenNo.setEnabled(true);
+        cboType.setEnabled(true);
+        
     }
+    
+    private void addDocumentListener() {
+        documentListener = new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+                search();
+            }
 
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                search();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+                search();
+            }
+
+            private void search() {
+                searchTableContents(txtSearch.getText());
+            }
+        };
+    }
+    
+    //https://stackoverflow.com/questions/31158089/how-to-search-data-in-jtable-using-jtextfield
+    public void searchTableContents(String searchString) {    
+        DefaultTableModel currtableModel = (DefaultTableModel) jTable1.getModel();
+          //To empty the table before search
+          currtableModel.setRowCount(0);
+          //To search for contents from original table content
+          for (Object rows : originalTableModel) {
+              Vector rowVector = (Vector) rows;
+              for (Object column : rowVector) {
+                  if (column.toString().contains(searchString)) {
+                      //content found so adding to table
+                      currtableModel.addRow(rowVector);
+                      break;
+                  }
+              }
+
+          }
+      }
+
+    public void updateTable(){
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.getDataVector().removeAllElements();
+        Personnel.viewPeople(jTable1);
+        model.fireTableDataChanged(); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,9 +127,7 @@ public class UserManagement extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        txtStatus = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txtType = new javax.swing.JTextField();
         lblTitle = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
@@ -59,7 +135,10 @@ public class UserManagement extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         txtDOB = new com.toedter.calendar.JDateChooser();
-        btnDelete1 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        cboType = new javax.swing.JComboBox<>();
+        cboStatus = new javax.swing.JComboBox<>();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(600, 200));
@@ -121,10 +200,25 @@ public class UserManagement extends javax.swing.JFrame {
     lblTitle.setText("User Management");
 
     btnUpdate.setText("Update");
+    btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnUpdateActionPerformed(evt);
+        }
+    });
 
     btnSearch.setText("Search");
+    btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSearchActionPerformed(evt);
+        }
+    });
 
     btnAdd.setText("Add");
+    btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnAddActionPerformed(evt);
+        }
+    });
 
     btnClear.setText("Clear");
     btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +227,26 @@ public class UserManagement extends javax.swing.JFrame {
         }
     });
 
-    btnDelete1.setText("Delete");
+    btnDelete.setText("Delete");
+    btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnDeleteActionPerformed(evt);
+        }
+    });
+
+    cboType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Non-citizen", "Citizen" }));
+    cboType.setSelectedIndex(-1);
+
+    cboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Vacinated", "1st Dose Completed", "Fully Vacinated" }));
+    cboStatus.setSelectedIndex(-1);
+    cboStatus.setToolTipText("");
+
+    btnReset.setText("Reset");
+    btnReset.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnResetActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -142,9 +255,6 @@ public class UserManagement extends javax.swing.JFrame {
         .addComponent(jScrollPane1)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(225, 225, 225)
-                    .addComponent(lblTitle))
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(39, 39, 39)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,8 +271,19 @@ public class UserManagement extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-            .addContainerGap(302, Short.MAX_VALUE))
+                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(225, 225, 225)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(29, 29, 29)
+                            .addComponent(btnSearch)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblTitle))))
+            .addContainerGap(192, Short.MAX_VALUE))
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -180,15 +301,18 @@ public class UserManagement extends javax.swing.JFrame {
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(28, 28, 28)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(18, 18, 18)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cboType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(29, 29, 29)
@@ -200,23 +324,18 @@ public class UserManagement extends javax.swing.JFrame {
                     .addGap(15, 15, 15)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(29, 29, 29)
-            .addComponent(btnSearch)
-            .addGap(230, 230, 230))
     );
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lblTitle)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnSearch)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReset))
+            .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(36, 36, 36)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,12 +351,12 @@ public class UserManagement extends javax.swing.JFrame {
                         .addComponent(jLabel11))
                     .addGap(20, 20, 20)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel12))
+                        .addComponent(jLabel12)
+                        .addComponent(cboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(20, 20, 20)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel13)))
+                        .addComponent(jLabel13)
+                        .addComponent(cboType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,7 +374,7 @@ public class UserManagement extends javax.swing.JFrame {
                 .addComponent(btnAdd)
                 .addComponent(btnUpdate)
                 .addComponent(btnClear)
-                .addComponent(btnDelete1))
+                .addComponent(btnDelete))
             .addGap(40, 40, 40)
             .addComponent(btnBack)
             .addGap(25, 25, 25))
@@ -282,8 +401,13 @@ public class UserManagement extends javax.swing.JFrame {
         txtPhone.setText("");
         txtEmail.setText("");
         txtAddress.setText("");       
-        txtStatus.setText("");
-        txtType.setText("");
+        cboStatus.setSelectedIndex(-1);
+        cboType.setSelectedIndex(-1);
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtIdenNo.setEnabled(true);
+        cboType.setEnabled(true);
         this.setVisible(false);
         JavaAssignment1.pHome.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -292,15 +416,15 @@ public class UserManagement extends javax.swing.JFrame {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         if(evt.getClickCount()==1){
             int row = jTable1.getSelectedRow();
-            String id = (String) jTable1.getValueAt(row, 0);
-            String name = (String) jTable1.getValueAt(row, 1);
-            String identityNo = (String) jTable1.getValueAt(row, 2);
-            String dob = (String) jTable1.getValueAt(row, 3);
-            String phoneNo = (String) jTable1.getValueAt(row, 4);
-            String email = (String) jTable1.getValueAt(row, 5);
-            String address = (String) jTable1.getValueAt(row, 6);
-            String status = (String) jTable1.getValueAt(row, 7);
-            String type = (String) jTable1.getValueAt(row, 8);
+            id = (String) jTable1.getValueAt(row, 0);
+            name = (String) jTable1.getValueAt(row, 1);
+            identityNo = (String) jTable1.getValueAt(row, 2);
+            dob = (String) jTable1.getValueAt(row, 3);
+            phoneNo = (String) jTable1.getValueAt(row, 4);
+            email = (String) jTable1.getValueAt(row, 5);
+            address = (String) jTable1.getValueAt(row, 6);
+            status = (String) jTable1.getValueAt(row, 7);
+            type = (String) jTable1.getValueAt(row, 8);
 
             txtName.setText(name);
             txtIdenNo.setText(identityNo);
@@ -312,8 +436,13 @@ public class UserManagement extends javax.swing.JFrame {
             txtPhone.setText(phoneNo);
             txtEmail.setText(email);
             txtAddress.setText(address);
-            txtStatus.setText(status);
-            txtType.setText(type);
+            cboStatus.setSelectedItem(status);
+            cboType.setSelectedItem(type);
+            btnAdd.setEnabled(false);
+            btnUpdate.setEnabled(true);
+            btnDelete.setEnabled(true);
+            txtIdenNo.setEnabled(false);
+            cboType.setEnabled(false);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -324,9 +453,223 @@ public class UserManagement extends javax.swing.JFrame {
         txtPhone.setText("");
         txtEmail.setText("");
         txtAddress.setText("");       
-        txtStatus.setText("");
-        txtType.setText("");
+        cboStatus.setSelectedIndex(-1);
+        cboType.setSelectedIndex(-1);
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtIdenNo.setEnabled(true);
+        cboType.setEnabled(true);
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        userName = txtName.getText();
+        userIdenNo = txtIdenNo.getText();
+        userPhone = txtPhone.getText();
+        userEmail = txtEmail.getText();
+        userAddress = txtAddress.getText();
+        userStatus = cboStatus.getSelectedIndex();
+        userType = cboType.getSelectedIndex();
+        
+        if(userName.trim().isEmpty()|| userIdenNo.trim().isEmpty() || txtDOB.getDate()==null || userPhone.trim().isEmpty() 
+                || userEmail.trim().isEmpty() || userAddress.trim().isEmpty() || userStatus==-1 || userType==-1){
+            JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill!!!");
+            return;
+        }
+        
+        if(!(userName.trim().matches("^[A-Za-z]{1,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Name");
+            return;
+        }
+        
+        if(userType==1){
+            if(!(userIdenNo.trim().matches("^[0-9]{12}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Identity Number");
+                return;
+            }                  
+        }else if(userType==0){
+            if(!(userIdenNo.trim().matches("^[A-Za-z][0-9]{8,}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Passport Number");
+                return;
+            }   
+        }
+        if(!(userPhone.trim().matches("^[0-9]{10,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Phone Number");
+            return;
+        }
+        
+        if(!(userEmail.trim().matches("^[a-zA-Z0-9]{1,}@[a-z]{4,}.com$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Email");
+            return;
+        }
+        
+        People found = DataIO.checkPeople(userIdenNo);
+        if(found!=null){
+            JOptionPane.showMessageDialog(this,"The identity number has been used!");
+        }else{
+            int id=1;
+            for(int i=0; i<DataIO.allPeople.size(); i++){
+                if(i <DataIO.allPeople.get(i).getId()){
+                    id = DataIO.allPeople.get(i).getId()+1;
+                }else{
+                    id = DataIO.allPeople.size()+1;
+                }
+            }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            userDOB = dateFormat.format(txtDOB.getDate());
+            if(userType==1){
+                Citizen x = new Citizen(id,userName,userIdenNo,userDOB,userPhone,userEmail,userAddress,userStatus);
+                JavaAssignment1.plogin.registerNew(x);
+            }else if(userType==0){
+                Noncitizen x = new Noncitizen(id,userName,userIdenNo,userDOB,userPhone,userEmail,userAddress,userStatus);
+                JavaAssignment1.plogin.registerNew(x);
+            }
+            JOptionPane.showMessageDialog(this,"Register Succesfully");
+            txtName.setText("");
+            txtIdenNo.setText("");
+            txtDOB.setCalendar(null);
+            txtPhone.setText("");
+            txtEmail.setText("");
+            txtAddress.setText("");       
+            cboStatus.setSelectedIndex(-1);
+            cboType.setSelectedIndex(-1);
+            updateTable();
+            originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+            JavaAssignment1.pAppointment.ownerItem();
+        }    
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        userName = txtName.getText();
+        userIdenNo = txtIdenNo.getText();
+        userPhone = txtPhone.getText();
+        userEmail = txtEmail.getText();
+        userAddress = txtAddress.getText();
+        userStatus = cboStatus.getSelectedIndex();
+        userType = cboType.getSelectedIndex();
+        
+        if(userName.trim().isEmpty()|| userIdenNo.trim().isEmpty() || txtDOB.getDate()==null || userPhone.trim().isEmpty() 
+                || userEmail.trim().isEmpty() || userAddress.trim().isEmpty() || userStatus==-1 || userType==-1){
+            JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill!!!");
+            return;
+        }
+        
+        if(!(userName.trim().matches("^[A-Za-z]{1,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Name");
+            return;
+        }
+        
+        if(userType==1){
+            if(!(userIdenNo.trim().matches("^[0-9]{12}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Identity Number");
+                return;
+            }                  
+        }else if(userType==0){
+            if(!(userIdenNo.trim().matches("^[A-Za-z][0-9]{8,}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Passport Number");
+                return;
+            }   
+        }
+        if(!(userPhone.trim().matches("^[0-9]{10,}$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Phone Number");
+            return;
+        }
+        
+        if(!(userEmail.trim().matches("^[a-zA-Z0-9]{1,}@[a-z]{4,}.com$"))){
+            JOptionPane.showMessageDialog(this, "Invalid Email");
+            return;
+        }
+        People x=null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        userDOB = dateFormat.format(txtDOB.getDate());
+        for(int i=0;i<DataIO.allPeople.size();i++){
+            if(Integer.parseInt(id)==DataIO.allPeople.get(i).getId()){
+                 x = DataIO.allPeople.get(i);                
+            }
+        }
+        
+        boolean flag=true;
+        
+        if(x!=null){
+            People found = DataIO.checkPeople(userIdenNo);
+            People y = new People(Integer.parseInt(id),userName,userIdenNo,userDOB,userPhone,userEmail,userAddress,userStatus,userType);
+            
+            for(int i=0;i<DataIO.allPeople.size();i++){
+                if(y.getId()==DataIO.allPeople.get(i).getId() &&
+                   y.getName().equals(DataIO.allPeople.get(i).getName()) &&
+                   y.getIdentityNo().equals(DataIO.allPeople.get(i).getIdentityNo()) &&
+                   y.getDob().equals(DataIO.allPeople.get(i).getDob()) &&
+                   y.getPhoneNo().equals(DataIO.allPeople.get(i).getPhoneNo())&&
+                   y.getEmail().equals(DataIO.allPeople.get(i).getEmail()) &&
+                   y.getAddress().equals(DataIO.allPeople.get(i).getAddress()) &&
+                   y.getStatus()==DataIO.allPeople.get(i).getStatus() &&
+                   y.getStatus()==DataIO.allPeople.get(i).getStatus()){            
+                   flag=false;
+                   break;
+                }             
+            }
+            
+            if(flag){
+                if(found.getId()==y.getId()){
+                    JavaAssignment1.plogin.updateProfile(x, y);        
+                    JOptionPane.showMessageDialog(this,"Update Successfully");
+                    txtName.setText("");
+                    txtIdenNo.setText("");
+                    txtDOB.setCalendar(null);
+                    txtPhone.setText("");
+                    txtEmail.setText("");
+                    txtAddress.setText("");       
+                    cboStatus.setSelectedIndex(-1);
+                    cboType.setSelectedIndex(-1);
+                    updateTable();
+                    originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+                    JavaAssignment1.pAppointment.ownerItem();
+                    JavaAssignment1.pAppointment.updateTable();
+                    return;
+                }
+                JOptionPane.showMessageDialog(this, "The identity number has been used!"); 
+            }else{
+                JOptionPane.showMessageDialog(this, "No changes have been done!"); 
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "User not found!");
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        People x=null;
+        for(int i=0;i<DataIO.allPeople.size();i++){
+            if(Integer.parseInt(id)==DataIO.allPeople.get(i).getId()){
+                 x = DataIO.allPeople.get(i);                
+            }
+        }
+        if(x!=null){
+            JavaAssignment1.plogin.deletePeople(x);
+            JOptionPane.showMessageDialog(this,"Delete Successfully");
+            txtName.setText("");
+            txtIdenNo.setText("");
+            txtDOB.setCalendar(null);
+            txtPhone.setText("");
+            txtEmail.setText("");
+            txtAddress.setText("");       
+            cboStatus.setSelectedIndex(-1);
+            cboType.setSelectedIndex(-1);
+            updateTable(); 
+            originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+            JavaAssignment1.pAppointment.ownerItem();
+        }else{
+             JOptionPane.showMessageDialog(this, "User not found");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        searchTableContents(txtSearch.getText());
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        updateTable();
+        txtSearch.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,9 +710,12 @@ public class UserManagement extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnDelete1;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cboStatus;
+    private javax.swing.JComboBox<String> cboType;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -390,7 +736,5 @@ public class UserManagement extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtSearch;
-    private javax.swing.JTextField txtStatus;
-    private javax.swing.JTextField txtType;
     // End of variables declaration//GEN-END:variables
 }

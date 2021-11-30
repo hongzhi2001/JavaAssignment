@@ -9,7 +9,6 @@ public class JavaAssignment {
     public static PeopleAppointment pa = new PeopleAppointment();
     public static ViewAppointment va = new ViewAppointment();
     public static VaccineStatus vs = new VaccineStatus();
-    public static Testing t = new Testing();
     public static void main(String[] args) {
         DataIO.read();
     }
