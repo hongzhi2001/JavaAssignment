@@ -36,14 +36,14 @@ public class People implements Operation{
     }
     
     @Override
-    public void updateProfile(People x, People y){
-         for(int i=0;i<DataIO.allPeople.size();i++){
-            if(x==DataIO.allPeople.get(i)){                
+     public void updateProfile(People x, People y){
+        for(int i=0;i<DataIO.allPeople.size();i++){
+            if(x==DataIO.allPeople.get(i)){
                 DataIO.allPeople.remove(i);
                 DataIO.allPeople.add(i, y);
                 DataIO.write();
                 break;
-            }           
+            }       
         }
     }
     
@@ -52,12 +52,12 @@ public class People implements Operation{
         DataIO.write();
     }
     
-    public void viewAppointment(JTable x){  // NOT DONE
+    public void viewAppointment(JTable x){ 
         DataIO.read();
-        String[] data = new String[5];
-        String status;
+        String[] data = new String[8];
+        String Astatus, dos;
         
-        String[] columnNames = { "Date", "Time", "Status", "Dos", "Centre" };
+        String[] columnNames = { "ID", "Date", "Time", "Status", "Dos", "Owner", "Centre", "Vaccine" };
         DefaultTableModel model = (DefaultTableModel)x.getModel();
         model.setColumnIdentifiers(columnNames);     
         
@@ -65,20 +65,31 @@ public class People implements Operation{
             for(int i=0;i<myAppointment.size();i++){
                 Appointment a = myAppointment.get(i);
                 if(a.getStatus()==0){
-                    status="Pending";
+                    Astatus="Pending";
                 }else if(a.getStatus()==1){
-                    status="Accepted";
+                    Astatus="Approved";
                 }else if(a.getStatus()==2){
-                    status="Cancelled";
+                    Astatus="Cancelled";
                 }else{
-                    status="Completed";
+                    Astatus="Completed";
                 }
                 
-                data[0] = ""+a.getAppointmentDate();
-                data[1] = ""+a.getTime();
-                data[2] = ""+status;
-                data[3] = ""+String.valueOf(a.getDos());             
-                data[4] = ""+a.getAppointCentre().getHealthFacility();
+                if(a.getDos()==1){
+                    dos="DOS 1";
+                }else if(a.getDos()==2){
+                    dos="DOS 2";
+                }else{
+                    dos=null;
+                }
+                
+                data[0] = String.valueOf(a.getId());
+                data[1] = ""+a.getAppointmentDate();
+                data[2] = ""+a.getTime();
+                data[3] = ""+Astatus;
+                data[4] = ""+dos;
+                data[5] = ""+a.getOwner().getName();
+                data[6] = ""+a.getAppointCentre().getHealthFacility();
+                data[7] = ""+a.getVaccine().getName();
                 model.addRow(data);
             }
         } catch(Exception e){           
@@ -87,13 +98,15 @@ public class People implements Operation{
     
     }
     
-    public void cancelAppointment(Appointment x){
+    @Override
+    public void updateAppointment(Appointment x,Appointment y){
         for (int i = 0; i < DataIO.allAppointment.size(); i++) {
             if (x == DataIO.allAppointment.get(i)) {
-                DataIO.allAppointment.get(i).cancelAppointment();
+                DataIO.allAppointment.remove(i);
+                DataIO.allAppointment.add(i, y);
                 DataIO.write();
                 break;
-            };
+            }
         }
     }
     
@@ -107,6 +120,19 @@ public class People implements Operation{
             String manufacture = v.getManufacture();
             String healtfacility = String.valueOf(v.getVaccineCentre());   
         }     
+    }
+    
+    @Override
+    public void updateVaccine(Vaccine x, Vaccine y){
+         for(int i=0;i<DataIO.allVaccine.size();i++){
+            if(x==DataIO.allVaccine.get(i)){
+                DataIO.allVaccine.remove(i);
+                DataIO.allVaccine.add(i, y);
+                DataIO.write();
+                break;
+            }
+            
+        }
     }
     
     public int getId() {

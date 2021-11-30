@@ -138,6 +138,7 @@ public class Personnel implements Operation{
         }
     }
     
+    @Override
     public void updateAppointment(Appointment x, Appointment y){
          for(int i=0;i<DataIO.allAppointment.size();i++){
             if(x==DataIO.allAppointment.get(i)){
@@ -164,7 +165,7 @@ public class Personnel implements Operation{
                 if(a.getStatus()==0){
                     status="Pending";
                 }else if(a.getStatus()==1){
-                    status="Accepted";
+                    status="Approved";
                 }else if(a.getStatus()==2){
                     status="Cancelled";
                 }else{
@@ -210,6 +211,7 @@ public class Personnel implements Operation{
         }
     }
     
+    @Override
     public void updateVaccine(Vaccine x, Vaccine y){
          for(int i=0;i<DataIO.allVaccine.size();i++){
             if(x==DataIO.allVaccine.get(i)){

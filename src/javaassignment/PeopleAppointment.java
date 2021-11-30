@@ -47,6 +47,8 @@ public class PeopleAppointment extends javax.swing.JFrame {
         cbHF = new javax.swing.JComboBox<>();
         cbTime = new javax.swing.JComboBox<>();
         lblTitle = new javax.swing.JLabel();
+        cboVaccine = new javax.swing.JComboBox<>();
+        lblVaccine = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(700, 300));
@@ -76,6 +78,11 @@ public class PeopleAppointment extends javax.swing.JFrame {
         cbHF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setia City Convention Centre", "Sunway Pyramid Convention Centre", "Stadium Nasional Bukit Jalil", "Kuala Lumpur Convention Centre", "Axiata Arena Bukit Jalil", "Universiti Malaya(UM)" }));
         cbHF.setSelectedIndex(-1);
         cbHF.setToolTipText("");
+        cbHF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbHFActionPerformed(evt);
+            }
+        });
 
         cbTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" }));
         cbTime.setSelectedIndex(-1);
@@ -83,31 +90,44 @@ public class PeopleAppointment extends javax.swing.JFrame {
         lblTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lblTitle.setText("Appointment");
 
+        cboVaccine.setSelectedIndex(-1);
+        cboVaccine.setToolTipText("");
+
+        lblVaccine.setText("Vaccine:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(64, 64, 64)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnExit)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConfirm))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDate)
+                                    .addComponent(lblTime))
+                                .addGap(63, 63, 63)
+                                .addComponent(lblTitle))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(181, 181, 181)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnExit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnConfirm))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblDate)
-                                .addComponent(lblTime))
-                            .addGap(63, 63, 63)
-                            .addComponent(lblTitle))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(181, 181, 181)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblHealthFacility)
-                        .addGap(77, 77, 77)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblHealthFacility)
+                                .addGap(128, 128, 128))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(lblVaccine)
+                                .addGap(145, 145, 145)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cboVaccine, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbHF, 0, 1, Short.MAX_VALUE)
                             .addComponent(cbTime, 0, 240, Short.MAX_VALUE))))
                 .addContainerGap(95, Short.MAX_VALUE))
@@ -129,11 +149,15 @@ public class PeopleAppointment extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblHealthFacility)
                     .addComponent(cbHF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnExit)
-                    .addComponent(btnConfirm))
-                .addContainerGap(79, Short.MAX_VALUE))
+                    .addComponent(lblVaccine)
+                    .addComponent(cboVaccine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirm)
+                    .addComponent(btnExit))
+                .addGap(50, 50, 50))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,7 +168,9 @@ public class PeopleAppointment extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 13, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -178,27 +204,45 @@ public class PeopleAppointment extends javax.swing.JFrame {
                             x5 = DataIO.allCentre.get(i);
                         }                    
                     }
+                    Vaccine x6=null;
+                    
+                    String centre = cbHF.getSelectedItem().toString();
+                    String vaccine = cboVaccine.getSelectedItem().toString();
+                    for(int i=0;i<DataIO.allVaccine.size();i++){
+                        if(vaccine.equals(DataIO.allVaccine.get(i).getName()) && centre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                            x6 = DataIO.allVaccine.get(i);
+                        }
+                    }
+                   
                    boolean flag = true;
                         for(int i=0; i<DataIO.allAppointment.size(); i++){
                             Appointment x = DataIO.allAppointment.get(i);
                             if(x1.equals(x.getAppointmentDate()) 
                                     && x2.equals(x.getTime()) 
-                                    && x5.equals(x.getAppointCentre())){
+                                    && x5 == x.getAppointCentre()
+                                    && x6 == x.getVaccine()){
                                 flag = false;
                                 JOptionPane.showMessageDialog(this,"This time slot is not available!");
                                 break;
                             }
                         }
                         if(flag){                                              
-                            Appointment z = new Appointment(id,x1,x2,x3,dos,x4,x5);
+                            Appointment z = new Appointment(id,x1,x2,x3,dos,x4,x5,x6);
                             DataIO.allAppointment.add(z);
                             JavaAssignment.login.getMyAppointment().add(z);
                             x5.getAllAppointment().add(z);
-                            DataIO.write();
-                            jDateChooser1.setCalendar(null);                            
-                            cbHF.setSelectedIndex(-1);
-                            cbTime.setSelectedIndex(-1);
-                            JOptionPane.showMessageDialog(this,"Your appointment is submitted");
+                            for (int i = 0; i < DataIO.allVaccine.size(); i++) {
+                                if (x6 == DataIO.allVaccine.get(i)) {          
+                                    x6.bookVaccine();
+                                    JavaAssignment.login.updateVaccine(DataIO.allVaccine.get(i), x6);
+                                    DataIO.write();
+                                    jDateChooser1.setCalendar(null);                            
+                                    cbHF.setSelectedIndex(-1);
+                                    cbTime.setSelectedIndex(-1);
+                                    JOptionPane.showMessageDialog(this,"Your appointment is submitted");
+                                    break;
+                                }
+                            }
                         } 
                }else{
                     JOptionPane.showMessageDialog(this,"Sorry, You have booked an appointment!");
@@ -216,6 +260,17 @@ public class PeopleAppointment extends javax.swing.JFrame {
         this.setVisible(false);
         JavaAssignment.h.setVisible(true);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void cbHFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHFActionPerformed
+        String centre = String.valueOf(cbHF.getSelectedItem());
+        cboVaccine.removeAllItems();
+            for(int i=0;i<DataIO.allVaccine.size();i++){
+                if(centre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                    cboVaccine.addItem(DataIO.allVaccine.get(i).getName());;
+                }
+            }
+        cboVaccine.setSelectedIndex(-1);
+    }//GEN-LAST:event_cbHFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,11 +312,13 @@ public class PeopleAppointment extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JComboBox<String> cbHF;
     private javax.swing.JComboBox<String> cbTime;
+    private javax.swing.JComboBox<String> cboVaccine;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblHealthFacility;
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblVaccine;
     // End of variables declaration//GEN-END:variables
 }

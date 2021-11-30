@@ -38,7 +38,7 @@ public class Appointment {
     }
     
     public void cancelAppointment(){
-        status=0;
+        status=2;
     }
     
     public String getTime() {
