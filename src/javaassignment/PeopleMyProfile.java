@@ -219,6 +219,26 @@ public class PeopleMyProfile extends javax.swing.JFrame {
         String address = txtAddress.getText();
 
         if(user!=null){
+            if(name.trim().isEmpty() || phoneNo.trim().isEmpty() || email.trim().isEmpty() || address.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please ensure all required fields have been fill and tick the correct identity!!!");
+            return;
+            }
+
+            if(!(name.trim().matches("^[A-Za-z]{1,}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Name");
+                return;
+            }                          
+
+            if(!(phoneNo.trim().matches("^[0-9]{10,}$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Phone Number");
+                return;
+            }
+
+            if(!(email.trim().matches("^[a-zA-Z0-9]{1,}@[a-z]{4,}.com$"))){
+                JOptionPane.showMessageDialog(this, "Invalid Email");
+                return;
+            }
+            
             People p = new People(user.getId(),name,identityNo,dob,phoneNo,email,address,user.getStatus(),user.getType());
             user.updateProfile(user, p);
             JOptionPane.showMessageDialog(this,"Update Successfully");

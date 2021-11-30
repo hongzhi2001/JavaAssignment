@@ -20,7 +20,7 @@ public class ViewAppointment extends javax.swing.JFrame {
      */
     public ViewAppointment() {
         initComponents();          
-        btnCancel.setEnabled(true);
+        btnCancel.setEnabled(false);
     }
     
     /**
@@ -31,7 +31,13 @@ public class ViewAppointment extends javax.swing.JFrame {
     public void viewAppointment(){
         JavaAssignment.login.viewAppointment(jTable1);
         originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
-        btnCancel.setEnabled(true);
+    }
+    
+    public void updateTable(){
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.getDataVector().removeAllElements();
+        JavaAssignment.login.viewAppointment(jTable1);
+        model.fireTableDataChanged();
     }
     
     @SuppressWarnings("unchecked")
@@ -143,6 +149,7 @@ public class ViewAppointment extends javax.swing.JFrame {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         btnCancel.setEnabled(true);
         this.setVisible(false);
+        btnCancel.setEnabled(false);
         JavaAssignment.h.setVisible(true);
     }//GEN-LAST:event_btnExitActionPerformed
 
@@ -192,14 +199,12 @@ public class ViewAppointment extends javax.swing.JFrame {
             if(Integer.parseInt(id)==DataIO.allAppointment.get(i).getId()){
                 Appointment a2 = new Appointment(Integer.parseInt(id),date,time,Astatus,Ados,p,c,v);
                 a2.cancelAppointment();
-                JavaAssignment.login.updateAppointment(DataIO.allAppointment.get(i), a2);                   
+                JavaAssignment.login.updateAppointment(DataIO.allAppointment.get(i), a2);  
             }
         }  
         
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-        model.getDataVector().removeAllElements();
-        viewAppointment();
-        model.fireTableDataChanged();
+        JOptionPane.showMessageDialog(this, "Cancelled Successfully");
+        updateTable();
         originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
         
     }//GEN-LAST:event_btnCancelActionPerformed

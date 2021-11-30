@@ -240,6 +240,7 @@ public class PeopleAppointment extends javax.swing.JFrame {
                                     cbHF.setSelectedIndex(-1);
                                     cbTime.setSelectedIndex(-1);
                                     JOptionPane.showMessageDialog(this,"Your appointment is submitted");
+                                    JavaAssignment.va.updateTable();
                                     break;
                                 }
                             }

@@ -16,12 +16,12 @@ public class DataIO {
             = new ArrayList<Centre>();
     public static ArrayList<Vaccine> allVaccine
             = new ArrayList<Vaccine>();
-        public static void read(){
+        public static void read(){       
             allPeople.clear();
+            allCentre.clear();
+            allVaccine.clear();
             allAppointment.clear();
             allPersonnel.clear();
-            allVaccine.clear();
-            allCentre.clear();
         try{
             Scanner s = new Scanner(new File("people.txt"));
             while(s.hasNext()){
@@ -152,11 +152,12 @@ public class DataIO {
                 e.println(allCentre.get(i).getLocation());
                 e.println();
             }
-            e.close();
+            e.close();          
         } catch(Exception e){
             System.out.println("Error in write!");
         } 
     }
+    
     public static Personnel checkPersonnel(String x){
         for(int i=0; i<allPersonnel.size(); i++){
             if(x.equals(allPersonnel.get(i).getIdentityNo())){

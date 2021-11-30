@@ -39,6 +39,36 @@ public class Home extends javax.swing.JFrame {
         
     }
     
+    public void checkStatus(People x){
+        int status=0;
+        int size = x.getMyAppointment().size();
+        
+        if(size==0 || x.getMyAppointment().get(size-1).getStatus()!=3 && x.getMyAppointment().get(size-1).getDos()==1){
+            status=0;
+        }
+        else if(x.getMyAppointment().get(size-1).getStatus()==3 && x.getMyAppointment().get(size-1).getDos()==1 ||
+                x.getMyAppointment().get(size-1).getStatus()!=3 && x.getMyAppointment().get(size-1).getDos()==2){
+            status=1;
+        }
+        else if(x.getMyAppointment().get(size-1).getStatus()==3 && x.getMyAppointment().get(size-1).getDos()==2){
+            status=2;
+        }
+        
+        People y = new People(x.getId(),x.getName(),x.getIdentityNo(),x.getDob(),x.getPhoneNo(),x.getEmail(),x.getAddress(),status,x.getType());    
+        x.updateProfile(x, y);
+        
+        new java.util.Timer().schedule( 
+            new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    setPeopleStatus(y.getStatus());
+                }
+            }, 
+            100 
+        );
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
