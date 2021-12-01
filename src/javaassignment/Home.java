@@ -207,6 +207,8 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        JavaAssignment.login.getMyAppointment().clear();
+        JavaAssignment.login =null;
         this.setVisible(false);
         JavaAssignment.PL.setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed

@@ -430,8 +430,10 @@ public class AppointmentManage extends javax.swing.JFrame {
             cboCentre.setEnabled(false);
             cboVaccine.setEnabled(false);
             
-            if(status.equals("Cancelled")){
+            if(status.equals("Cancelled") || status.equals("Completed")){
                 cboStatus.setEnabled(false);
+            }else{
+                cboStatus.setEnabled(true);
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked
@@ -520,11 +522,14 @@ public class AppointmentManage extends javax.swing.JFrame {
         
         int totalvaccine=0;
         
+        Vaccine v=null;
+                        
         for(int i=0;i<DataIO.allVaccine.size();i++){
-            if(Avaccine.equals(DataIO.allVaccine.get(i).getName())){
+            if(Avaccine.equals(DataIO.allVaccine.get(i).getName()) && Acentre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                v = DataIO.allVaccine.get(i);
                 totalvaccine = DataIO.allVaccine.get(i).getQuantity();
             }
-        }
+        }      
         
         if(totalvaccine<=0){
             JOptionPane.showMessageDialog(this,"Sorry, the vaccine stock is empty!");
@@ -549,13 +554,6 @@ public class AppointmentManage extends javax.swing.JFrame {
             }
             
             Centre c = DataIO.checkCentre(Acentre);
-            Vaccine v=null;
-                        
-            for(int i=0;i<DataIO.allVaccine.size();i++){
-                if(Avaccine.equals(DataIO.allVaccine.get(i).getName()) && Acentre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
-                    v = DataIO.allVaccine.get(i);
-                }
-            }
 
             Appointment a = new Appointment(Aid,Adate,Atime,Astatus,Ados,x,c,v);
             int size = x.getMyAppointment().size();
@@ -620,118 +618,128 @@ public class AppointmentManage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Adate = dateFormat.format(txtDate.getDate());
-        Atime = cboTime.getSelectedItem().toString();
-        Astatus = cboStatus.getSelectedIndex();
-        if(cboDos.getSelectedIndex()==0){
-            Ados = 1;
-        }else{
-            Ados = 2;
-        }
-        Aowner = cboOwner.getSelectedItem().toString();
-        Acentre = cboCentre.getSelectedItem().toString();
-        Avaccine = cboVaccine.getSelectedItem().toString();
-        
-        People p=null;
-        for(int i=0; i<DataIO.allPeople.size(); i++){
-            if(Aowner.equals(DataIO.allPeople.get(i).getName())){
-              p = DataIO.allPeople.get(i);
-            }
-        }          
-        Centre c = DataIO.checkCentre(Acentre);
-
-        Vaccine v=null;                        
-        for(int i=0;i<DataIO.allVaccine.size();i++){
-            if(Avaccine.equals(DataIO.allVaccine.get(i).getName()) && Acentre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
-                v = DataIO.allVaccine.get(i);
-            }
-        }            
-
-        boolean flag=true;
-        Appointment a1=null;
-
-        for (int i = 0; i < DataIO.allAppointment.size(); i++) {
-           if (Integer.parseInt(id) == DataIO.allAppointment.get(i).getId()) {
-               a1 = DataIO.allAppointment.get(i);
-           }
-        }
-        
-        Appointment a2 = new Appointment(Integer.parseInt(id),Adate,Atime,Astatus,Ados,p,c,v);
-        
-        if(a2.getStatus()==a1.getStatus()){
-           flag=false;
-        }
-        
-        if(a1!=null){              
-            if(flag){
-                if(Ados==1 && Astatus==3){
-                    int totalvaccine=0;
-
-                    for(int i=0;i<DataIO.allVaccine.size();i++){
-                        if(Avaccine.equals(DataIO.allVaccine.get(i).getName())){
-                            totalvaccine = DataIO.allVaccine.get(i).getQuantity();
-                        }
-                    }
-
-                    if(totalvaccine<=0){
-                        JOptionPane.showMessageDialog(this,"Sorry, the vaccine stock is empty!");
-                        return;
-                    }
-
-                    int Aid=1;
-                    for(int i=0;i<DataIO.allAppointment.size();i++){
-                        if(i <DataIO.allAppointment.get(i).getId()){
-                            Aid = DataIO.allAppointment.get(i).getId()+1;
-                        }else{
-                            Aid = DataIO.allAppointment.size()+1;
-                        }          
-                    }
-                    Date secondDate;
-                    String appointDate;
-                    //https://stackoverflow.com/questions/7654151/how-to-add-7-days-to-current-date-while-not-going-over-available-days-of-a-month/7654199
-                    Calendar cal = Calendar.getInstance();  
-                    cal.setTime(txtDate.getDate());  
-                    cal.add(Calendar.DATE, 14);
-                    secondDate = cal.getTime();
-                    appointDate = dateFormat.format(secondDate);                           
-            
-                    Appointment a3 = new Appointment(Aid,appointDate,Atime,0,2,p,c,v);
-                    JavaAssignment1.plogin.addAppointment(a3, v);
-                    JOptionPane.showMessageDialog(this,"Update Successfully and the second appointment has been created!");
-                    
-                }else if(Astatus==2){            
-
-                    for (int i = 0; i < DataIO.allVaccine.size(); i++) {               
-                        if(v==DataIO.allVaccine.get(i)){
-                            v.cancelVaccine();
-                            JavaAssignment1.plogin.updateVaccine(DataIO.allVaccine.get(i), v);
-                            JOptionPane.showMessageDialog(this,"Update Successfully");                           
-                            break;
-                        }
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(this,"The appointment does not exist!");
-                }
-            
-                JavaAssignment1.plogin.updateAppointment(a1, a2);
-                txtDate.setCalendar(null);
-                cboTime.setSelectedIndex(-1);
-                cboStatus.setSelectedIndex(-1);
-                cboDos.setSelectedIndex(-1);
-                cboOwner.setSelectedIndex(-1);
-                cboCentre.setSelectedIndex(-1);
-                cboVaccine.setSelectedIndex(-1);
-                updateTable();
-                originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
-                JavaAssignment1.pVaccine.updateTable();  
-                
-                
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Adate = dateFormat.format(txtDate.getDate());
+            Atime = cboTime.getSelectedItem().toString();
+            Astatus = cboStatus.getSelectedIndex();
+            if(cboDos.getSelectedIndex()==0){
+                Ados = 1;
             }else{
-                JOptionPane.showMessageDialog(this,"No changes have been done!"); 
+                Ados = 2;
             }
-        }else{
-            JOptionPane.showMessageDialog(this,"The appointment does not exist"); 
+            Aowner = cboOwner.getSelectedItem().toString();
+            Acentre = cboCentre.getSelectedItem().toString();
+            Avaccine = cboVaccine.getSelectedItem().toString();
+
+            People p=null;
+            for(int i=0; i<DataIO.allPeople.size(); i++){
+                if(Aowner.equals(DataIO.allPeople.get(i).getName())){
+                  p = DataIO.allPeople.get(i);
+                }
+            }          
+            Centre c = DataIO.checkCentre(Acentre);
+
+            Appointment ap=null;
+            int totalvaccine=0;
+
+            for(int i=0;i<DataIO.allAppointment.size();i++){
+                if(Integer.parseInt(id)==DataIO.allAppointment.get(i).getId()){
+                    ap=DataIO.allAppointment.get(i);
+                }
+            }
+            
+            Vaccine v=null;                        
+            for(int i=0;i<DataIO.allVaccine.size();i++){
+                if(ap.getVaccine().getVaccineNo()==DataIO.allVaccine.get(i).getVaccineNo()){
+                    v = DataIO.allVaccine.get(i);
+                    totalvaccine = DataIO.allVaccine.get(i).getQuantity();
+                }
+            }            
+
+            boolean flag=true;
+            Appointment a1=null;
+
+            for (int i = 0; i < DataIO.allAppointment.size(); i++) {
+               if (Integer.parseInt(id) == DataIO.allAppointment.get(i).getId()) {
+                   a1 = DataIO.allAppointment.get(i);
+               }
+            }
+
+            Appointment a2 = new Appointment(Integer.parseInt(id),Adate,Atime,Astatus,Ados,p,c,v);
+
+            if(a2.getStatus()==a1.getStatus()){
+               flag=false;
+            }
+
+            if(a1!=null){              
+                if(flag){
+                    if(Ados==1 && Astatus==3){
+
+                        if(totalvaccine<=0){
+                            JOptionPane.showMessageDialog(this,"Sorry, the vaccine stock is empty!");
+                            return;
+                        }
+
+                        int Aid=1;
+                        for(int i=0;i<DataIO.allAppointment.size();i++){
+                            if(i <DataIO.allAppointment.get(i).getId()){
+                                Aid = DataIO.allAppointment.get(i).getId()+1;
+                            }else{
+                                Aid = DataIO.allAppointment.size()+1;
+                            }          
+                        }
+                        Date secondDate;
+                        String appointDate;
+                        //https://stackoverflow.com/questions/7654151/how-to-add-7-days-to-current-date-while-not-going-over-available-days-of-a-month/7654199
+                        Calendar cal = Calendar.getInstance();  
+                        cal.setTime(txtDate.getDate());  
+                        cal.add(Calendar.DATE, 14);
+                        secondDate = cal.getTime();
+                        appointDate = dateFormat.format(secondDate);                           
+
+                        Appointment a3 = new Appointment(Aid,appointDate,Atime,0,2,p,c,v);
+                        JavaAssignment1.plogin.addAppointment(a3, v);
+                        JOptionPane.showMessageDialog(this,"Update Successfully and the second appointment has been created!");
+
+                    }else if(Astatus==2){            
+
+                        for (int i = 0; i < DataIO.allVaccine.size(); i++) {               
+                            if(v==DataIO.allVaccine.get(i)){
+                                v.cancelVaccine();
+                                JavaAssignment1.plogin.updateVaccine(DataIO.allVaccine.get(i), v);
+                                JOptionPane.showMessageDialog(this,"Appointment has been cancelled!");                           
+                                break;
+                            }
+                        }
+                    }else if(Astatus!=2){
+                        JOptionPane.showMessageDialog(this,"Appointment has been updated!");
+                    }
+
+                    JavaAssignment1.plogin.updateAppointment(a1, a2);
+                    txtDate.setCalendar(null);
+                    cboTime.setSelectedIndex(-1);
+                    cboStatus.setSelectedIndex(-1);
+                    cboDos.setSelectedIndex(-1);
+                    cboOwner.setSelectedIndex(-1);
+                    cboCentre.setSelectedIndex(-1);
+                    cboVaccine.setSelectedIndex(-1);
+                    updateTable();
+                    originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+                    JavaAssignment1.pVaccine.updateTable();  
+                    btnAdd.setEnabled(true);
+                    btnUpdate.setEnabled(false);
+                    btnUpdate.setEnabled(false);
+
+                }else{
+                    JOptionPane.showMessageDialog(this,"No changes have been done!"); 
+                }
+            }else{
+                JOptionPane.showMessageDialog(this,"The appointment does not existaa"); 
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this,"You have not selected any item");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -772,6 +780,9 @@ public class AppointmentManage extends javax.swing.JFrame {
             updateTable();
             originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
             JavaAssignment1.pVaccine.updateTable();
+            btnAdd.setEnabled(true);
+            btnUpdate.setEnabled(false);
+            btnUpdate.setEnabled(false);
         }else{
              JOptionPane.showMessageDialog(this, "The appointment does not exist!");
         }

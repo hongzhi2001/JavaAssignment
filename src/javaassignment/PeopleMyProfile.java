@@ -207,7 +207,7 @@ public class PeopleMyProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        //not done 
+
         People user = JavaAssignment.login;  
         String name = txtName.getText();
         String identityNo = txtIdenNo.getText();
@@ -251,6 +251,7 @@ public class PeopleMyProfile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Update Successfully");
             JavaAssignment.login = p;
             getProfile(p);
+            JavaAssignment.h.setPeople(p.getName());
         }else{
             JOptionPane.showMessageDialog(this,"Invalid User!");
         }

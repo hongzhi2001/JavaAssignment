@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -627,6 +628,9 @@ public class UserManagement extends javax.swing.JFrame {
                     JavaAssignment1.pAppointment.ownerItem();
                     JavaAssignment1.pAppointment.updateTable();
                     JavaAssignment1.sreport.report();
+                    btnAdd.setEnabled(true);
+                    btnUpdate.setEnabled(false);
+                    btnDelete.setEnabled(false);                   
                     return;
                 }
                 JOptionPane.showMessageDialog(this, "The identity number has been used!"); 
@@ -645,7 +649,19 @@ public class UserManagement extends javax.swing.JFrame {
                  x = DataIO.allPeople.get(i);                
             }
         }
+        
+//https://stackoverflow.com/questions/22317701/when-remove-an-element-of-arraylist-from-inside-for-each-loop-its-break-the-loo/22317741
+        Iterator<Appointment> iter = DataIO.allAppointment.iterator();
+        while(iter.hasNext()){
+                Appointment a = iter.next();             
+                if(x==a.getOwner()){
+                    iter.remove();
+                }
+            }
+            DataIO.write();
+        
         if(x!=null){
+            
             JavaAssignment1.plogin.deletePeople(x);
             JOptionPane.showMessageDialog(this,"Delete Successfully");
             txtName.setText("");
@@ -659,7 +675,12 @@ public class UserManagement extends javax.swing.JFrame {
             updateTable(); 
             originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
             JavaAssignment1.pAppointment.ownerItem();
-            JavaAssignment1.sreport.report();
+            JavaAssignment1.sreport.report();      
+            JavaAssignment1.pAppointment.updateTable();
+            
+            btnAdd.setEnabled(true);
+            btnUpdate.setEnabled(false);
+            btnDelete.setEnabled(false);
         }else{
              JOptionPane.showMessageDialog(this, "User not found");
         }

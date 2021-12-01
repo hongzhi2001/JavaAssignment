@@ -198,12 +198,12 @@ public class ViewAppointment extends javax.swing.JFrame {
             if(Integer.parseInt(id)==DataIO.allAppointment.get(i).getId()){
                 Appointment a2 = new Appointment(Integer.parseInt(id),date,time,Astatus,Ados,p,c,v);
                 a2.cancelAppointment();
-                JavaAssignment.login.updateAppointment(DataIO.allAppointment.get(i), a2);  
+                JavaAssignment.login.updateAppointment(DataIO.allAppointment.get(i), a2);
             }
         }  
         
         JOptionPane.showMessageDialog(this, "Cancelled Successfully");
-        updateTable();
+        updateTable();        
         originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
         
     }//GEN-LAST:event_btnCancelActionPerformed

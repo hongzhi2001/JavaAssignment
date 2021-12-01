@@ -23,6 +23,7 @@ public class DataIO {
             allAppointment.clear();
             allPersonnel.clear();
         try{
+            logout=true;
             Scanner s = new Scanner(new File("people.txt"));
             while(s.hasNext()){
                 int x1 = Integer.parseInt(s.nextLine());
@@ -89,10 +90,8 @@ public class DataIO {
                 allPersonnel.add(ps);
             }
         } catch(Exception e){
-            System.out.println("Error in read!");
-            JOptionPane.showMessageDialog(JavaAssignment1.pAppointment, "The user or vaccine has been removed, please kindly check and remove the unuse appointment!");
+            System.out.println("Error in read!");    
             logout = false;
-            e.printStackTrace();
         }
     }
     public static void write(){

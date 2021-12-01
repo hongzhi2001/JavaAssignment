@@ -231,6 +231,7 @@ public class PMyprofile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Update Successfully");
             JavaAssignment1.plogin = x;
             getProfile(x);
+            JavaAssignment1.pHome.setUser(x.getName());
         }else{
             JOptionPane.showMessageDialog(this,"Invalid User!");
         }

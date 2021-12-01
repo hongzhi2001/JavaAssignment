@@ -5,6 +5,7 @@
  */
 package javaassignment;
 
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -495,6 +496,9 @@ public class VaccineManage extends javax.swing.JFrame {
                     cboCentre.setSelectedIndex(-1);
                     updateTable();
                     originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+                    btnAdd.setEnabled(true);
+                    btnUpdate.setEnabled(false);
+                    btnDelete.setEnabled(false);
                 }else{
                     JOptionPane.showMessageDialog(this,"No changes have been done!"); 
                 }
@@ -512,6 +516,16 @@ public class VaccineManage extends javax.swing.JFrame {
                v1 = DataIO.allVaccine.get(i);
            }
         }
+        
+        Iterator<Appointment> iter = DataIO.allAppointment.iterator();
+        while(iter.hasNext()){
+                Appointment a = iter.next();             
+                if(v1==a.getVaccine()){
+                    iter.remove();
+                }
+            }
+            DataIO.write();
+        
 
         if(v1!=null){
             JavaAssignment1.plogin.deleteVaccine(v1);
@@ -522,6 +536,10 @@ public class VaccineManage extends javax.swing.JFrame {
             cboCentre.setSelectedIndex(-1);
             updateTable();
             originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+            JavaAssignment1.pAppointment.updateTable();
+            btnAdd.setEnabled(true);
+            btnUpdate.setEnabled(false);
+            btnDelete.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(this, "Vaccine not found!");
         }

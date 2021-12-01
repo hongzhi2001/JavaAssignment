@@ -180,6 +180,15 @@ public class PeopleAppointment extends javax.swing.JFrame {
        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
        int dos =1;
        
+       JavaAssignment.login.getMyAppointment().clear();
+       DataIO.read();
+       
+       for(int i=0;i<DataIO.allPeople.size();i++){
+           if(JavaAssignment.login.getId()==DataIO.allPeople.get(i).getId()){
+               JavaAssignment.login=DataIO.allPeople.get(i);
+           }
+       }
+       
        if(jDateChooser1.getDate()==null || cbHF.getSelectedItem()==null || cbTime.getSelectedItem()==null){
            JOptionPane.showMessageDialog(this,"Please ensure all the information have valid input");
        } else{                    
