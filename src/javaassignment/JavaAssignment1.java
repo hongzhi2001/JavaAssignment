@@ -8,6 +8,7 @@ public class JavaAssignment1 {
     public static AppointmentManage pAppointment = new AppointmentManage();
     public static VaccineManage pVaccine = new VaccineManage();
     public static PMyprofile pMyProfile = new PMyprofile();
+    public static StatisticReport sreport = new StatisticReport();
     public static Personnel plogin;
     
     public static void main(String[] args) {

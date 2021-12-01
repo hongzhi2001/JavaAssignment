@@ -574,6 +574,7 @@ public class AppointmentManage extends javax.swing.JFrame {
                        updateTable();
                        originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
                        JavaAssignment1.pVaccine.updateTable();
+                      
                        return;
                     }
                     JOptionPane.showMessageDialog(this, "The user has booked appointment!");
@@ -601,6 +602,7 @@ public class AppointmentManage extends javax.swing.JFrame {
                             updateTable();
                             originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
                             JavaAssignment1.pVaccine.updateTable();
+                            
                         }else{
                             JOptionPane.showMessageDialog(this, "The second dos appointment date must be after first dos!");
                         }
@@ -722,7 +724,8 @@ public class AppointmentManage extends javax.swing.JFrame {
                 cboVaccine.setSelectedIndex(-1);
                 updateTable();
                 originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
-                JavaAssignment1.pVaccine.updateTable();    
+                JavaAssignment1.pVaccine.updateTable();  
+                
                 
             }else{
                 JOptionPane.showMessageDialog(this,"No changes have been done!"); 
@@ -740,6 +743,24 @@ public class AppointmentManage extends javax.swing.JFrame {
             }
         }
         if(a!=null){
+            if(!status.equals("Cancelled")){            
+                
+                Vaccine v=null;                        
+                for(int i=0;i<DataIO.allVaccine.size();i++){
+                    if(Avaccine.equals(DataIO.allVaccine.get(i).getName()) && Acentre.equals(DataIO.allVaccine.get(i).getVaccineCentre().getHealthFacility())){
+                        v = DataIO.allVaccine.get(i);
+                    }
+                }
+
+                for (int i = 0; i < DataIO.allVaccine.size(); i++) {               
+                    if(v==DataIO.allVaccine.get(i)){
+                        v.cancelVaccine();
+                        JavaAssignment1.plogin.updateVaccine(DataIO.allVaccine.get(i), v);
+                        JOptionPane.showMessageDialog(this,"Delete Successfully");                           
+                        break;
+                    }
+                }
+            }
             JavaAssignment1.plogin.deleteAppointment(a);
             txtDate.setCalendar(null);
             cboTime.setSelectedIndex(-1);
@@ -750,6 +771,7 @@ public class AppointmentManage extends javax.swing.JFrame {
             cboVaccine.setSelectedIndex(-1);
             updateTable();
             originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
+            JavaAssignment1.pVaccine.updateTable();
         }else{
              JOptionPane.showMessageDialog(this, "The appointment does not exist!");
         }

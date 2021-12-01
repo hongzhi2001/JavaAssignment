@@ -536,6 +536,7 @@ public class UserManagement extends javax.swing.JFrame {
             updateTable();
             originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
             JavaAssignment1.pAppointment.ownerItem();
+            JavaAssignment1.sreport.report();
         }    
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -625,6 +626,7 @@ public class UserManagement extends javax.swing.JFrame {
                     originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
                     JavaAssignment1.pAppointment.ownerItem();
                     JavaAssignment1.pAppointment.updateTable();
+                    JavaAssignment1.sreport.report();
                     return;
                 }
                 JOptionPane.showMessageDialog(this, "The identity number has been used!"); 
@@ -657,6 +659,7 @@ public class UserManagement extends javax.swing.JFrame {
             updateTable(); 
             originalTableModel = (Vector) ((DefaultTableModel) jTable1.getModel()).getDataVector().clone();
             JavaAssignment1.pAppointment.ownerItem();
+            JavaAssignment1.sreport.report();
         }else{
              JOptionPane.showMessageDialog(this, "User not found");
         }

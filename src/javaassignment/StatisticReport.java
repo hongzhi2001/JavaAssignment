@@ -16,31 +16,28 @@ public class StatisticReport extends javax.swing.JFrame {
      */
     public StatisticReport() {
         initComponents();
+        report();
+    }
+    public void report(){
         DataIO.read();
         int size = DataIO.allPeople.size();
         int x = 0,y =0,z =0;
-        for(int i=0;i<DataIO.allAppointment.size();i++){
-                Appointment a = DataIO.allAppointment.get(i);
-                if(a.getDos()==1 && a.getStatus()==3){
-                    y++;                    
-                } else if(a.getDos()==2 && a.getStatus()==3){
-                   z++;
-                }
-        }
         for(int i=0;i<DataIO.allPeople.size(); i++){
             People p = DataIO.allPeople.get(i);
             if(p.getStatus()==0){
                 x++;
+            } else if(p.getStatus()==1){
+                y++;
+            } else{
+                z++;
             }
+            
                     
         }
          txtRegister.setText(String.valueOf(size));
          txtNotVaccine.setText(String.valueOf(x));
          txtParticiallyV.setText(String.valueOf(y));
-         txtFullyV.setText(String.valueOf(z));                 
-         
-       
-        
+         txtFullyV.setText(String.valueOf(z)); 
     }
     
     /**
@@ -85,8 +82,15 @@ public class StatisticReport extends javax.swing.JFrame {
         txtParticiallyV.setEditable(false);
 
         jButton1.setText("Exit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         lblZero.setText("Not vaccinated:");
+
+        txtNotVaccine.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -159,6 +163,11 @@ public class StatisticReport extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        JavaAssignment1.pHome.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

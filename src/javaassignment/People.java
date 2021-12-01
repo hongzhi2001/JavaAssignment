@@ -116,15 +116,10 @@ public class People implements Operation{
         }
     }
     
-    public void viewVaccine(){  // NOT DONE
-        DataIO.read();
-        
+    public void viewVaccine(Vaccine x){  // NOT DONE
+        DataIO.read();        
         for(int i=0;i<myVaccine.size();i++){
             Vaccine v = myVaccine.get(i);            
-            String id = String.valueOf(v.getVaccineNo());
-            String name = v.getName();
-            String manufacture = v.getManufacture();
-            String healtfacility = String.valueOf(v.getVaccineCentre());   
         }     
     }
     

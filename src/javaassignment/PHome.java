@@ -100,6 +100,11 @@ public class PHome extends javax.swing.JFrame {
         });
 
         btnReport.setText("Report");
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportActionPerformed(evt);
+            }
+        });
 
         logoutbtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         logoutbtn.setText("Logout");
@@ -200,6 +205,11 @@ public class PHome extends javax.swing.JFrame {
         this.setVisible(false);
         JavaAssignment1.pVaccine.setVisible(true);
     }//GEN-LAST:event_btnVaccineActionPerformed
+
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        this.setVisible(false);
+        JavaAssignment1.sreport.setVisible(true);
+    }//GEN-LAST:event_btnReportActionPerformed
 
     public void setUser(String user){
         lblTitle.setText("Welcome " + user + "!");
