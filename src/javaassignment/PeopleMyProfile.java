@@ -240,7 +240,16 @@ public class PeopleMyProfile extends javax.swing.JFrame {
             }
             
             People p = new People(user.getId(),name,identityNo,dob,phoneNo,email,address,user.getStatus(),user.getType());
-            user.updateProfile(user, p);
+            
+            for(int i=0;i<DataIO.allPeople.size();i++){
+                if(user.getIdentityNo().equals(DataIO.allPeople.get(i).getIdentityNo())){
+                    DataIO.allPeople.remove(i);
+                    DataIO.allPeople.add(i, p);
+                    DataIO.write();
+                    break;
+                }       
+            }
+            
             JOptionPane.showMessageDialog(this,"Update Successfully");
             JavaAssignment.login = p;
             getProfile(p);

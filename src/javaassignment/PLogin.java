@@ -137,6 +137,7 @@ public class PLogin extends javax.swing.JFrame {
                 JavaAssignment1.pMyProfile.getProfile(found);
                 this.setVisible(false);
                 JavaAssignment1.pHome.setVisible(true);  
+
             }else{
                 JOptionPane.showMessageDialog(this, "Wrong Password!");
             }

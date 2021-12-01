@@ -18,7 +18,7 @@ public class PeopleLogin extends javax.swing.JFrame {
      */
     public PeopleLogin() {
         initComponents();
-        setVisible(true);
+        this.setVisible(true);
     }
 
     /**
@@ -139,11 +139,12 @@ public class PeopleLogin extends javax.swing.JFrame {
                 txtIdenNo.setText("");
                 txtPassword.setText("");               
                 JavaAssignment.h.setPeople(found.getName());
+                JavaAssignment.h.checkStatus(found);
                 JavaAssignment.h.setPeopleStatus(found.getStatus());
                 JavaAssignment.pm.getProfile(found);
-                JavaAssignment.va.viewAppointment();
-                JavaAssignment.vs.viewVaccine();
-                JavaAssignment.t.test();
+                JavaAssignment.va.viewAppointment(found);
+                //JavaAssignment.vs.viewVaccine();
+                //JavaAssignment.t.test();
                 this.setVisible(false);
                 JavaAssignment.h.setVisible(true);
                 

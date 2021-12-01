@@ -61,36 +61,42 @@ public class People implements Operation{
         DefaultTableModel model = (DefaultTableModel)x.getModel();
         model.setColumnIdentifiers(columnNames);     
         
-        try{
+        try{           
             for(int i=0;i<myAppointment.size();i++){
-                Appointment a = myAppointment.get(i);
-                if(a.getStatus()==0){
-                    Astatus="Pending";
-                }else if(a.getStatus()==1){
-                    Astatus="Approved";
-                }else if(a.getStatus()==2){
-                    Astatus="Cancelled";
-                }else{
-                    Astatus="Completed";
+                Appointment a = myAppointment.get(i);              
+                for(int j=0;j<DataIO.allAppointment.size();j++){
+                    Appointment a1 = DataIO.allAppointment.get(j);
+                    if(a.getId()==a1.getId()){
+                        if(a1.getStatus()==0){
+                           Astatus="Pending";
+                        }else if(a1.getStatus()==1){
+                            Astatus="Approved";
+                        }else if(a1.getStatus()==2){
+                            Astatus="Cancelled";
+                        }else{
+                            Astatus="Completed";
+                        }
+
+                        if(a1.getDos()==1){
+                            dos="DOS 1";
+                        }else if(a1.getDos()==2){
+                            dos="DOS 2";
+                        }else{
+                            dos=null;
+                        }
+
+                        data[0] = String.valueOf(a1.getId());
+                        data[1] = ""+a1.getAppointmentDate();
+                        data[2] = ""+a1.getTime();
+                        data[3] = ""+Astatus;
+                        data[4] = ""+dos;
+                        data[5] = ""+a1.getOwner().getName();
+                        data[6] = ""+a1.getAppointCentre().getHealthFacility();
+                        data[7] = ""+a1.getVaccine().getName();
+                        model.addRow(data);
+                    }
                 }
                 
-                if(a.getDos()==1){
-                    dos="DOS 1";
-                }else if(a.getDos()==2){
-                    dos="DOS 2";
-                }else{
-                    dos=null;
-                }
-                
-                data[0] = String.valueOf(a.getId());
-                data[1] = ""+a.getAppointmentDate();
-                data[2] = ""+a.getTime();
-                data[3] = ""+Astatus;
-                data[4] = ""+dos;
-                data[5] = ""+a.getOwner().getName();
-                data[6] = ""+a.getAppointCentre().getHealthFacility();
-                data[7] = ""+a.getVaccine().getName();
-                model.addRow(data);
             }
         } catch(Exception e){           
             System.out.println("Error!");
